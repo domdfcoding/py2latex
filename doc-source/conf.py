@@ -8,12 +8,7 @@ import os
 import re
 import sys
 import warnings
-
-# 3rd party
 from sphinx.locale import _
-
-# this package
-from __pkginfo__ import __version__
 
 # Suppress warnings from sphinx_autodoc_typehints
 # TODO: Remove once the following issues is resolved:
@@ -22,6 +17,8 @@ warnings.filterwarnings('ignore', message='sphinx.util.inspect.Signature\(\) is 
 
 sys.path.append(os.path.abspath('.'))
 sys.path.append(os.path.abspath('..'))
+
+from __pkginfo__ import __version__
 
 
 

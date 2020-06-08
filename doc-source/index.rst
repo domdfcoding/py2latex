@@ -4,7 +4,7 @@ latex_tools
 
 .. start short_desc
 
-**A collection of tools for creating LaTeX code with Python.**
+**An assortment of tools for creating LaTeX code with Python.**
 
 .. end short_desc
 

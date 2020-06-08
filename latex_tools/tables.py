@@ -36,7 +36,7 @@ import tabulate
 from tabulate import Line, TableFormat
 
 # this package
-from latex_tools.core import begin,  make_caption, make_label, re_escape
+from latex_tools.core import begin, make_caption, make_label, re_escape
 
 hline = r"\hline"
 toprule = r"\toprule"
@@ -99,7 +99,12 @@ def _latex_line_begin_tabular(colwidths, colaligns, booktabs=False, longtable=Fa
 	return "\n".join(line_begin_elements)
 
 
-def latex_format_builder(raw=False, booktabs=False, longtable=False, longtable_continued=False):
+def latex_format_builder(
+		raw: bool = False,
+		booktabs: bool = False,
+		longtable: bool = False,
+		longtable_continued: bool = False,
+		) -> TableFormat:
 	lineabove = partial(
 			_latex_line_begin_tabular,
 			longtable=longtable,
@@ -128,9 +133,9 @@ def latex_format_builder(raw=False, booktabs=False, longtable=False, longtable_c
 		linebelow = [hline, r"\end{tabular}"]
 
 	if raw:
-		datarow = headerrow = partial(tabulate._latex_row, escrules={})
+		datarow = headerrow = partial(tabulate._latex_row, escrules={})  # type: ignore
 	else:
-		datarow = headerrow = tabulate._latex_row
+		datarow = headerrow = tabulate._latex_row  # type: ignore
 
 	return TableFormat(
 			lineabove=lineabove,
@@ -156,7 +161,7 @@ table_formats = {
 		}
 
 
-def add_longtable_caption(table: str, caption: Optional[str] = None, label: Optional[str] = None):
+def add_longtable_caption(table: str, caption: Optional[str] = None, label: Optional[str] = None) -> str:
 	"""
 	Add a caption to a longtable
 

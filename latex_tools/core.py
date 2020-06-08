@@ -22,16 +22,10 @@
 #
 
 # stdlib
-import re
-from functools import partial
 from typing import Optional
 
-# 3rd party
-import tabulate
-from tabulate import Line, TableFormat
 
-
-def make_caption(caption):
+def make_caption(caption: str) -> str:
 	r"""
 	Akin to \caption{}
 
@@ -45,7 +39,7 @@ def make_caption(caption):
 	return rf"\caption{{{caption}}}"
 
 
-def make_label(label):
+def make_label(label: str) -> str:
 	r"""
 	Akin to \label{}
 
@@ -59,7 +53,7 @@ def make_label(label):
 	return rf"\label{{{label}}}"
 
 
-def begin(environment: str, options: Optional[str] = None):
+def begin(environment: str, options: Optional[str] = None) -> str:
 	r"""
 	Akin to \begin{environment}
 
@@ -78,7 +72,7 @@ def begin(environment: str, options: Optional[str] = None):
 		return rf"\begin{{{environment}}}"
 
 
-def end(environment):
+def end(environment: str) -> str:
 	r"""
 	Akin to \end{environment}
 
@@ -92,7 +86,7 @@ def end(environment):
 	return rf"\end{{{environment}}}"
 
 
-def re_escape(string):
+def re_escape(string: str) -> str:
 	"""
 	Escape literal backslashes for use with re.
 

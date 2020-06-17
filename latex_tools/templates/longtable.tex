@@ -1,0 +1,31 @@
+\begin{spacing}{1.3}
+\begin{longtable}[{{ pos }}]{{ brace(colalign) }}
+{##}
+
+    \midrule
+    \multicolumn{{ brace(ncols) }}{r}{{ "{{" }}\small Continued on next page\normalsize{{ "}}" }} \\
+    \midrule
+    \endfoot
+
+    {% if footer %}\midrule
+    {{ footer }}\\{% endif %}
+
+    \bottomrule
+    \endlastfoot
+
+    \caption{{ brace(caption) }}\label{{ "{table:" }}{{ label }}{{ "}" }}\\
+    \toprule
+    {% if header_row %}{{ header_row }}
+    \midrule{% endif %}
+    \endfirsthead
+
+    \caption[]{{ brace(caption) }}\\
+    \toprule
+    {% if header_row %}{{ header_row }}
+    \midrule{% endif %}
+    \endhead
+
+    {{ table_body }}
+
+\end{longtable}
+\end{spacing}

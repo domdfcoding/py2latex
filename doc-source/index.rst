@@ -15,35 +15,50 @@ latex_tools
 	:widths: 10 90
 
 	* - Docs
-	  - |docs|
+	  - |docs| |docs_check|
 	* - Tests
-	  - |travis| |requires| |codefactor|
+	  - |travis| |actions_windows| |actions_macos|
+	    |codefactor|
 	* - PyPI
 	  - |pypi-version| |supported-versions| |supported-implementations| |wheel|
+	* - Activity
+	  - |commits-latest| |commits-since| |maintained|
 	* - Other
-	  - |license| |language| |commits-since| |commits-latest| |maintained| 
+	  - |license| |language| |requires|
 
-.. |docs| image:: https://readthedocs.org/projects/latex_tools/badge/?version=latest
+.. |docs| image:: https://img.shields.io/readthedocs/latex_tools/latest?logo=read-the-docs
 	:target: https://latex_tools.readthedocs.io/en/latest/?badge=latest
 	:alt: Documentation Status
+	
+.. |docs| image:: https://github.com/domdfcoding/latex_tools/workflows/Docs%20Check/badge.svg
+	:target: https://github.com/domdfcoding/latex_tools/actions?query=workflow%3A%22Docs+Check%22
+	:alt: Docs Check Status
 
 .. |travis| image:: https://img.shields.io/travis/com/domdfcoding/latex_tools/master?logo=travis
 	:target: https://travis-ci.com/domdfcoding/latex_tools
 	:alt: Travis Build Status
 
+.. |actions_windows| image:: https://github.com/domdfcoding/latex_tools/workflows/Windows%20Tests/badge.svg
+	:target: https://github.com/domdfcoding/latex_tools/actions?query=workflow%3A%22Windows+Tests%22
+	:alt: Windows Tests Status
+	
+.. |actions_macos| image:: https://github.com/domdfcoding/latex_tools/workflows/macOS%20Tests/badge.svg
+	:target: https://github.com/domdfcoding/latex_tools/actions?query=workflow%3A%22macOS+Tests%22
+	:alt: macOS Tests Status
+
 .. |requires| image:: https://requires.io/github/domdfcoding/latex_tools/requirements.svg?branch=master
 	:target: https://requires.io/github/domdfcoding/latex_tools/requirements/?branch=master
 	:alt: Requirements Status
 
-.. |codefactor| image:: https://img.shields.io/codefactor/grade/github/domdfcoding/latex_tools
+.. |codefactor| image:: https://img.shields.io/codefactor/grade/github/domdfcoding/latex_tools?logo=codefactor
 	:target: https://www.codefactor.io/repository/github/domdfcoding/latex_tools
 	:alt: CodeFactor Grade
 
-.. |pypi-version| image:: https://img.shields.io/pypi/v/latex_tools.svg
+.. |pypi-version| image:: https://img.shields.io/pypi/v/latex_tools
 	:target: https://pypi.org/project/latex_tools/
 	:alt: PyPI - Package Version
 
-.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/latex_tools.svg
+.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/latex_tools
 	:target: https://pypi.org/project/latex_tools/
 	:alt: PyPI - Supported Python Versions
 
@@ -90,7 +105,7 @@ latex_tools
 
 		.. prompt:: bash
 
-			pip install git+https://github.com//latex_tools@master
+			pip install git+https://github.com/domdfcoding/latex_tools@master
 
 .. end installation
 

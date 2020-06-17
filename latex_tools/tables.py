@@ -1,5 +1,4 @@
 #  !/usr/bin/env python
-#   -*- coding: utf-8 -*-
 #
 #  tabulate.py
 """
@@ -29,7 +28,8 @@ https://pypi.org/project/tabulate/
 # stdlib
 import re
 from functools import partial
-from typing import Optional
+from textwrap import indent
+from typing import Optional, Sequence, Union
 
 # 3rd party
 import tabulate
@@ -160,6 +160,10 @@ table_formats = {
 		"latex_longtable_booktabs_raw": latex_format_builder(raw=True, longtable=True, booktabs=True),
 		}
 
+raw_longbooktab_cont = latex_format_builder(
+	raw=True, booktabs=True, longtable=True,
+	longtable_continued=True)
+
 
 def add_longtable_caption(table: str, caption: Optional[str] = None, label: Optional[str] = None) -> str:
 	"""
@@ -186,6 +190,10 @@ def add_longtable_caption(table: str, caption: Optional[str] = None, label: Opti
 
 	if caption or label:
 		table = table.replace(toprule, "".join([*elems, "\\\\\n", toprule]))
+		# table = table.replace(
+		# 		toprule,
+		# 		"".join([*elems, "\\\\\n", toprule, "\n\\endfirsthead\n", f"\\caption*{{{caption}}}\\\\\n"])
+		# 		)
 
 	return table
 
@@ -205,9 +213,357 @@ def set_table_widths(table: str, widths: str) -> str:
 
 	for environment in {"tabular", "longtable"}:
 		table = re.sub(
-				fr"{re_escape(begin(environment))}{{.*}}",
+				fr"{re_escape(begin(environment))}(\[[^\]]*\])?{{.*}}",
 				fr"{re_escape(begin(environment))}{{{widths}}}",
 				table,
 				)
 
 	return table
+
+
+# this package
+from latex_tools.templates import templates
+
+_longtable_template = templates.get_template("longtable.tex")
+_table_template = templates.get_template("table.tex")
+
+
+def longtable_from_template(
+		tabular_data,
+		caption: str,
+		label: Optional[str] = None,
+		headers: Sequence[str] = (),
+		pos: str = "htpb",
+		floatfmt: str = tabulate._DEFAULT_FLOATFMT,
+		numalign: str = "decimal",
+		stralign: str = "left",
+		missingval: str = tabulate._DEFAULT_MISSINGVAL,
+		showindex: str = "default",
+		disable_numparse: bool = False,
+		colalign: Optional[Sequence[Union[str, None]]] = None,
+		colwidths: Optional[Sequence[Union[str, None]]] = None,
+		vlines: Union[Sequence[int], bool] = False,
+		hspace: Union[Sequence[int], bool] = False,
+		raw: bool = True,
+		footer: Optional[str] = None,
+		) -> str:
+	"""
+	Create a ``longtable`` with ``booktabs`` formatting.
+
+	:param tabular_data:
+	:type tabular_data:
+	:param caption: The caption for the table
+	:type caption: str
+	:param label: The label for the table.
+		If undefined the caption is used, in lowercase, with underscores replacing spaces
+	:param headers: A sequence of column headers
+	:param pos: The positioning of the table, e.g. ``"htp"``
+	:type pos: str
+	:param floatfmt: The formatting of :class:`float` values. Default ``"g"``
+	:type floatfmt: str
+	:param numalign:
+	:type numalign:
+	:param stralign:
+	:type stralign:
+	:param missingval:
+	:type missingval:
+	:param showindex:
+	:type showindex:
+	:param disable_numparse:
+	:type disable_numparse:
+	:param colalign:
+	:param colwidths: Sequence of column widths, e.g. ``3cm``. Values of :py:obj:`None` indicates auto width
+	:param vlines: If a sequence of integers a line will be inserted before the specified columns. ``-1`` indicates a line should be inserted after the last column.
+		If :py:obj:`True` a line will be inserted before every column, and after the last column.
+		If :py:obj:`False` no lines will be inserted.
+	:param hspace: If a sequence of integers extra space will be inserted before the specified row. ``-1`` indicates a space should be inserted after the last row.
+		If :py:obj:`True` a space will be inserted before every row, and after the last row.
+		If :py:obj:`False` no spaces will be inserted.
+	:param raw: Whether latex markup in ``tabular_data`` should be unescaped. Default ``True``
+	:type raw: bool
+	:param footer: Optional footer for the table. Inserted as raw LaTeX
+
+
+	:return:
+	:rtype: str
+	"""
+
+	if raw:
+		datarow = headerrow = partial(tabulate._latex_row, escrules={})  # type: ignore
+	else:
+		datarow = headerrow = tabulate._latex_row  # type: ignore
+
+	body_only_format = TableFormat(
+			lineabove=None,
+			linebelowheader=None,
+			linebelow=None,
+			datarow=datarow,
+			headerrow=headerrow,
+			linebetweenrows=None,
+			padding=1,
+			with_header_hide=None,
+			)
+
+	rows = tabulate.tabulate(
+			tabular_data,
+			tablefmt=body_only_format,
+			headers=headers,
+			floatfmt=floatfmt,
+			numalign=numalign,
+			stralign=stralign,
+			missingval=missingval,
+			showindex=showindex,
+			disable_numparse=disable_numparse,  # colalign=colalign,
+			).split("\n")
+
+	if headers:
+		header_row = rows[0]
+		body_rows = rows[1:]
+		ncols = len(headers)
+	else:
+		header_row = ''
+		body_rows = rows
+		ncols = len(tabular_data[0])
+
+	if isinstance(hspace, Sequence):
+		add_hspace = True
+	else:
+		add_hspace = bool(hspace)
+		hspace = list(range(len(body_rows)))
+
+	table_body = ''
+	for row_idx, row in enumerate(body_rows):
+		row = re.sub(r"(\\multicolumn{2\}{.*\}{{.*\}\}\s*)&", r"\1 ", row)
+		row = re.sub(r"(\\multicolumn{3\}{.*\}{{.*\}\}\s*)&(\s*)&", r"\1 \2", row)
+		row = re.sub(r"(\\multicolumn{4\}{.*\}{{.*\}\}\s*)&(\s*)&(\s*)&", r"\1 \2 \3", row)
+		row = re.sub(r"(\\multicolumn{5\}{.*\}{{.*\}\}\s*)&(\s*)&(\s*)&(\s*)&", r"\1 \2 \3 \4", row)
+
+		if add_hspace and row_idx in hspace:
+			table_body += "\\addlinespace"
+
+		table_body += f"{row}\n"
+
+	if not label:
+		label = caption.lower().replace(" ", "_")
+
+	col_alignment = parse_column_alignments(colalign, colwidths, vlines, ncols)
+
+	return _longtable_template.render(
+			caption=caption,
+			label=label,
+			header_row=header_row,
+			table_body=table_body,
+			ncols=ncols,
+			colalign="".join(col_alignment),
+			pos=pos,
+			footer=footer,
+			)
+
+
+def table_from_template(
+		tabular_data,
+		caption: str,
+		label: Optional[str] = None,
+		headers: Sequence[str] = (),
+		pos: str = "htpb",
+		floatfmt: str = tabulate._DEFAULT_FLOATFMT,
+		numalign: str = "decimal",
+		stralign: str = "left",
+		missingval: str = tabulate._DEFAULT_MISSINGVAL,
+		showindex: str = "default",
+		disable_numparse: bool = False,
+		colalign: Optional[Sequence[Union[str, None]]] = None,
+		colwidths: Optional[Sequence[Union[str, None]]] = None,
+		vlines: Union[Sequence[int], bool] = False,
+		hspace: Union[Sequence[int], bool] = False,
+		raw: bool = True,
+		footer: Optional[str] = None,
+		) -> str:
+	"""
+	Create a ``table`` with ``booktabs`` formatting.
+
+	:param tabular_data:
+	:type tabular_data:
+	:param caption: The caption for the table
+	:type caption: str
+	:param label: The label for the table.
+		If undefined the caption is used, in lowercase, with underscores replacing spaces
+	:param headers: A sequence of column headers
+	:param pos: The positioning of the table, e.g. ``"htp"``
+	:type pos: str
+	:param floatfmt: The formatting of :class:`float` values. Default ``"g"``
+	:type floatfmt: str
+	:param numalign:
+	:type numalign:
+	:param stralign:
+	:type stralign:
+	:param missingval:
+	:type missingval:
+	:param showindex:
+	:type showindex:
+	:param disable_numparse:
+	:type disable_numparse:
+	:param colalign:
+	:param colwidths: Sequence of column widths, e.g. ``3cm``. Values of :py:obj:`None` indicates auto width
+	:param vlines: If a sequence of integers a line will be inserted before the specified columns. ``-1`` indicates a line should be inserted after the last column.
+		If :py:obj:`True` a line will be inserted before every column, and after the last column.
+		If :py:obj:`False` no lines will be inserted.
+	:param hspace: If a sequence of integers extra space will be inserted before the specified row. ``-1`` indicates a space should be inserted after the last row.
+		If :py:obj:`True` a space will be inserted before every row, and after the last row.
+		If :py:obj:`False` no spaces will be inserted.
+	:param raw: Whether latex markup in ``tabular_data`` should be unescaped. Default ``False``
+	:type raw: bool
+	:param footer: Optional footer for the table. Inserted as raw LaTeX
+
+	:return:
+	:rtype: str
+	"""
+
+	if raw:
+		datarow = headerrow = partial(tabulate._latex_row, escrules={})  # type: ignore
+	else:
+		datarow = headerrow = tabulate._latex_row  # type: ignore
+
+	body_only_format = TableFormat(
+			lineabove=None,
+			linebelowheader=None,
+			linebelow=None,
+			datarow=datarow,
+			headerrow=headerrow,
+			linebetweenrows=None,
+			padding=1,
+			with_header_hide=None,
+			)
+
+	rows = tabulate.tabulate(
+			tabular_data,
+			tablefmt=body_only_format,
+			headers=headers,
+			floatfmt=floatfmt,
+			numalign=numalign,
+			stralign=stralign,
+			missingval=missingval,
+			showindex=showindex,
+			disable_numparse=disable_numparse,  # colalign=colalign,
+			).split("\n")
+
+	if headers:
+		header_row = rows[0]
+		body_rows = rows[1:]
+		ncols = len(headers)
+	else:
+		header_row = ''
+		body_rows = rows
+		ncols = len(tabular_data[0])
+
+	if isinstance(hspace, Sequence):
+		add_hspace = True
+	else:
+		add_hspace = bool(hspace)
+		hspace = list(range(len(body_rows)))
+
+	table_body = ''
+	for row_idx, row in enumerate(body_rows):
+		row = re.sub(r"(\\multicolumn{2\}{.*\}{{.*\}\}\s*)&", r"\1 ", row)
+		row = re.sub(r"(\\multicolumn{3\}{.*\}{{.*\}\}\s*)&(\s*)&", r"\1 \2", row)
+		row = re.sub(r"(\\multicolumn{4\}{.*\}{{.*\}\}\s*)&(\s*)&(\s*)&", r"\1 \2 \3", row)
+		row = re.sub(r"(\\multicolumn{5\}{.*\}{{.*\}\}\s*)&(\s*)&(\s*)&(\s*)&", r"\1 \2 \3 \4", row)
+
+		if add_hspace and row_idx in hspace:
+			table_body += "\\addlinespace"
+
+		table_body += f"{row}\n"
+
+	if not label:
+		label = caption.lower().replace(" ", "_")
+
+	col_alignment = parse_column_alignments(colalign, colwidths, vlines, ncols)
+
+	return _table_template.render(
+			caption=caption,
+			label=label,
+			header_row=header_row,
+			table_body=indent(table_body, "       "),
+			ncols=ncols,
+			colalign="".join(col_alignment),
+			pos=pos,
+			footer=footer,
+			)
+
+
+def parse_column_alignments(colalign, colwidths, vlines, ncols):
+	if colalign is None:
+		colalign = ["l"] * ncols
+
+	while len(colalign) < ncols:
+		colalign.append("l")
+
+	alignment_elements = []
+
+	if colwidths is None:
+		colwidths = [None] * ncols
+
+	while len(colwidths) < ncols:
+		colwidths.append(None)
+
+	if isinstance(vlines, Sequence):
+		add_vlines = True
+	else:
+		add_vlines = bool(vlines)
+		vlines = list(range(ncols + 1))
+
+	col_idx = 0
+
+	for col_idx, (alignment, width) in enumerate(zip(colalign, colwidths)):
+		# print(col_idx, alignment, width)
+
+		if add_vlines and col_idx in vlines:
+			alignment_elements.append("|")
+
+		if alignment.startswith("l"):
+			if width is None:
+				alignment_elements.append("l")
+			else:
+				alignment_elements.append(fr">{{\raggedright}}p{{{width}}}")
+
+		elif alignment.startswith("r") or alignment.lower() == "decimal":
+			if width is None:
+				alignment_elements.append("r")
+			else:
+				alignment_elements.append(fr">{{\raggedleft\arraybackslash}}p{{{width}}}")
+
+		# TODO: centered and width
+
+		elif alignment.startswith("c"):
+			alignment_elements.append("c")
+
+		elif alignment.startswith("p"):
+			if width is None:
+				raise ValueError(f"Must specify width for 'p' column with index {col_idx}")
+			else:
+				alignment_elements.append(fr">{{\raggedleft\arraybackslash}}p{{{width}}}")
+
+	if add_vlines:
+		if col_idx + 1 in vlines or -1 in vlines:
+			alignment_elements.append("|")
+
+	return "".join(alignment_elements)
+
+
+templates.globals["brace"] = lambda var: f"{{{var}}}"
+
+if __name__ == '__main__':
+
+	
+	# stdlib
+	from pprint import pprint
+	pprint(
+			longtable_from_template([
+					[1, 2, 3, 4, 5],
+					[1, 2, 3, 4, 5],
+					[1, 2, 3, 4, 5],
+					[1, 2, 3, 4, 5],
+					],
+									headers=["Foo", "Bar", "Baz", "Fizz", "Buzz"],
+									caption="My Caption")
+			)

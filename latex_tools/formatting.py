@@ -1,5 +1,4 @@
 #  !/usr/bin/env python
-#   -*- coding: utf-8 -*-
 #
 #  formatting.py
 #
@@ -35,6 +34,19 @@ def bold(val: Union[str, float]) -> str:
 	"""
 
 	return fr"\textbf{{{val}}}"
+
+
+def underline(val: Union[str, float]) -> str:
+	r"""Underline the given value
+
+	Akin to \underline{string}
+
+	:param val: The value to underline
+
+	:return: The formatted string.
+	"""
+
+	return fr"\underline{{{val}}}"
 
 
 def italic(val: Union[str, float]) -> str:

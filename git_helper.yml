@@ -25,8 +25,8 @@ python_versions:
 #travis_pypi_secure:
 
 # additional lines for MANIFEST.in
-#manifest_additional:
-#  -
+manifest_additional:
+  - recursive-include latex_tools/templates/ *
 
 classifiers:
   - 'Development Status :: 4 - Beta'

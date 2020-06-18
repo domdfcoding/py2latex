@@ -534,7 +534,7 @@ class SubTable:
 		self.table_body: str = indent(table_body, "       ")
 		self.ncols: int = ncols
 		self.colalign: str = "".join(col_alignment)
-		self.footer: str = str(footer)
+		self.footer: Optional[str] = footer
 
 
 def subtables_from_template(

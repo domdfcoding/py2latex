@@ -36,7 +36,7 @@ __author__ = "Dominic Davis-Foster"
 __copyright__ = "2020 Dominic Davis-Foster"
 
 __license__ = "GNU Lesser General Public License v3 or later (LGPLv3+)"
-__version__ = "0.0.4"
+__version__ = "0.0.5"
 __email__ = "dominic@davis-foster.co.uk"
 
 main_template = templates.get_template("main.tex")

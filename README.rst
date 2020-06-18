@@ -78,7 +78,7 @@ This project is at a VERY early stage, and as such things might not work and WIL
 .. |language| image:: https://img.shields.io/github/languages/top/domdfcoding/py2latex
 	:alt: GitHub top language
 
-.. |commits-since| image:: https://img.shields.io/github/commits-since/domdfcoding/py2latex/v0.0.1
+.. |commits-since| image:: https://img.shields.io/github/commits-since/domdfcoding/py2latex/v0.0.2
 	:target: https://github.com/domdfcoding/py2latex/pulse
 	:alt: GitHub commits since tagged version
 

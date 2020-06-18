@@ -66,6 +66,5 @@ description={{{data['description']}}},
 	return out
 
 
-
 def glossary_from_file(filename):
 	return make_glossary(load_glossary(filename))

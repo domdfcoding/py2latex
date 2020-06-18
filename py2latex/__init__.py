@@ -39,7 +39,6 @@ __license__ = "GNU Lesser General Public License v3 or later (LGPLv3+)"
 __version__ = "0.0.1"
 __email__ = "dominic@davis-foster.co.uk"
 
-
 main_template = templates.get_template("main.tex")
 
 

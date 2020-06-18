@@ -135,7 +135,7 @@ if __name__ == '__main__':
 
 	github_username = "domdfcoding"
 
-	copy_pypi_2_github(g, "latex_tools", "domdfcoding", pypi_name="latex_tools")
+	copy_pypi_2_github(g, "py2latex", "domdfcoding", pypi_name="py2latex")
 
 	rate = g.get_rate_limit()
 	used_requests = remaining_requests - rate.core.remaining

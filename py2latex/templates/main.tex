@@ -1,0 +1,28 @@
+% Preamble
+\documentclass[11pt]{book}
+
+% Packages
+\usepackage{amsmath}
+\usepackage[autostyle=false, style=british]{csquotes}
+\usepackage{natbib} % This MUST be included in your preamble
+\usepackage[acronym,automake,docdef=restricted, nonumberlist,section]{glossaries-extra}
+\usepackage{glossaries-prefix}
+\usepackage[per-mode=symbol, range-units=single]{siunitx}
+
+\makeglossaries
+
+\preto\chapter{\glsresetall}
+\setabbreviationstyle[acronym]{long-short}
+
+%\glssetcategoryattribute{acronym}{glossname}{firstuc}
+\glssetcategoryattribute{acronym}{glossdesc}{title}
+
+{% block glossary %}{{ glossary }}{% endblock %}
+
+
+% Document
+\begin{document}
+{% block document %}{% for element in elements %}
+{{ element }}
+{% endfor %}{% endblock %}
+\end{document}

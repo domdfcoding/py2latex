@@ -4,26 +4,15 @@
     \begin{center}
         \begin{spacing}{1.3}
 {#        \renewcommand{\arraystretch}{1.3}#}
-
         \begin{tabular}{{ brace(colalign) }}
-
         \toprule
-
        {% if header_row %}{{ header_row }}
         \midrule{% endif %}
 {{ table_body }}
-
         {% if footer %}\midrule
         {{ footer }}\\{% endif %}
-
         \bottomrule
-
         \end{tabular}
-
     \end{spacing}
     \end{center}
-
-
-
-
 \end{table}

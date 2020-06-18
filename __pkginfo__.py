@@ -22,6 +22,7 @@ __all__ = [
 		"py_modules",
 		"entry_points",
 		"__license__",
+		"__author__",
 		"short_desc",
 		"author",
 		"author_email",
@@ -44,9 +45,9 @@ __copyright__ = """
 
 __version__ = "0.0.1"
 
-modname = "latex_tools"
-pypi_name = "latex_tools"
-import_name = "latex_tools"
+modname = "py2latex"
+pypi_name = "py2latex"
+import_name = "py2latex"
 py_modules = []
 entry_points = {
 		"console_scripts": []
@@ -54,14 +55,14 @@ entry_points = {
 
 __license__ = "GNU Lesser General Public License v3 or later (LGPLv3+)"
 
-short_desc = "An assortment of tools for creating LaTeX code with Python."
+short_desc = "Create LaTeX documents with Python, Markdown and Jinja2."
 
 __author__ = author = "Dominic Davis-Foster"
 author_email = "dominic@davis-foster.co.uk"
 github_username = "domdfcoding"
-web = github_url = f"https://github.com/domdfcoding/latex_tools"
+web = github_url = f"https://github.com/domdfcoding/py2latex"
 project_urls = {
-		"Documentation": f"https://latex_tools.readthedocs.io",
+		"Documentation": f"https://py2latex.readthedocs.io",
 		"Issue Tracker": f"{github_url}/issues",
 		"Source Code": github_url,
 		}
@@ -75,7 +76,7 @@ install_requires = (repo_root / "requirements.txt").read_text(encoding="utf-8").
 extras_require = {'all': []}
 
 classifiers = [
-		'Development Status :: 4 - Beta',
+		'Development Status :: 3 - Alpha',
 		'Intended Audience :: Developers',
 		'Operating System :: OS Independent',
 		'Topic :: Utilities',

@@ -15,7 +15,7 @@
 
     \caption{{ brace(caption) }}\label{{ "{table:" }}{{ label }}{{ "}" }}\\
     \toprule
-    {% if header_row %}{{ header_row }}
+   {% if header_row %}{{ header_row }}
     \midrule{% endif %}
     \endfirsthead
 
@@ -25,7 +25,7 @@
     \midrule{% endif %}
     \endhead
 
-    {{ table_body }}
+{{ table_body }}
 
 \end{longtable}
 \end{spacing}

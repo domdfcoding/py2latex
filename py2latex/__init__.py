@@ -24,9 +24,36 @@ Docstring Goes Here
 #
 #
 
+# stdlib
+import os
+import pathlib
+from typing import Iterable, Optional, Union
+
+# this package
+from .templates import templates
+
 __author__ = "Dominic Davis-Foster"
 __copyright__ = "2020 Dominic Davis-Foster"
 
 __license__ = "GNU Lesser General Public License v3 or later (LGPLv3+)"
 __version__ = "0.0.1"
 __email__ = "dominic@davis-foster.co.uk"
+
+
+main_template = templates.get_template("main.tex")
+
+
+def make_document(
+		outfile: Union[str, pathlib.Path, os.PathLike],
+		elements: Optional[Iterable[str]] = None,
+		glossary: str = '',
+		):
+
+	if not isinstance(outfile, pathlib.Path):
+		outfile = pathlib.Path(outfile)
+
+	if elements is None:
+		elements = []
+
+	with open(outfile, "w") as fp:
+		fp.write(main_template.render(elements=elements, glossary=glossary))

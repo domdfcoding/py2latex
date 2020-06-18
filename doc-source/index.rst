@@ -4,7 +4,7 @@ latex_tools
 
 .. start short_desc
 
-**An assortment of tools for creating LaTeX code with Python.**
+**Create LaTeX documents with Python, Markdown and Jinja2.**
 
 .. end short_desc
 
@@ -17,8 +17,7 @@ latex_tools
 	* - Docs
 	  - |docs| |docs_check|
 	* - Tests
-	  - |travis| |actions_windows| |actions_macos|
-	    |codefactor|
+	  - |travis| |actions_windows| |actions_macos| |codefactor|
 	* - PyPI
 	  - |pypi-version| |supported-versions| |supported-implementations| |wheel|
 	* - Activity
@@ -26,63 +25,63 @@ latex_tools
 	* - Other
 	  - |license| |language| |requires|
 
-.. |docs| image:: https://img.shields.io/readthedocs/latex_tools/latest?logo=read-the-docs
-	:target: https://latex_tools.readthedocs.io/en/latest/?badge=latest
+.. |docs| image:: https://img.shields.io/readthedocs/py2latex/latest?logo=read-the-docs
+	:target: https://py2latex.readthedocs.io/en/latest/?badge=latest
 	:alt: Documentation Status
 	
-.. |docs| image:: https://github.com/domdfcoding/latex_tools/workflows/Docs%20Check/badge.svg
-	:target: https://github.com/domdfcoding/latex_tools/actions?query=workflow%3A%22Docs+Check%22
+.. |docs_check| image:: https://github.com/domdfcoding/py2latex/workflows/Docs%20Check/badge.svg
+	:target: https://github.com/domdfcoding/py2latex/actions?query=workflow%3A%22Docs+Check%22
 	:alt: Docs Check Status
 
-.. |travis| image:: https://img.shields.io/travis/com/domdfcoding/latex_tools/master?logo=travis
-	:target: https://travis-ci.com/domdfcoding/latex_tools
+.. |travis| image:: https://img.shields.io/travis/com/domdfcoding/py2latex/master?logo=travis
+	:target: https://travis-ci.com/domdfcoding/py2latex
 	:alt: Travis Build Status
 
-.. |actions_windows| image:: https://github.com/domdfcoding/latex_tools/workflows/Windows%20Tests/badge.svg
-	:target: https://github.com/domdfcoding/latex_tools/actions?query=workflow%3A%22Windows+Tests%22
+.. |actions_windows| image:: https://github.com/domdfcoding/py2latex/workflows/Windows%20Tests/badge.svg
+	:target: https://github.com/domdfcoding/py2latex/actions?query=workflow%3A%22Windows+Tests%22
 	:alt: Windows Tests Status
-	
-.. |actions_macos| image:: https://github.com/domdfcoding/latex_tools/workflows/macOS%20Tests/badge.svg
-	:target: https://github.com/domdfcoding/latex_tools/actions?query=workflow%3A%22macOS+Tests%22
+
+.. |actions_macos| image:: https://github.com/domdfcoding/py2latex/workflows/macOS%20Tests/badge.svg
+	:target: https://github.com/domdfcoding/py2latex/actions?query=workflow%3A%22macOS+Tests%22
 	:alt: macOS Tests Status
 
-.. |requires| image:: https://requires.io/github/domdfcoding/latex_tools/requirements.svg?branch=master
-	:target: https://requires.io/github/domdfcoding/latex_tools/requirements/?branch=master
+.. |requires| image:: https://requires.io/github/domdfcoding/py2latex/requirements.svg?branch=master
+	:target: https://requires.io/github/domdfcoding/py2latex/requirements/?branch=master
 	:alt: Requirements Status
 
-.. |codefactor| image:: https://img.shields.io/codefactor/grade/github/domdfcoding/latex_tools?logo=codefactor
-	:target: https://www.codefactor.io/repository/github/domdfcoding/latex_tools
+.. |codefactor| image:: https://img.shields.io/codefactor/grade/github/domdfcoding/py2latex?logo=codefactor
+	:target: https://www.codefactor.io/repository/github/domdfcoding/py2latex
 	:alt: CodeFactor Grade
 
-.. |pypi-version| image:: https://img.shields.io/pypi/v/latex_tools
-	:target: https://pypi.org/project/latex_tools/
+.. |pypi-version| image:: https://img.shields.io/pypi/v/py2latex
+	:target: https://pypi.org/project/py2latex/
 	:alt: PyPI - Package Version
 
-.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/latex_tools
-	:target: https://pypi.org/project/latex_tools/
+.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/py2latex
+	:target: https://pypi.org/project/py2latex/
 	:alt: PyPI - Supported Python Versions
 
-.. |supported-implementations| image:: https://img.shields.io/pypi/implementation/latex_tools
-	:target: https://pypi.org/project/latex_tools/
+.. |supported-implementations| image:: https://img.shields.io/pypi/implementation/py2latex
+	:target: https://pypi.org/project/py2latex/
 	:alt: PyPI - Supported Implementations
 
-.. |wheel| image:: https://img.shields.io/pypi/wheel/latex_tools
-	:target: https://pypi.org/project/latex_tools/
+.. |wheel| image:: https://img.shields.io/pypi/wheel/py2latex
+	:target: https://pypi.org/project/py2latex/
 	:alt: PyPI - Wheel
 
-.. |license| image:: https://img.shields.io/github/license/domdfcoding/latex_tools
+.. |license| image:: https://img.shields.io/github/license/domdfcoding/py2latex
 	:alt: License
-	:target: https://github.com/domdfcoding/latex_tools/blob/master/LICENSE
+	:target: https://github.com/domdfcoding/py2latex/blob/master/LICENSE
 
-.. |language| image:: https://img.shields.io/github/languages/top/domdfcoding/latex_tools
+.. |language| image:: https://img.shields.io/github/languages/top/domdfcoding/py2latex
 	:alt: GitHub top language
 
-.. |commits-since| image:: https://img.shields.io/github/commits-since/domdfcoding/latex_tools/v0.0.1
-	:target: https://github.com/domdfcoding/latex_tools/pulse
+.. |commits-since| image:: https://img.shields.io/github/commits-since/domdfcoding/py2latex/v0.0.1
+	:target: https://github.com/domdfcoding/py2latex/pulse
 	:alt: GitHub commits since tagged version
 
-.. |commits-latest| image:: https://img.shields.io/github/last-commit/domdfcoding/latex_tools
-	:target: https://github.com/domdfcoding/latex_tools/commit/master
+.. |commits-latest| image:: https://img.shields.io/github/last-commit/domdfcoding/py2latex
+	:target: https://github.com/domdfcoding/py2latex/commit/master
 	:alt: GitHub last commit
 
 .. |maintained| image:: https://img.shields.io/maintenance/yes/2020
@@ -98,14 +97,14 @@ latex_tools
 
 		.. prompt:: bash
 
-			pip install latex_tools
+			pip install py2latex
 
 
 	.. tab:: from GitHub
 
 		.. prompt:: bash
 
-			pip install git+https://github.com/domdfcoding/latex_tools@master
+			pip install git+https://github.com/domdfcoding/py2latex@master
 
 .. end installation
 
@@ -126,6 +125,6 @@ latex_tools
 
 View the :ref:`Function Index <genindex>` or browse the `Source Code <_modules/index.html>`__.
 
-`Browse the GitHub Repository <https://github.com/domdfcoding/latex_tools>`__
+`Browse the GitHub Repository <https://github.com/domdfcoding/py2latex>`__
 
 .. end links

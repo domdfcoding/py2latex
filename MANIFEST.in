@@ -3,5 +3,5 @@ include LICENSE
 include requirements.txt
 recursive-exclude **/__pycache__ *
 recursive-include latex_tools/templates/ *
-recursive-include latex_tools/ *.pyi
-recursive-include latex_tools/ py.typed
+recursive-include py2latex/ *.pyi
+recursive-include py2latex/ py.typed

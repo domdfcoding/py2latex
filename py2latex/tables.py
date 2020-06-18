@@ -1,11 +1,6 @@
 #  !/usr/bin/env python
 #
-#  tabulate.py
-"""
-Extension to python-tabulate
-
-https://pypi.org/project/tabulate/
-"""
+#  tables.py
 #
 #  Copyright © 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
@@ -29,14 +24,15 @@ https://pypi.org/project/tabulate/
 import re
 from functools import partial
 from textwrap import indent
-from typing import Optional, Sequence, Union
+from typing import Iterable, List, Optional, Sequence, Union
 
 # 3rd party
 import tabulate
 from tabulate import Line, TableFormat
 
 # this package
-from latex_tools.core import begin, make_caption, make_label, re_escape
+from py2latex.core import begin, make_caption, make_label, re_escape
+from py2latex.templates import templates
 
 hline = r"\hline"
 toprule = r"\toprule"
@@ -68,8 +64,15 @@ def multicolumn(cols: int, pos: str, text: str) -> str:
 	return fr"\multicolumn{{{cols}}}{{{pos}}}{{{{{text}}}}}"
 
 
-# From https://github.com/bartbroere/python-tabulate
 def _latex_line_begin_tabular(colwidths, colaligns, booktabs=False, longtable=False, longtable_continued=False):
+	"""
+	Based on Bart Broere's fork of python-tabulate
+	https://github.com/bartbroere/python-tabulate
+	MIT Licensed
+
+	https://pypi.org/project/tabulate/
+	"""
+
 	alignment = {"left": "l", "right": "r", "center": "c", "decimal": "r"}
 	tabular_columns_fmt = "".join([alignment.get(a, "l") for a in colaligns])
 
@@ -160,9 +163,7 @@ table_formats = {
 		"latex_longtable_booktabs_raw": latex_format_builder(raw=True, longtable=True, booktabs=True),
 		}
 
-raw_longbooktab_cont = latex_format_builder(
-	raw=True, booktabs=True, longtable=True,
-	longtable_continued=True)
+raw_longbooktab_cont = latex_format_builder(raw=True, booktabs=True, longtable=True, longtable_continued=True)
 
 
 def add_longtable_caption(table: str, caption: Optional[str] = None, label: Optional[str] = None) -> str:
@@ -190,10 +191,10 @@ def add_longtable_caption(table: str, caption: Optional[str] = None, label: Opti
 
 	if caption or label:
 		table = table.replace(toprule, "".join([*elems, "\\\\\n", toprule]))
-		# table = table.replace(
-		# 		toprule,
-		# 		"".join([*elems, "\\\\\n", toprule, "\n\\endfirsthead\n", f"\\caption*{{{caption}}}\\\\\n"])
-		# 		)
+	# table = table.replace(
+	# 		toprule,
+	# 		"".join([*elems, "\\\\\n", toprule, "\n\\endfirsthead\n", f"\\caption*{{{caption}}}\\\\\n"])
+	# 		)
 
 	return table
 
@@ -221,15 +222,15 @@ def set_table_widths(table: str, widths: str) -> str:
 	return table
 
 
-# this package
-from latex_tools.templates import templates
-
 _longtable_template = templates.get_template("longtable.tex")
 _table_template = templates.get_template("table.tex")
+_subtables_template = templates.get_template("subtables.tex")
+_subtables_template.globals["indent"] = indent
 
 
 def longtable_from_template(
 		tabular_data,
+		*,
 		caption: str,
 		label: Optional[str] = None,
 		headers: Sequence[str] = (),
@@ -283,17 +284,40 @@ def longtable_from_template(
 	:type raw: bool
 	:param footer: Optional footer for the table. Inserted as raw LaTeX
 
-
 	:return:
 	:rtype: str
 	"""
+
+	return table_from_template(
+			tabular_data,
+			caption=caption,
+			label=label,
+			headers=headers,
+			pos=pos,
+			floatfmt=floatfmt,
+			numalign=numalign,
+			stralign=stralign,
+			missingval=missingval,
+			showindex=showindex,
+			disable_numparse=disable_numparse,
+			colalign=colalign,
+			colwidths=colwidths,
+			vlines=vlines,
+			hspace=hspace,
+			raw=raw,
+			footer=footer,
+			longtable=True,
+			)
+
+
+def _make_body_only_formats(raw=False):
 
 	if raw:
 		datarow = headerrow = partial(tabulate._latex_row, escrules={})  # type: ignore
 	else:
 		datarow = headerrow = tabulate._latex_row  # type: ignore
 
-	body_only_format = TableFormat(
+	return TableFormat(
 			lineabove=None,
 			linebelowheader=None,
 			linebelow=None,
@@ -304,17 +328,16 @@ def longtable_from_template(
 			with_header_hide=None,
 			)
 
-	rows = tabulate.tabulate(
-			tabular_data,
-			tablefmt=body_only_format,
-			headers=headers,
-			floatfmt=floatfmt,
-			numalign=numalign,
-			stralign=stralign,
-			missingval=missingval,
-			showindex=showindex,
-			disable_numparse=disable_numparse,  # colalign=colalign,
-			).split("\n")
+
+body_only_format = _make_body_only_formats(raw=False)
+raw_body_only_format = _make_body_only_formats(raw=True)
+
+
+def _parse_rows(
+		rows: List[str],
+		tabular_data,
+		headers: Sequence[str] = (),
+		):
 
 	if headers:
 		header_row = rows[0]
@@ -325,43 +348,23 @@ def longtable_from_template(
 		body_rows = rows
 		ncols = len(tabular_data[0])
 
+	return header_row, body_rows, ncols
+
+
+def parse_hspace(ncols: int, hspace: Union[Sequence[int], bool] = False):
+
 	if isinstance(hspace, Sequence):
 		add_hspace = True
 	else:
 		add_hspace = bool(hspace)
-		hspace = list(range(len(body_rows)))
+		hspace = list(range(ncols))
 
-	table_body = ''
-	for row_idx, row in enumerate(body_rows):
-		row = re.sub(r"(\\multicolumn{2\}{.*\}{{.*\}\}\s*)&", r"\1 ", row)
-		row = re.sub(r"(\\multicolumn{3\}{.*\}{{.*\}\}\s*)&(\s*)&", r"\1 \2", row)
-		row = re.sub(r"(\\multicolumn{4\}{.*\}{{.*\}\}\s*)&(\s*)&(\s*)&", r"\1 \2 \3", row)
-		row = re.sub(r"(\\multicolumn{5\}{.*\}{{.*\}\}\s*)&(\s*)&(\s*)&(\s*)&", r"\1 \2 \3 \4", row)
-
-		if add_hspace and row_idx in hspace:
-			table_body += "\\addlinespace"
-
-		table_body += f"{row}\n"
-
-	if not label:
-		label = caption.lower().replace(" ", "_")
-
-	col_alignment = parse_column_alignments(colalign, colwidths, vlines, ncols)
-
-	return _longtable_template.render(
-			caption=caption,
-			label=label,
-			header_row=header_row,
-			table_body=table_body,
-			ncols=ncols,
-			colalign="".join(col_alignment),
-			pos=pos,
-			footer=footer,
-			)
+	return add_hspace, hspace
 
 
 def table_from_template(
 		tabular_data,
+		*,
 		caption: str,
 		label: Optional[str] = None,
 		headers: Sequence[str] = (),
@@ -378,6 +381,7 @@ def table_from_template(
 		hspace: Union[Sequence[int], bool] = False,
 		raw: bool = True,
 		footer: Optional[str] = None,
+		longtable: bool = False
 		) -> str:
 	"""
 	Create a ``table`` with ``booktabs`` formatting.
@@ -414,80 +418,157 @@ def table_from_template(
 	:param raw: Whether latex markup in ``tabular_data`` should be unescaped. Default ``False``
 	:type raw: bool
 	:param footer: Optional footer for the table. Inserted as raw LaTeX
+	:param longtable: Whether to create a ``longtable``. Default :py:obj:`False``
+	:type longtable: bool
 
 	:return:
 	:rtype: str
 	"""
 
-	if raw:
-		datarow = headerrow = partial(tabulate._latex_row, escrules={})  # type: ignore
-	else:
-		datarow = headerrow = tabulate._latex_row  # type: ignore
-
-	body_only_format = TableFormat(
-			lineabove=None,
-			linebelowheader=None,
-			linebelow=None,
-			datarow=datarow,
-			headerrow=headerrow,
-			linebetweenrows=None,
-			padding=1,
-			with_header_hide=None,
-			)
-
-	rows = tabulate.tabulate(
+	table = SubTable(
 			tabular_data,
-			tablefmt=body_only_format,
+			caption=caption,
+			label=label,
 			headers=headers,
 			floatfmt=floatfmt,
 			numalign=numalign,
 			stralign=stralign,
 			missingval=missingval,
 			showindex=showindex,
-			disable_numparse=disable_numparse,  # colalign=colalign,
-			).split("\n")
+			disable_numparse=disable_numparse,
+			colalign=colalign,
+			colwidths=colwidths,
+			vlines=vlines,
+			hspace=hspace,
+			raw=raw,
+			footer=footer,
+			)
 
-	if headers:
-		header_row = rows[0]
-		body_rows = rows[1:]
-		ncols = len(headers)
+	if longtable:
+		return _longtable_template.render(
+				caption=table.caption,
+				label=table.label,
+				header_row=table.header_row,
+				table_body=table.table_body,
+				ncols=table.ncols,
+				colalign=table.colalign,
+				pos=pos,
+				footer=table.footer,
+				)
+
 	else:
-		header_row = ''
-		body_rows = rows
-		ncols = len(tabular_data[0])
+		return _table_template.render(
+				caption=table.caption,
+				label=table.label,
+				header_row=table.header_row,
+				table_body=table.table_body,
+				ncols=table.ncols,
+				colalign=table.colalign,
+				pos=pos,
+				footer=table.footer,
+				)
 
-	if isinstance(hspace, Sequence):
-		add_hspace = True
-	else:
-		add_hspace = bool(hspace)
-		hspace = list(range(len(body_rows)))
 
-	table_body = ''
-	for row_idx, row in enumerate(body_rows):
-		row = re.sub(r"(\\multicolumn{2\}{.*\}{{.*\}\}\s*)&", r"\1 ", row)
-		row = re.sub(r"(\\multicolumn{3\}{.*\}{{.*\}\}\s*)&(\s*)&", r"\1 \2", row)
-		row = re.sub(r"(\\multicolumn{4\}{.*\}{{.*\}\}\s*)&(\s*)&(\s*)&", r"\1 \2 \3", row)
-		row = re.sub(r"(\\multicolumn{5\}{.*\}{{.*\}\}\s*)&(\s*)&(\s*)&(\s*)&", r"\1 \2 \3 \4", row)
+class SubTable:
 
-		if add_hspace and row_idx in hspace:
-			table_body += "\\addlinespace"
+	def __init__(
+			self,
+			tabular_data,
+			*,
+			caption: str,
+			label: Optional[str] = None,
+			headers: Sequence[str] = (),
+			floatfmt: str = tabulate._DEFAULT_FLOATFMT,
+			numalign: str = "decimal",
+			stralign: str = "left",
+			missingval: str = tabulate._DEFAULT_MISSINGVAL,
+			showindex: str = "default",
+			disable_numparse: bool = False,
+			colalign: Optional[Sequence[Union[str, None]]] = None,
+			colwidths: Optional[Sequence[Union[str, None]]] = None,
+			vlines: Union[Sequence[int], bool] = False,
+			hspace: Union[Sequence[int], bool] = False,
+			raw: bool = True,
+			footer: Optional[str] = None,
+			) -> None:
 
-		table_body += f"{row}\n"
+		if raw:
+			tablefmt = raw_body_only_format
+		else:
+			tablefmt = body_only_format
+
+		rows = tabulate.tabulate(
+				tabular_data,
+				tablefmt=tablefmt,
+				headers=headers,
+				floatfmt=floatfmt,
+				numalign=numalign,
+				stralign=stralign,
+				missingval=missingval,
+				showindex=showindex,
+				disable_numparse=disable_numparse,  # colalign=colalign,
+				).split("\n")
+
+		header_row, body_rows, ncols = _parse_rows(rows, tabular_data, headers)
+		add_hspace, hspace = parse_hspace(ncols, hspace)
+		col_alignment = parse_column_alignments(colalign, colwidths, vlines, ncols)
+
+		table_body = ''
+		for row_idx, row in enumerate(body_rows):
+			row = re.sub(r"(\\multicolumn{2\}{.*\}{{.*\}\}\s*)&", r"\1 ", row)
+			row = re.sub(r"(\\multicolumn{3\}{.*\}{{.*\}\}\s*)&(\s*)&", r"\1 \2", row)
+			row = re.sub(r"(\\multicolumn{4\}{.*\}{{.*\}\}\s*)&(\s*)&(\s*)&", r"\1 \2 \3", row)
+			row = re.sub(r"(\\multicolumn{5\}{.*\}{{.*\}\}\s*)&(\s*)&(\s*)&(\s*)&", r"\1 \2 \3 \4", row)
+
+			if add_hspace and row_idx in hspace:
+				table_body += "\\addlinespace"
+
+			table_body += f"{row}\n"
+
+		if not label:
+			label = caption.lower().replace(" ", "_")
+
+		self.caption: str = str(caption)
+		self.label: str = str(label)
+		self.header_row: str = header_row
+		self.table_body: str = indent(table_body, "       ")
+		self.ncols: int = ncols
+		self.colalign: str = "".join(col_alignment)
+		self.footer: str = footer
+
+
+def subtables_from_template(
+		subtables: Iterable[SubTable],
+		*,
+		caption: str,
+		label: Optional[str] = None,
+		pos: str = "htpb",
+		) -> str:
+	# TODO: customise spacing between tables
+	"""
+	Create a series of ``subtables`` with ``booktabs`` formatting.
+
+	:param subtables:
+	:type subtables:
+	:param caption: The caption for the table
+	:type caption: str
+	:param label: The label for the table.
+		If undefined the caption is used, in lowercase, with underscores replacing spaces
+	:param pos: The positioning of the table, e.g. ``"htp"``
+	:type pos: str
+
+	:return:
+	:rtype: str
+	"""
 
 	if not label:
 		label = caption.lower().replace(" ", "_")
 
-	col_alignment = parse_column_alignments(colalign, colwidths, vlines, ncols)
-
-	return _table_template.render(
+	return _subtables_template.render(
+			subtables=subtables,
 			caption=caption,
 			label=label,
-			header_row=header_row,
-			table_body=indent(table_body, "       "),
-			ncols=ncols,
-			colalign="".join(col_alignment),
 			pos=pos,
-			footer=footer,
 			)
 
 
@@ -553,10 +634,9 @@ def parse_column_alignments(colalign, colwidths, vlines, ncols):
 templates.globals["brace"] = lambda var: f"{{{var}}}"
 
 if __name__ == '__main__':
-
-	
 	# stdlib
 	from pprint import pprint
+
 	pprint(
 			longtable_from_template([
 					[1, 2, 3, 4, 5],

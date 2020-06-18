@@ -32,7 +32,7 @@ jobs:
       deploy:
         on:
           tags: true
-          repo: domdfcoding/latex_tools
+          repo: domdfcoding/py2latex
         provider: pypi
         user: "DomDF"
         password:
@@ -48,6 +48,6 @@ jobs:
       script: skip
       deploy:
         on:
-          repo: domdfcoding/latex_tools
+          repo: domdfcoding/py2latex
         provider: script
         script: python .ci/copy_pypi_2_github.py || return 1;

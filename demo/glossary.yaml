@@ -1,0 +1,52 @@
+acronyms:
+  #Indefinite article `a`
+  GSR:  # bit that goes in the text
+    name: GSR
+    text: gunshot residue
+    prefix: "a "
+  NC:
+    name: NC
+    text: nitrocellulose
+    prefix: "a "
+  DPA:
+    name: DPA
+    text: diphenylamine
+    prefix: "a "
+  GCMS:
+    name: GC**--**MS
+    text: gas chromatography**--**mass spectrometry
+    prefix: "a "
+
+  # Indefinite article `an`
+  EC:
+    name: EC
+    text: ethyl centralite
+    prefix: "an "
+
+  # Indefinite article `a` for the full word, and `an` for the acronym
+  MS:  # bit that goes in the text
+    name: MS
+    text: mass spectrometry
+    prefix: "an "
+    prefixfirst: "a "
+  LCQTOF:
+    name: LC**--**QTOF
+    text: liquid chromatography**--**quadrupole time-of-flight mass spectrometry
+    prefix: "an "
+    prefixfirst: "a "
+  LCMS:
+    name: LC**--**MS
+    text: liquid chromatography**--**mass spectrometry
+    prefix: "an "
+    prefixfirst: "a "
+
+  # other
+
+glossary:
+  hit:
+    name: Hit
+    text: hit
+    description: "In the NIST MS Search program, a list of 'hits' is
+                  returned for each spectrum that is searched against the library.
+                  Each 'hit' represents a possible identity for the
+                  unknown spectrum, sorted by the mass spectrum similarity score."

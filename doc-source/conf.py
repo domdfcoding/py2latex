@@ -24,20 +24,20 @@ from __pkginfo__ import __version__
 
 
 
-github_url = f"https://github.com/domdfcoding/latex_tools"
+github_url = f"https://github.com/domdfcoding/py2latex"
 
-rst_prolog = f""".. |pkgname| replace:: latex_tools
-.. |pkgname2| replace:: ``latex_tools``
+rst_prolog = f""".. |pkgname| replace:: py2latex
+.. |pkgname2| replace:: ``py2latex``
 .. |browse_github| replace:: `Browse the GitHub Repository <{github_url}>`__
 """
 
 author = "Dominic Davis-Foster"
-project = "latex_tools"
+project = "py2latex"
 slug = re.sub(r'\W+', '-', project.lower())
 release = version = __version__
 copyright = "2020 Dominic Davis-Foster"  # pylint: disable=redefined-builtin
 language = 'en'
-package_root = "latex_tools"
+package_root = "py2latex"
 
 extensions = [
 		'sphinx.ext.intersphinx',
@@ -92,7 +92,7 @@ html_show_sourcelink = False  # True will show link to source
 html_context = {
 		'display_github': True,
 		'github_user': 'domdfcoding',
-		'github_repo': 'latex_tools',
+		'github_repo': 'py2latex',
 		'github_version': 'master',
 		'conf_py_path': '/',
 		}

@@ -1,11 +1,11 @@
-modname: latex_tools
+modname: py2latex
 copyright_years: "2020"
 author: "Dominic Davis-Foster"
 email: "dominic@davis-foster.co.uk"
 version: "0.0.1"
 username: "domdfcoding"
 license: 'LGPLv3+'
-short_desc: 'An assortment of tools for creating LaTeX code with Python.'
+short_desc: 'Create LaTeX documents with Python, Markdown and Jinja2.'
 
 enable_tests: False
 enable_conda: False
@@ -29,13 +29,11 @@ manifest_additional:
   - recursive-include latex_tools/templates/ *
 
 classifiers:
-  - 'Development Status :: 4 - Beta'
+  - 'Development Status :: 3 - Alpha'
+#  - 'Development Status :: 4 - Beta'
 #  - "Development Status :: 5 - Production/Stable"
 #  - "Development Status :: 6 - Mature"
 #  - "Development Status :: 7 - Inactive"
   - 'Intended Audience :: Developers'
   - 'Operating System :: OS Independent'
   - 'Topic :: Utilities'
-
-#extra_sphinx_extensions:
-#  -

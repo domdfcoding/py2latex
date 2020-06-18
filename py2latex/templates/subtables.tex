@@ -1,0 +1,19 @@
+\begin{table}[{{ pos }}]
+    \caption{{ brace(caption) }}\label{{ "{table:" }}{{ label }}{{ "}" }}
+    \begin{spacing}{1.3}
+    {% for table in subtables  %}
+        \begin{subtable}[h]{\textwidth}
+            \centering
+            \caption{{ brace(table.caption) }}\label{{ "{table:" }}{{ table.label }}{{ "}" }}
+                \begin{tabular}{{ brace(table.colalign) }}
+                \toprule
+               {% if table.header_row %}{{ table.header_row }}
+                \midrule{% endif %}
+{{ indent(table.table_body, '        ') }}
+                \bottomrule
+            \end{tabular}
+        \end{subtable}
+        \vspace{5mm}
+    {% endfor %}
+    \end{spacing}
+\end{table}

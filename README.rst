@@ -8,6 +8,7 @@ py2latex
 
 .. end short_desc
 
+This project is at a VERY early stage, and as such things might not work and WILL break between versions.
 
 .. start shields 
 

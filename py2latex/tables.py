@@ -225,7 +225,7 @@ def set_table_widths(table: str, widths: str) -> str:
 _longtable_template = templates.get_template("longtable.tex")
 _table_template = templates.get_template("table.tex")
 _subtables_template = templates.get_template("subtables.tex")
-_subtables_template.globals["indent"] = indent
+_subtables_template.globals["indent"] = indent  # type: ignore
 
 
 def longtable_from_template(
@@ -235,10 +235,10 @@ def longtable_from_template(
 		label: Optional[str] = None,
 		headers: Sequence[str] = (),
 		pos: str = "htpb",
-		floatfmt: str = tabulate._DEFAULT_FLOATFMT,
+		floatfmt: str = tabulate._DEFAULT_FLOATFMT,  # type: ignore
 		numalign: str = "decimal",
 		stralign: str = "left",
-		missingval: str = tabulate._DEFAULT_MISSINGVAL,
+		missingval: str = tabulate._DEFAULT_MISSINGVAL,  # type: ignore
 		showindex: str = "default",
 		disable_numparse: bool = False,
 		colalign: Optional[Sequence[Union[str, None]]] = None,
@@ -369,10 +369,10 @@ def table_from_template(
 		label: Optional[str] = None,
 		headers: Sequence[str] = (),
 		pos: str = "htpb",
-		floatfmt: str = tabulate._DEFAULT_FLOATFMT,
+		floatfmt: str = tabulate._DEFAULT_FLOATFMT,  # type: ignore
 		numalign: str = "decimal",
 		stralign: str = "left",
-		missingval: str = tabulate._DEFAULT_MISSINGVAL,
+		missingval: str = tabulate._DEFAULT_MISSINGVAL,  # type: ignore
 		showindex: str = "default",
 		disable_numparse: bool = False,
 		colalign: Optional[Sequence[Union[str, None]]] = None,
@@ -478,10 +478,10 @@ class SubTable:
 			caption: str,
 			label: Optional[str] = None,
 			headers: Sequence[str] = (),
-			floatfmt: str = tabulate._DEFAULT_FLOATFMT,
+			floatfmt: str = tabulate._DEFAULT_FLOATFMT,  # type: ignore
 			numalign: str = "decimal",
 			stralign: str = "left",
-			missingval: str = tabulate._DEFAULT_MISSINGVAL,
+			missingval: str = tabulate._DEFAULT_MISSINGVAL,  # type: ignore
 			showindex: str = "default",
 			disable_numparse: bool = False,
 			colalign: Optional[Sequence[Union[str, None]]] = None,
@@ -520,7 +520,7 @@ class SubTable:
 			row = re.sub(r"(\\multicolumn{4\}{.*\}{{.*\}\}\s*)&(\s*)&(\s*)&", r"\1 \2 \3", row)
 			row = re.sub(r"(\\multicolumn{5\}{.*\}{{.*\}\}\s*)&(\s*)&(\s*)&(\s*)&", r"\1 \2 \3 \4", row)
 
-			if add_hspace and row_idx in hspace:
+			if add_hspace and row_idx in hspace:  # type: ignore
 				table_body += "\\addlinespace"
 
 			table_body += f"{row}\n"
@@ -534,7 +534,7 @@ class SubTable:
 		self.table_body: str = indent(table_body, "       ")
 		self.ncols: int = ncols
 		self.colalign: str = "".join(col_alignment)
-		self.footer: str = footer
+		self.footer: str = str(footer)
 
 
 def subtables_from_template(
@@ -634,6 +634,7 @@ def parse_column_alignments(colalign, colwidths, vlines, ncols):
 templates.globals["brace"] = lambda var: f"{{{var}}}"
 
 if __name__ == '__main__':
+
 	# stdlib
 	from pprint import pprint
 

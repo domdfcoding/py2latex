@@ -84,7 +84,7 @@ import xml.dom.minidom
 from urllib.parse import urlparse
 
 # 3rd party
-import markdown
+import markdown  # type: ignore
 
 start_single_quote_re = re.compile("(^|\\s|\")'")
 start_double_quote_re = re.compile("(^|\\s|'|`)\"")
@@ -444,7 +444,7 @@ class Table2Latex:
 
 		colformatting = self.colformat()
 		table_latex = \
-               f"""
+                     f"""
 			\\begin{{table}}[h]
 			\\begin{{tabular}}{{{colformatting}}}
 			{core}
@@ -503,7 +503,7 @@ class Img2Latex:
 		alt = img.getAttribute('alt')
 		# Using graphicx and ajustbox package for *max width*
 		out = \
-               f"""
+                     f"""
 			\\begin{{figure}}[H]
 			\\centering
 			\\includegraphics[max width=\\linewidth]{{{src}}}
@@ -543,7 +543,7 @@ class Link2Latex:
 
 		desc = re.search(r'>([^<]+)', instr)
 		out = \
-               f"""
+                     f"""
 			\\href{{{href}}}{{{desc.group(0)[1:]}}}
 			"""
 		return out
@@ -688,7 +688,7 @@ def main():
 	# stdlib
 	import optparse
 	usage = \
-        """usage: %prog [options] <in-file-path>
+           """usage: %prog [options] <in-file-path>
 
 		Given a file path, process it using markdown2latex and print the result on
 		stdout.

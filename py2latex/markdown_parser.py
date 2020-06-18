@@ -26,7 +26,7 @@ import re
 from typing import Union
 
 # 3rd party
-import markdown
+import markdown  # type: ignore
 
 # this package
 import py2latex.mdx_latex

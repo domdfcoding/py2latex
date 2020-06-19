@@ -54,5 +54,5 @@ def make_document(
 	if elements is None:
 		elements = []
 
-	with open(outfile, "w") as fp:
+	with open(outfile, 'w') as fp:
 		fp.write(main_template.render(elements=elements, glossary=glossary))

@@ -71,7 +71,7 @@ def latex_subscript(val: Union[str, float]) -> str:
 	:rtype: str
 	"""
 
-	return f'$_{{{val}}}$'
+	return f"$_{{{val}}}$"
 
 
 def latex_superscript(val: Union[str, float]) -> str:
@@ -83,4 +83,4 @@ def latex_superscript(val: Union[str, float]) -> str:
 	:rtype: str
 	"""
 
-	return f'$^{{{val}}}$'
+	return f"$^{{{val}}}$"

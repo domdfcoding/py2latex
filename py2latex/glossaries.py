@@ -33,7 +33,7 @@ def load_glossary(glossary_file: Union[str, pathlib.Path, os.PathLike]) -> Dict[
 
 
 def escape_prefix(prefix: str) -> str:
-	prefix = prefix.replace(" ", "\\ ")
+	prefix = prefix.replace(' ', "\\ ")
 	return prefix
 
 

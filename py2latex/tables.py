@@ -78,8 +78,8 @@ def _latex_line_begin_tabular(colwidths, colaligns, booktabs=False, longtable=Fa
 	https://pypi.org/project/tabulate/
 	"""
 
-	alignment = {"left": "l", "right": "r", "center": "c", "decimal": "r"}
-	tabular_columns_fmt = "".join([alignment.get(a, "l") for a in colaligns])
+	alignment = {"left": 'l', "right": 'r', "center": 'c', "decimal": 'r'}
+	tabular_columns_fmt = ''.join([alignment.get(a, 'l') for a in colaligns])
 
 	if longtable:
 
@@ -147,8 +147,8 @@ def latex_format_builder(
 
 	return TableFormat(
 			lineabove=lineabove,
-			linebelowheader=Line("\n".join(linebelowheader), "", "", ""),
-			linebelow=Line("\n".join(linebelow), "", "", ""),
+			linebelowheader=Line("\n".join(linebelowheader), '', '', ''),
+			linebelow=Line("\n".join(linebelow), '', '', ''),
 			datarow=datarow,
 			headerrow=headerrow,
 			linebetweenrows=None,
@@ -195,10 +195,10 @@ def add_longtable_caption(table: str, caption: Optional[str] = None, label: Opti
 		elems.append(make_label(label))
 
 	if caption or label:
-		table = table.replace(toprule, "".join([*elems, "\\\\\n", toprule]))
+		table = table.replace(toprule, ''.join([*elems, "\\\\\n", toprule]))
 	# table = table.replace(
 	# 		toprule,
-	# 		"".join([*elems, "\\\\\n", toprule, "\n\\endfirsthead\n", f"\\caption*{{{caption}}}\\\\\n"])
+	# 		''.join([*elems, "\\\\\n", toprule, "\n\\endfirsthead\n", f"\\caption*{{{caption}}}\\\\\n"])
 	# 		)
 
 	return table
@@ -257,7 +257,7 @@ def longtable_from_template(
 	"""
 	Create a ``longtable`` with ``booktabs`` formatting.
 
-		:param tabular_data:
+	:param tabular_data:
 	:param caption: The caption for the table
 	:type caption: str
 	:param label: The label for the table.
@@ -596,14 +596,14 @@ class SubTable:
 			table_body += f"{row}\n"
 
 		if not label:
-			label = caption.lower().replace(" ", "_")
+			label = caption.lower().replace(' ', '_')
 
 		self.caption: str = str(caption)
 		self.label: str = str(label)
 		self.header_row: str = header_row
 		self.table_body: str = indent(table_body, "       ")
 		self.ncols: int = ncols
-		self.colalign: str = "".join(col_alignment)
+		self.colalign: str = ''.join(col_alignment)
 		self.footer: Optional[str] = footer
 
 
@@ -631,7 +631,7 @@ def subtables_from_template(
 	"""
 
 	if not label:
-		label = caption.lower().replace(" ", "_")
+		label = caption.lower().replace(' ', '_')
 
 	return _subtables_template.render(
 			subtables=subtables,
@@ -658,10 +658,10 @@ def parse_column_alignments(colalign, colwidths, vlines, ncols):
 	"""
 
 	if colalign is None:
-		colalign = ["l"] * ncols
+		colalign = ['l'] * ncols
 
 	while len(colalign) < ncols:
-		colalign.append("l")
+		colalign.append('l')
 
 	alignment_elements = []
 
@@ -683,26 +683,26 @@ def parse_column_alignments(colalign, colwidths, vlines, ncols):
 		# print(col_idx, alignment, width)
 
 		if add_vlines and col_idx in vlines:
-			alignment_elements.append("|")
+			alignment_elements.append('|')
 
-		if alignment.startswith("l"):
+		if alignment.startswith('l'):
 			if width is None:
-				alignment_elements.append("l")
+				alignment_elements.append('l')
 			else:
 				alignment_elements.append(fr">{{\raggedright}}p{{{width}}}")
 
-		elif alignment.startswith("r") or alignment.lower() == "decimal":
+		elif alignment.startswith('r') or alignment.lower() == "decimal":
 			if width is None:
-				alignment_elements.append("r")
+				alignment_elements.append('r')
 			else:
 				alignment_elements.append(fr">{{\raggedleft\arraybackslash}}p{{{width}}}")
 
 		# TODO: centered and width
 
-		elif alignment.startswith("c"):
-			alignment_elements.append("c")
+		elif alignment.startswith('c'):
+			alignment_elements.append('c')
 
-		elif alignment.startswith("p"):
+		elif alignment.startswith('p'):
 			if width is None:
 				raise ValueError(f"Must specify width for 'p' column with index {col_idx}")
 			else:
@@ -712,14 +712,14 @@ def parse_column_alignments(colalign, colwidths, vlines, ncols):
 
 	if add_vlines:
 		if col_idx + 1 in vlines or -1 in vlines:
-			alignment_elements.append("|")
+			alignment_elements.append('|')
 
-	return "".join(alignment_elements)
+	return ''.join(alignment_elements)
 
 
 templates.globals["brace"] = lambda var: f"{{{var}}}"
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
 	# stdlib
 	from pprint import pprint

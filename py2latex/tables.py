@@ -244,7 +244,8 @@ def longtable_from_template(
 		colalign: Optional[Sequence[Union[str, None]]] = None,
 		colwidths: Optional[Sequence[Union[str, None]]] = None,
 		vlines: Union[Sequence[int], bool] = False,
-		hspace: Union[Sequence[int], bool] = False,
+		hlines: Union[Sequence[int], bool] = False,
+		vspace: Union[Sequence[int], bool] = False,
 		raw: bool = True,
 		footer: Optional[str] = None,
 		) -> str:
@@ -277,7 +278,10 @@ def longtable_from_template(
 	:param vlines: If a sequence of integers a line will be inserted before the specified columns. ``-1`` indicates a line should be inserted after the last column.
 		If :py:obj:`True` a line will be inserted before every column, and after the last column.
 		If :py:obj:`False` no lines will be inserted.
-	:param hspace: If a sequence of integers extra space will be inserted before the specified row. ``-1`` indicates a space should be inserted after the last row.
+	:param hlines: If a sequence of integers a line will be inserted before the specified rows. ``-1`` indicates a line should be inserted after the last row.
+		If :py:obj:`True` a line will be inserted before every row, and after the last row.
+		If :py:obj:`False` no lines will be inserted.
+	:param vspace: If a sequence of integers extra space will be inserted before the specified row. ``-1`` indicates a space should be inserted after the last row.
 		If :py:obj:`True` a space will be inserted before every row, and after the last row.
 		If :py:obj:`False` no spaces will be inserted.
 	:param raw: Whether latex markup in ``tabular_data`` should be unescaped. Default ``True``
@@ -303,7 +307,8 @@ def longtable_from_template(
 			colalign=colalign,
 			colwidths=colwidths,
 			vlines=vlines,
-			hspace=hspace,
+			hlines=hlines,
+			vspace=vspace,
 			raw=raw,
 			footer=footer,
 			longtable=True,
@@ -351,15 +356,26 @@ def _parse_rows(
 	return header_row, body_rows, ncols
 
 
-def parse_hspace(ncols: int, hspace: Union[Sequence[int], bool] = False):
+def parse_vspace(ncols: int, vspace: Union[Sequence[int], bool] = False):
 
-	if isinstance(hspace, Sequence):
-		add_hspace = True
+	if isinstance(vspace, Sequence):
+		add_vspace = True
 	else:
-		add_hspace = bool(hspace)
-		hspace = list(range(ncols))
+		add_vspace = bool(vspace)
+		vspace = list(range(ncols))
 
-	return add_hspace, hspace
+	return add_vspace, vspace
+
+
+def parse_hlines(tabular_data, hlines: Union[Sequence[int], bool] = False):
+
+	if isinstance(hlines, Sequence):
+		add_hlines = True
+	else:
+		add_hlines = bool(hlines)
+		hlines = list(range(len(tabular_data)))
+
+	return add_hlines, hlines
 
 
 def table_from_template(
@@ -378,7 +394,8 @@ def table_from_template(
 		colalign: Optional[Sequence[Union[str, None]]] = None,
 		colwidths: Optional[Sequence[Union[str, None]]] = None,
 		vlines: Union[Sequence[int], bool] = False,
-		hspace: Union[Sequence[int], bool] = False,
+		hlines: Union[Sequence[int], bool] = False,
+		vspace: Union[Sequence[int], bool] = False,
 		raw: bool = True,
 		footer: Optional[str] = None,
 		longtable: bool = False
@@ -412,7 +429,10 @@ def table_from_template(
 	:param vlines: If a sequence of integers a line will be inserted before the specified columns. ``-1`` indicates a line should be inserted after the last column.
 		If :py:obj:`True` a line will be inserted before every column, and after the last column.
 		If :py:obj:`False` no lines will be inserted.
-	:param hspace: If a sequence of integers extra space will be inserted before the specified row. ``-1`` indicates a space should be inserted after the last row.
+	:param hlines: If a sequence of integers a line will be inserted before the specified rows. ``-1`` indicates a line should be inserted after the last row.
+		If :py:obj:`True` a line will be inserted before every row, and after the last row.
+		If :py:obj:`False` no lines will be inserted.
+	:param vspace: If a sequence of integers extra space will be inserted before the specified row. ``-1`` indicates a space should be inserted after the last row.
 		If :py:obj:`True` a space will be inserted before every row, and after the last row.
 		If :py:obj:`False` no spaces will be inserted.
 	:param raw: Whether latex markup in ``tabular_data`` should be unescaped. Default ``False``
@@ -439,7 +459,8 @@ def table_from_template(
 			colalign=colalign,
 			colwidths=colwidths,
 			vlines=vlines,
-			hspace=hspace,
+			hlines=hlines,
+			vspace=vspace,
 			raw=raw,
 			footer=footer,
 			)
@@ -487,7 +508,8 @@ class SubTable:
 			colalign: Optional[Sequence[Union[str, None]]] = None,
 			colwidths: Optional[Sequence[Union[str, None]]] = None,
 			vlines: Union[Sequence[int], bool] = False,
-			hspace: Union[Sequence[int], bool] = False,
+			hlines: Union[Sequence[int], bool] = False,
+			vspace: Union[Sequence[int], bool] = False,
 			raw: bool = True,
 			footer: Optional[str] = None,
 			) -> None:
@@ -510,7 +532,8 @@ class SubTable:
 				).split("\n")
 
 		header_row, body_rows, ncols = _parse_rows(rows, tabular_data, headers)
-		add_hspace, hspace = parse_hspace(ncols, hspace)
+		add_vspace, vspace = parse_vspace(ncols, vspace)
+		add_hlines, hlines = parse_hlines(tabular_data, hlines)
 		col_alignment = parse_column_alignments(colalign, colwidths, vlines, ncols)
 
 		table_body = ''
@@ -520,8 +543,10 @@ class SubTable:
 			row = re.sub(r"(\\multicolumn{4\}{.*\}{{.*\}\}\s*)&(\s*)&(\s*)&", r"\1 \2 \3", row)
 			row = re.sub(r"(\\multicolumn{5\}{.*\}{{.*\}\}\s*)&(\s*)&(\s*)&(\s*)&", r"\1 \2 \3 \4", row)
 
-			if add_hspace and row_idx in hspace:  # type: ignore
+			if add_vspace and row_idx in vspace:  # type: ignore
 				table_body += "\\addlinespace"
+			if add_hlines and row_idx in hlines:  # type: ignore
+				table_body += "\\midrule"
 
 			table_body += f"{row}\n"
 
@@ -623,6 +648,9 @@ def parse_column_alignments(colalign, colwidths, vlines, ncols):
 				raise ValueError(f"Must specify width for 'p' column with index {col_idx}")
 			else:
 				alignment_elements.append(fr">{{\raggedleft\arraybackslash}}p{{{width}}}")
+		else:
+			alignment_elements.append(str(alignment))
+
 
 	if add_vlines:
 		if col_idx + 1 in vlines or -1 in vlines:

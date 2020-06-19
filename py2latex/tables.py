@@ -4,6 +4,9 @@
 #
 #  Copyright © 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
+#  Type annotations from Typeshed
+#  https://github.com/python/typeshed/blob/master/third_party/2and3/tabulate.pyi
+#
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU Lesser General Public License as published by
 #  the Free Software Foundation; either version 3 of the License, or
@@ -24,7 +27,7 @@
 import re
 from functools import partial
 from textwrap import indent
-from typing import Iterable, List, Optional, Sequence, Union
+from typing import Any, Iterable, List, Mapping, Optional, Sequence, Tuple, Union
 
 # 3rd party
 import tabulate
@@ -33,6 +36,8 @@ from tabulate import Line, TableFormat
 # this package
 from py2latex.core import begin, make_caption, make_label, re_escape
 from py2latex.templates import templates
+
+# TODO: Tabulate accepts Union[Mapping[str, Iterable[Any]], Iterable[Iterable[Any]]] for tabular data
 
 hline = r"\hline"
 toprule = r"\toprule"
@@ -229,18 +234,18 @@ _subtables_template.globals["indent"] = indent  # type: ignore
 
 
 def longtable_from_template(
-		tabular_data,
+		tabular_data: Union[Sequence[Sequence[Any]]],
 		*,
 		caption: str,
 		label: Optional[str] = None,
 		headers: Sequence[str] = (),
 		pos: str = "htpb",
-		floatfmt: str = tabulate._DEFAULT_FLOATFMT,  # type: ignore
-		numalign: str = "decimal",
-		stralign: str = "left",
-		missingval: str = tabulate._DEFAULT_MISSINGVAL,  # type: ignore
-		showindex: str = "default",
-		disable_numparse: bool = False,
+		floatfmt: Union[str, Iterable[str]] = tabulate._DEFAULT_FLOATFMT,  # type: ignore
+		numalign: Optional[str] = "decimal",
+		stralign: Optional[str] = "left",
+		missingval: Union[str, Iterable[str]] = tabulate._DEFAULT_MISSINGVAL,  # type: ignore
+		showindex: Union[str, bool, Iterable[Any]] = "default",
+		disable_numparse: Union[bool, Iterable[int]] = False,
 		colalign: Optional[Sequence[Union[str, None]]] = None,
 		colwidths: Optional[Sequence[Union[str, None]]] = None,
 		vlines: Union[Sequence[int], bool] = False,
@@ -252,8 +257,7 @@ def longtable_from_template(
 	"""
 	Create a ``longtable`` with ``booktabs`` formatting.
 
-	:param tabular_data:
-	:type tabular_data:
+		:param tabular_data:
 	:param caption: The caption for the table
 	:type caption: str
 	:param label: The label for the table.
@@ -262,17 +266,11 @@ def longtable_from_template(
 	:param pos: The positioning of the table, e.g. ``"htp"``
 	:type pos: str
 	:param floatfmt: The formatting of :class:`float` values. Default ``"g"``
-	:type floatfmt: str
 	:param numalign:
-	:type numalign:
 	:param stralign:
-	:type stralign:
 	:param missingval:
-	:type missingval:
 	:param showindex:
-	:type showindex:
 	:param disable_numparse:
-	:type disable_numparse:
 	:param colalign:
 	:param colwidths: Sequence of column widths, e.g. ``3cm``. Values of :py:obj:`None` indicates auto width
 	:param vlines: If a sequence of integers a line will be inserted before the specified columns. ``-1`` indicates a line should be inserted after the last column.
@@ -284,7 +282,7 @@ def longtable_from_template(
 	:param vspace: If a sequence of integers extra space will be inserted before the specified row. ``-1`` indicates a space should be inserted after the last row.
 		If :py:obj:`True` a space will be inserted before every row, and after the last row.
 		If :py:obj:`False` no spaces will be inserted.
-	:param raw: Whether latex markup in ``tabular_data`` should be unescaped. Default ``True``
+	:param raw: Whether latex markup in ``tabular_data`` should be unescaped. Default ``False``
 	:type raw: bool
 	:param footer: Optional footer for the table. Inserted as raw LaTeX
 
@@ -292,12 +290,11 @@ def longtable_from_template(
 	:rtype: str
 	"""
 
-	return table_from_template(
+	table = SubTable(
 			tabular_data,
 			caption=caption,
 			label=label,
 			headers=headers,
-			pos=pos,
 			floatfmt=floatfmt,
 			numalign=numalign,
 			stralign=stralign,
@@ -311,7 +308,17 @@ def longtable_from_template(
 			vspace=vspace,
 			raw=raw,
 			footer=footer,
-			longtable=True,
+			)
+
+	return _longtable_template.render(
+			caption=table.caption,
+			label=table.label,
+			header_row=table.header_row,
+			table_body=table.table_body,
+			ncols=table.ncols,
+			colalign=table.colalign,
+			pos=pos,
+			footer=table.footer,
 			)
 
 
@@ -340,9 +347,18 @@ raw_body_only_format = _make_body_only_formats(raw=True)
 
 def _parse_rows(
 		rows: List[str],
-		tabular_data,
+		tabular_data: Union[Sequence[Sequence[Any]]],
 		headers: Sequence[str] = (),
-		):
+		) -> Tuple[str, List[str], int]:
+	"""
+
+	:param rows:
+	:param tabular_data:
+	:param headers:
+
+	:return:
+	:rtype:
+	"""
 
 	if headers:
 		header_row = rows[0]
@@ -356,7 +372,19 @@ def _parse_rows(
 	return header_row, body_rows, ncols
 
 
-def parse_vspace(ncols: int, vspace: Union[Sequence[int], bool] = False):
+def parse_vspace(
+		ncols: int,
+		vspace: Union[Sequence[int], bool] = False,
+		) -> Tuple[bool, Sequence[int]]:
+	"""
+
+	:param ncols:
+	:type ncols: int
+	:param vspace:
+
+	:return:
+	:rtype:
+	"""
 
 	if isinstance(vspace, Sequence):
 		add_vspace = True
@@ -367,30 +395,41 @@ def parse_vspace(ncols: int, vspace: Union[Sequence[int], bool] = False):
 	return add_vspace, vspace
 
 
-def parse_hlines(tabular_data, hlines: Union[Sequence[int], bool] = False):
+def parse_hlines(
+		nrows: int,
+		hlines: Union[Sequence[int], bool] = False,
+		) -> Tuple[bool, Sequence[int]]:
+	"""
+
+	:param tabular_data:
+	:param hlines:
+
+	:return:
+	:rtype:
+	"""
 
 	if isinstance(hlines, Sequence):
 		add_hlines = True
 	else:
 		add_hlines = bool(hlines)
-		hlines = list(range(len(tabular_data)))
+		hlines = list(range(nrows))
 
 	return add_hlines, hlines
 
 
 def table_from_template(
-		tabular_data,
+		tabular_data: Union[Sequence[Sequence[Any]]],
 		*,
 		caption: str,
 		label: Optional[str] = None,
 		headers: Sequence[str] = (),
 		pos: str = "htpb",
-		floatfmt: str = tabulate._DEFAULT_FLOATFMT,  # type: ignore
-		numalign: str = "decimal",
-		stralign: str = "left",
-		missingval: str = tabulate._DEFAULT_MISSINGVAL,  # type: ignore
-		showindex: str = "default",
-		disable_numparse: bool = False,
+		floatfmt: Union[str, Iterable[str]] = tabulate._DEFAULT_FLOATFMT,  # type: ignore
+		numalign: Optional[str] = "decimal",
+		stralign: Optional[str] = "left",
+		missingval: Union[str, Iterable[str]] = tabulate._DEFAULT_MISSINGVAL,  # type: ignore
+		showindex: Union[str, bool, Iterable[Any]] = "default",
+		disable_numparse: Union[bool, Iterable[int]] = False,
 		colalign: Optional[Sequence[Union[str, None]]] = None,
 		colwidths: Optional[Sequence[Union[str, None]]] = None,
 		vlines: Union[Sequence[int], bool] = False,
@@ -398,13 +437,11 @@ def table_from_template(
 		vspace: Union[Sequence[int], bool] = False,
 		raw: bool = True,
 		footer: Optional[str] = None,
-		longtable: bool = False
 		) -> str:
 	"""
 	Create a ``table`` with ``booktabs`` formatting.
 
 	:param tabular_data:
-	:type tabular_data:
 	:param caption: The caption for the table
 	:type caption: str
 	:param label: The label for the table.
@@ -413,17 +450,11 @@ def table_from_template(
 	:param pos: The positioning of the table, e.g. ``"htp"``
 	:type pos: str
 	:param floatfmt: The formatting of :class:`float` values. Default ``"g"``
-	:type floatfmt: str
 	:param numalign:
-	:type numalign:
 	:param stralign:
-	:type stralign:
 	:param missingval:
-	:type missingval:
 	:param showindex:
-	:type showindex:
 	:param disable_numparse:
-	:type disable_numparse:
 	:param colalign:
 	:param colwidths: Sequence of column widths, e.g. ``3cm``. Values of :py:obj:`None` indicates auto width
 	:param vlines: If a sequence of integers a line will be inserted before the specified columns. ``-1`` indicates a line should be inserted after the last column.
@@ -438,8 +469,6 @@ def table_from_template(
 	:param raw: Whether latex markup in ``tabular_data`` should be unescaped. Default ``False``
 	:type raw: bool
 	:param footer: Optional footer for the table. Inserted as raw LaTeX
-	:param longtable: Whether to create a ``longtable``. Default :py:obj:`False``
-	:type longtable: bool
 
 	:return:
 	:rtype: str
@@ -465,46 +494,62 @@ def table_from_template(
 			footer=footer,
 			)
 
-	if longtable:
-		return _longtable_template.render(
-				caption=table.caption,
-				label=table.label,
-				header_row=table.header_row,
-				table_body=table.table_body,
-				ncols=table.ncols,
-				colalign=table.colalign,
-				pos=pos,
-				footer=table.footer,
-				)
-
-	else:
-		return _table_template.render(
-				caption=table.caption,
-				label=table.label,
-				header_row=table.header_row,
-				table_body=table.table_body,
-				ncols=table.ncols,
-				colalign=table.colalign,
-				pos=pos,
-				footer=table.footer,
-				)
+	return _table_template.render(
+			caption=table.caption,
+			label=table.label,
+			header_row=table.header_row,
+			table_body=table.table_body,
+			ncols=table.ncols,
+			colalign=table.colalign,
+			pos=pos,
+			footer=table.footer,
+			)
 
 
 class SubTable:
+	"""
+
+	:param tabular_data:
+	:param caption: The caption for the table
+	:type caption: str
+	:param label: The label for the table.
+		If undefined the caption is used, in lowercase, with underscores replacing spaces
+	:param headers: A sequence of column headers
+	:param floatfmt: The formatting of :class:`float` values. Default ``"g"``
+	:param numalign:
+	:param stralign:
+	:param missingval:
+	:param showindex:
+	:param disable_numparse:
+	:param colalign:
+	:param colwidths: Sequence of column widths, e.g. ``3cm``. Values of :py:obj:`None` indicates auto width
+	:param vlines: If a sequence of integers a line will be inserted before the specified columns. ``-1`` indicates a line should be inserted after the last column.
+		If :py:obj:`True` a line will be inserted before every column, and after the last column.
+		If :py:obj:`False` no lines will be inserted.
+	:param hlines: If a sequence of integers a line will be inserted before the specified rows. ``-1`` indicates a line should be inserted after the last row.
+		If :py:obj:`True` a line will be inserted before every row, and after the last row.
+		If :py:obj:`False` no lines will be inserted.
+	:param vspace: If a sequence of integers extra space will be inserted before the specified row. ``-1`` indicates a space should be inserted after the last row.
+		If :py:obj:`True` a space will be inserted before every row, and after the last row.
+		If :py:obj:`False` no spaces will be inserted.
+	:param raw: Whether latex markup in ``tabular_data`` should be unescaped. Default ``False``
+	:type raw: bool
+	:param footer: Optional footer for the table. Inserted as raw LaTeX
+	"""
 
 	def __init__(
 			self,
-			tabular_data,
+			tabular_data: Union[Sequence[Sequence[Any]]],
 			*,
 			caption: str,
 			label: Optional[str] = None,
 			headers: Sequence[str] = (),
-			floatfmt: str = tabulate._DEFAULT_FLOATFMT,  # type: ignore
-			numalign: str = "decimal",
-			stralign: str = "left",
-			missingval: str = tabulate._DEFAULT_MISSINGVAL,  # type: ignore
-			showindex: str = "default",
-			disable_numparse: bool = False,
+			floatfmt: Union[str, Iterable[str]] = tabulate._DEFAULT_FLOATFMT,  # type: ignore
+			numalign: Optional[str] = "decimal",
+			stralign: Optional[str] = "left",
+			missingval: Union[str, Iterable[str]] = tabulate._DEFAULT_MISSINGVAL,  # type: ignore
+			showindex: Union[str, bool, Iterable[Any]] = "default",
+			disable_numparse: Union[bool, Iterable[int]] = False,
 			colalign: Optional[Sequence[Union[str, None]]] = None,
 			colwidths: Optional[Sequence[Union[str, None]]] = None,
 			vlines: Union[Sequence[int], bool] = False,
@@ -533,7 +578,7 @@ class SubTable:
 
 		header_row, body_rows, ncols = _parse_rows(rows, tabular_data, headers)
 		add_vspace, vspace = parse_vspace(ncols, vspace)
-		add_hlines, hlines = parse_hlines(tabular_data, hlines)
+		add_hlines, hlines = parse_hlines(len(body_rows), hlines)
 		col_alignment = parse_column_alignments(colalign, colwidths, vlines, ncols)
 
 		table_body = ''
@@ -574,7 +619,6 @@ def subtables_from_template(
 	Create a series of ``subtables`` with ``booktabs`` formatting.
 
 	:param subtables:
-	:type subtables:
 	:param caption: The caption for the table
 	:type caption: str
 	:param label: The label for the table.
@@ -598,6 +642,21 @@ def subtables_from_template(
 
 
 def parse_column_alignments(colalign, colwidths, vlines, ncols):
+	"""
+
+	:param colalign:
+	:type colalign:
+	:param colwidths:
+	:type colwidths:
+	:param vlines:
+	:type vlines:
+	:param ncols:
+	:type ncols:
+
+	:return:
+	:rtype:
+	"""
+
 	if colalign is None:
 		colalign = ["l"] * ncols
 
@@ -650,7 +709,6 @@ def parse_column_alignments(colalign, colwidths, vlines, ncols):
 				alignment_elements.append(fr">{{\raggedleft\arraybackslash}}p{{{width}}}")
 		else:
 			alignment_elements.append(str(alignment))
-
 
 	if add_vlines:
 		if col_idx + 1 in vlines or -1 in vlines:

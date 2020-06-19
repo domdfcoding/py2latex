@@ -1,8 +1,8 @@
+#!/usr/bin/env python3
 # From https://github.com/rufuspollock/markdown2latex
 # BSD Licensed
-
-#!/usr/bin/env python3
-"""Extension to python-markdown to support LaTeX (rather than html) output.
+"""
+Extension to python-markdown to support LaTeX (rather than html) output.
 
 Authored by Rufus Pollock: <http://www.rufuspollock.org/>
 Reworked by Julian Wulfheide (ju.wulfheide@gmail.com) and
@@ -37,34 +37,34 @@ History
 
 Version: 1.0 (November 15, 2006)
 
-  * First working version (compatible with markdown 1.5)
-  * Includes support for tables
+* First working version (compatible with markdown 1.5)
+* Includes support for tables
 
 Version: 1.1 (January 17, 2007)
 
-  * Support for verbatim and images
+* Support for verbatim and images
 
 Version: 1.2 (June 2008)
 
-  * Refactor as an extension.
-  * Make into a proper python/setuptools package.
-  * Tested with markdown 1.7 but should work with 1.6 and (possibly) 1.5
+* Refactor as an extension.
+* Make into a proper python/setuptools package.
+* Tested with markdown 1.7 but should work with 1.6 and (possibly) 1.5
 	(though pre/post processor stuff not as worked out there)
 
 Version 1.3: (July 2008)
-  * Improvements to image output (width)
+* Improvements to image output (width)
 
 Version 1.3.1: (August 2009)
-  * Tiny bugfix to remove duplicate keyword argument and set zip_safe=False
-  * Add [width=\textwidth] by default for included images
+* Tiny bugfix to remove duplicate keyword argument and set zip_safe=False
+* Add [width=\textwidth] by default for included images
 
 Version 2.0: (June 2011)
-  * PEP8 cleanup
-  * Major rework since this was broken by new Python-Markdown releases
+* PEP8 cleanup
+* Major rework since this was broken by new Python-Markdown releases
 
 Version 2.1: (August 2013)
-  * Add handler for non locally referenced images, hyperlinks and horizontal rules
-  * Update math delimiters
+* Add handler for non locally referenced images, hyperlinks and horizontal rules
+* Update math delimiters
 """
 
 __version__ = '2.1'
@@ -149,8 +149,8 @@ class LaTeXExtension(markdown.Extension):
 		#         self.md.inlinePatterns.pop(key)
 		#         break
 
-		#footnote_extension = FootnoteExtension()
-		#footnote_extension.extendMarkdown(md, md_globals)
+		# footnote_extension = FootnoteExtension()
+		# footnote_extension.extendMarkdown(md, md_globals)
 
 		latex_tp = LaTeXTreeProcessor()
 		math_pp = MathTextPostProcessor()
@@ -222,7 +222,7 @@ class LaTeXTreeProcessor(markdown.treeprocessors.Treeprocessor):
 """
 		elif ournode.tag == 'li':
 			buffer += f"""
-  \\item {subcontent.strip()}"""
+	\\item {subcontent.strip()}"""
 		elif ournode.tag == 'blockquote':
 			# use quotation rather than quote as quotation can support multiple
 			# paragraphs
@@ -234,9 +234,8 @@ class LaTeXTreeProcessor(markdown.treeprocessors.Treeprocessor):
 		# ignore 'code' when inside pre tags
 		# (mkdn produces <pre><code></code></pre>)
 		elif (
-				ournode.tag == 'pre' or
-				# TODO: Take a look here
-				(ournode.tag == 'pre' and ournode.parentNode.tag != 'pre')
+				ournode.tag == 'pre'
+				or (ournode.tag == 'pre' and ournode.parentNode.tag != 'pre') 	# TODO: Take a look here
 				):
 			buffer += f"""
 \\begin{{verbatim}}
@@ -443,8 +442,7 @@ class Table2Latex:
 			caption = self.get_text(captionElements[0])
 
 		colformatting = self.colformat()
-		table_latex = \
-                     f"""
+		table_latex = f"""
 			\\begin{{table}}[h]
 			\\begin{{tabular}}{{{colformatting}}}
 			{core}
@@ -502,8 +500,7 @@ class Img2Latex:
 
 		alt = img.getAttribute('alt')
 		# Using graphicx and ajustbox package for *max width*
-		out = \
-                     f"""
+		out = f"""
 			\\begin{{figure}}[H]
 			\\centering
 			\\includegraphics[max width=\\linewidth]{{{src}}}
@@ -542,8 +539,7 @@ class Link2Latex:
 		href = link.getAttribute('href')
 
 		desc = re.search(r'>([^<]+)', instr)
-		out = \
-                     f"""
+		out = f"""
 			\\href{{{href}}}{{{desc.group(0)[1:]}}}
 			"""
 		return out
@@ -573,16 +569,16 @@ class FootnoteExtension(markdown.Extension):
 		md.registerExtension(self)
 
 		# Insert a preprocessor before ReferencePreprocessor
-		#index = md.preprocessors.index(md_globals['REFERENCE_PREPROCESSOR'])
-		#preprocessor = FootnotePreprocessor(self)
-		#preprocessor.md = md
-		#md.preprocessors.insert(index, preprocessor)
+		# index = md.preprocessors.index(md_globals['REFERENCE_PREPROCESSOR'])
+		# preprocessor = FootnotePreprocessor(self)
+		# preprocessor.md = md
+		# md.preprocessors.insert(index, preprocessor)
 		md.preprocessors.add('footnotes', FootnotePreprocessor(self), '_begin')
 
-		## Insert an inline pattern before ImageReferencePattern
+		# Insert an inline pattern before ImageReferencePattern
 		FOOTNOTE_RE = r"\[\^([^\]]*)\]"  # blah blah [^1] blah
-		#index = md.inlinePatterns.index(md_globals['IMAGE_REFERENCE_PATTERN'])
-		#md.inlinePatterns.insert(index, FootnotePattern(FOOTNOTE_RE, self))
+		# index = md.inlinePatterns.index(md_globals['IMAGE_REFERENCE_PATTERN'])
+		# md.inlinePatterns.insert(index, FootnotePattern(FOOTNOTE_RE, self))
 		md.inlinePatterns.add('footnotes', FootnotePattern(FOOTNOTE_RE, self), '_begin')
 
 	def reset(self):
@@ -619,11 +615,12 @@ class FootnotePreprocessor:
 		self.footnotes.used_footnotes[id] = nextNum
 
 	def _handleFootnoteDefinitions(self, lines):
-		"""Recursively finds all footnote definitions in the lines.
+		"""
+		Recursively finds all footnote definitions in the lines.
 
-			@param lines: a list of lines of text
-			@returns: a string representing the text with footnote
-					  definitions removed """
+		:param lines: a list of lines of text
+		:return: a string representing the text with footnote definitions removed
+		"""
 
 		i, id, footnote = self._findFootnoteDefinition(lines)
 
@@ -642,10 +639,11 @@ class FootnotePreprocessor:
 			return lines
 
 	def _findFootnoteDefinition(self, lines):
-		"""Finds the first line of a footnote definition.
+		"""
+		Finds the first line of a footnote definition.
 
-			@param lines: a list of lines of text
-			@returns: the index of the line containing a footnote definition.
+		:param lines: a list of lines of text
+		:return: the index of the line containing a footnote definition.
 		"""
 
 		counter = 0
@@ -681,43 +679,3 @@ def template(template_fo, latex_to_insert):
 # has_title_stuff = False
 # for it in title_items:
 #    has_title_stuff = has_title_stuff or (it in tmpl)
-
-
-def main():
-
-	# stdlib
-	import optparse
-	usage = \
-           """usage: %prog [options] <in-file-path>
-
-		Given a file path, process it using markdown2latex and print the result on
-		stdout.
-
-		If using template option template should place text INSERT-TEXT-HERE in the
-		template where text should be inserted.
-		"""
-	parser = optparse.OptionParser(usage)
-	parser.add_option(
-			'-t', '--template', dest='template', default='', help='path to latex template file (optional)'
-			)
-	(options, args) = parser.parse_args()
-	if not len(args) > 0:
-		parser.print_help()
-		sys.exit(1)
-	inpath = args[0]
-	infile = file(inpath)
-
-	md = markdown.Markdown()
-	mkdn2latex = LaTeXExtension()
-	mkdn2latex.extendMarkdown(md, markdown.__dict__)
-	out = md.convert(infile.read())
-
-	if options.template:
-		tmpl_fo = file(options.template)
-		out = template(tmpl_fo, out)
-
-	print(out)
-
-
-if __name__ == '__main__':
-	main()

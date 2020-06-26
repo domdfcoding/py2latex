@@ -30,6 +30,7 @@ from textwrap import indent
 from typing import Any, Iterable, List, Mapping, Optional, Sequence, Tuple, Union
 
 # 3rd party
+import pandas as pandas
 import tabulate
 from tabulate import Line, TableFormat
 
@@ -229,6 +230,7 @@ def set_table_widths(table: str, widths: str) -> str:
 
 _longtable_template = templates.get_template("longtable.tex")
 _table_template = templates.get_template("table.tex")
+_tabular_template = templates.get_template("tabular.tex")
 _subtables_template = templates.get_template("subtables.tex")
 _subtables_template.globals["indent"] = indent  # type: ignore
 
@@ -282,7 +284,7 @@ def longtable_from_template(
 	:param vspace: If a sequence of integers extra space will be inserted before the specified row. ``-1`` indicates a space should be inserted after the last row.
 		If :py:obj:`True` a space will be inserted before every row, and after the last row.
 		If :py:obj:`False` no spaces will be inserted.
-	:param raw: Whether latex markup in ``tabular_data`` should be unescaped. Default ``False``
+	:param raw: Whether latex markup in ``tabular_data`` should be unescaped. Default :py:obj:`False`
 	:type raw: bool
 	:param footer: Optional footer for the table. Inserted as raw LaTeX
 
@@ -345,6 +347,7 @@ body_only_format = _make_body_only_formats(raw=False)
 raw_body_only_format = _make_body_only_formats(raw=True)
 
 
+
 def _parse_rows(
 		rows: List[str],
 		tabular_data: Union[Sequence[Sequence[Any]]],
@@ -360,14 +363,22 @@ def _parse_rows(
 	:rtype:
 	"""
 
+	header_len = 0
+
 	if headers:
 		header_row = rows[0]
 		body_rows = rows[1:]
-		ncols = len(headers)
+		header_len = len(headers)
 	else:
 		header_row = ''
 		body_rows = rows
-		ncols = len(tabular_data[0])
+
+	if isinstance(tabular_data, pandas.DataFrame):
+		body_len = len(tabular_data.columns)
+	else:
+		body_len = max([len(subl) for subl in tabular_data])
+
+	ncols = max(header_len, body_len)
 
 	return header_row, body_rows, ncols
 
@@ -466,7 +477,7 @@ def table_from_template(
 	:param vspace: If a sequence of integers extra space will be inserted before the specified row. ``-1`` indicates a space should be inserted after the last row.
 		If :py:obj:`True` a space will be inserted before every row, and after the last row.
 		If :py:obj:`False` no spaces will be inserted.
-	:param raw: Whether latex markup in ``tabular_data`` should be unescaped. Default ``False``
+	:param raw: Whether latex markup in ``tabular_data`` should be unescaped. Default :py:obj:`False`
 	:type raw: bool
 	:param footer: Optional footer for the table. Inserted as raw LaTeX
 
@@ -506,6 +517,95 @@ def table_from_template(
 			)
 
 
+def tabular_from_template(
+		tabular_data: Union[Sequence[Sequence[Any]]],
+		*,
+		headers: Sequence[str] = (),
+		floatfmt: Union[str, Iterable[str]] = tabulate._DEFAULT_FLOATFMT,  # type: ignore
+		numalign: Optional[str] = "decimal",
+		stralign: Optional[str] = "left",
+		missingval: Union[str, Iterable[str]] = tabulate._DEFAULT_MISSINGVAL,  # type: ignore
+		showindex: Union[str, bool, Iterable[Any]] = "default",
+		disable_numparse: Union[bool, Iterable[int]] = False,
+		colalign: Optional[Sequence[Union[str, None]]] = None,
+		colwidths: Optional[Sequence[Union[str, None]]] = None,
+		vlines: Union[Sequence[int], bool] = False,
+		hlines: Union[Sequence[int], bool] = False,
+		vspace: Union[Sequence[int], bool] = False,
+		raw: bool = True,
+		footer: Optional[str] = None,
+		no_lines: bool = False,
+		left_margin: bool = True,
+		right_margin: bool = True,
+		) -> str:
+	"""
+	Create a ``tabular`` environment with ``booktabs`` formatting.
+
+	:param tabular_data:
+	:param headers: A sequence of column headers
+	:param floatfmt: The formatting of :class:`float` values. Default ``"g"``
+	:param numalign:
+	:param stralign:
+	:param missingval:
+	:param showindex:
+	:param disable_numparse:
+	:param colalign:
+	:param colwidths: Sequence of column widths, e.g. ``3cm``. Values of :py:obj:`None` indicates auto width
+	:param vlines: If a sequence of integers a line will be inserted before the specified columns. ``-1`` indicates a line should be inserted after the last column.
+		If :py:obj:`True` a line will be inserted before every column, and after the last column.
+		If :py:obj:`False` no lines will be inserted.
+	:param hlines: If a sequence of integers a line will be inserted before the specified rows. ``-1`` indicates a line should be inserted after the last row.
+		If :py:obj:`True` a line will be inserted before every row, and after the last row.
+		If :py:obj:`False` no lines will be inserted.
+	:param vspace: If a sequence of integers extra space will be inserted before the specified row. ``-1`` indicates a space should be inserted after the last row.
+		If :py:obj:`True` a space will be inserted before every row, and after the last row.
+		If :py:obj:`False` no spaces will be inserted.
+	:param raw: Whether latex markup in ``tabular_data`` should be unescaped. Default :py:obj:`False`
+	:type raw: bool
+	:param footer: Optional footer for the table. Inserted as raw LaTeX
+	:param no_lines: Whether to suppress horizontal lines in the table. Default :py:obj:`False`
+	:param left_margin: Whether to include a margin to the left of the table. Default :py:obj:`True`
+	:param right_margin: Whether to include a margin to the right of the table. Default :py:obj:`True`
+
+	:return:
+	:rtype: str
+	"""
+
+	table = SubTable(
+			tabular_data,
+			caption='',
+			label='',
+			headers=headers,
+			floatfmt=floatfmt,
+			numalign=numalign,
+			stralign=stralign,
+			missingval=missingval,
+			showindex=showindex,
+			disable_numparse=disable_numparse,
+			colalign=colalign,
+			colwidths=colwidths,
+			vlines=vlines,
+			hlines=hlines,
+			vspace=vspace,
+			raw=raw,
+			footer=footer,
+			)
+
+	if not left_margin:
+		table.colalign = f"@{{}}{table.colalign}"
+	if not right_margin:
+		table.colalign = f"{table.colalign}@{{}}"
+
+	return _tabular_template.render(
+			header_row=table.header_row,
+			table_body=table.table_body,
+			ncols=table.ncols,
+			colalign=table.colalign,
+			footer=table.footer,
+			lines=not no_lines,
+			)
+
+
 class SubTable:
 	"""
 
@@ -532,7 +632,7 @@ class SubTable:
 	:param vspace: If a sequence of integers extra space will be inserted before the specified row. ``-1`` indicates a space should be inserted after the last row.
 		If :py:obj:`True` a space will be inserted before every row, and after the last row.
 		If :py:obj:`False` no spaces will be inserted.
-	:param raw: Whether latex markup in ``tabular_data`` should be unescaped. Default ``False``
+	:param raw: Whether latex markup in ``tabular_data`` should be unescaped. Default :py:obj:`False`
 	:type raw: bool
 	:param footer: Optional footer for the table. Inserted as raw LaTeX
 	"""

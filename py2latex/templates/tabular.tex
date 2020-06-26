@@ -1,0 +1,9 @@
+\begin{tabular}{{ brace(colalign) }}
+{% if lines %}    \toprule{% endif %}
+{% if header_row %}    {{ header_row }}
+{% if lines %}    \midrule{% endif %}{% endif %}
+{{ table_body }}
+{% if footer %}{% if lines %}    \midrule{% endif %}
+    {{ footer }}\\{% endif %}
+{% if lines %}    \bottomrule{% endif %}
+\end{tabular}

@@ -1,5 +1,5 @@
 #########
-py2latex
+py2LaTeX
 #########
 
 .. start short_desc

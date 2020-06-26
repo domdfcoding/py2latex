@@ -1,4 +1,6 @@
-modname: py2latex
+modname: py2LaTeX
+pypi_name: py2latex
+import_name: py2latex
 copyright_years: "2020"
 author: "Dominic Davis-Foster"
 email: "dominic@davis-foster.co.uk"
@@ -37,3 +39,9 @@ classifiers:
   - 'Intended Audience :: Developers'
   - 'Operating System :: OS Independent'
   - 'Topic :: Utilities'
+
+sphinx_conf_epilogue:
+  - "html_logo = '../py2latex.png'"
+
+html_theme_options:
+  logo_only: True

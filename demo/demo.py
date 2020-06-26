@@ -31,11 +31,19 @@ chapters_list.append(make_chapter(title=f"Markdown Chapter", body=text_md))
 
 chapters_list.append(make_chapter(title=f"Introduction", body=load_markdown("introduction.md")))
 
+import astropy.units as u
+from py2latex.siunit import si, SI
+kgms = u.kg * u.m / u.A / u.s
+chapters_list.append(si(kgms))
+l3vt3 = u.lux ** 3 * u.V / u.T ** 3
+chapters_list.append(si(l3vt3))
+chapters_list.append(SI(3*l3vt3))
 
 glossary = glossary_from_file(pathlib.Path("glossary.yaml"))
 
 
 pprint(glossary)
 
+chapters_list.append(r"\bigskip\huge{\texttt{py}$2$\LaTeX}")
 
 py2latex.make_document("demo.tex", chapters_list, glossary=glossary)

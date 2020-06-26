@@ -4,7 +4,7 @@ API Reference
 
 .. contents:: Table of Contents
 
-.. automodule:: latex_tools
+.. automodule:: py2latex
     :members:
     :private-members:
     :special-members:
@@ -13,10 +13,10 @@ API Reference
 
 
 ===================================
-:mod:`latex_tools.__init__`
+:mod:`py2latex.__init__`
 ===================================
 
-.. automodule:: latex_tools.__init__
+.. automodule:: py2latex.__init__
     :members:
     :private-members:
     :special-members:
@@ -25,10 +25,10 @@ API Reference
 
 
 ===================================
-:mod:`latex_tools.core`
+:mod:`py2latex.core`
 ===================================
 
-.. automodule:: latex_tools.core
+.. automodule:: py2latex.core
     :members:
     :private-members:
     :special-members:
@@ -37,10 +37,10 @@ API Reference
 
 
 ===================================
-:mod:`latex_tools.formatting`
+:mod:`py2latex.formatting`
 ===================================
 
-.. automodule:: latex_tools.formatting
+.. automodule:: py2latex.formatting
     :members:
     :private-members:
     :special-members:
@@ -49,10 +49,10 @@ API Reference
 
 
 ===================================
-:mod:`latex_tools.tables`
+:mod:`py2latex.tables`
 ===================================
 
-.. automodule:: latex_tools.tables
+.. automodule:: py2latex.tables
     :members:
     :private-members:
     :special-members:

@@ -78,7 +78,7 @@ intersphinx_mapping = {
 
 html_theme = 'sphinx_rtd_theme'
 html_theme_options = {
-		'logo_only': False,
+		'logo_only': True,
 		}
 html_theme_path = ["../.."]
 # html_logo = "logo/pyms.png"
@@ -133,3 +133,5 @@ def setup(app):
 							),
 					]
 			)
+
+html_logo = '../py2latex.png'

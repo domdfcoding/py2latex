@@ -45,7 +45,7 @@ __copyright__ = """
 
 __version__ = "0.0.6"
 
-modname = "py2latex"
+modname = "py2LaTeX"
 pypi_name = "py2latex"
 import_name = "py2latex"
 py_modules = []

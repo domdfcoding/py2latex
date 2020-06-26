@@ -51,9 +51,12 @@ class PackageTracker:
 			cls.packages.append(package)
 
 		def wrap(f):
+
 			def wrapped_f(*args, **kwargs):
 				f(*args, **kwargs)
+
 			return wrapped_f
+
 		return wrap
 
 
@@ -62,4 +65,3 @@ class PackageTracker:
 # 	print("inside foo!")
 
 # print(PackageTracker.packages)
-

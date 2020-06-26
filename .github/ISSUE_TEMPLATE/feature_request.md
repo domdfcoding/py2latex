@@ -22,7 +22,7 @@ INSUFFICIENT INFO WILL GET THE ISSUE CLOSED. IT WILL ONLY BE REOPENED AFTER SUFF
 
   * Operating System:
   * Python:
-  * py2latex:
+  * py2LaTeX:
 
 
 ## Other Additional Information:

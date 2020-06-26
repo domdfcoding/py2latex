@@ -19,11 +19,13 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA 02110-1301, USA.
 #
+
+# stdlib
 from typing import List
 
-import astropy.units as u
+# 3rd party
+from astropy import units as u  # type: ignore
 from typing_extensions import Literal
-
 
 siunitx_abbreviations = {
 		# abbreviation, symbol  # unit
@@ -160,7 +162,6 @@ def si(
 	return rf"\si[per-mode={per_mode}]{{{' '.join(elems)}}}"
 
 
-
 def SI(
 		quantity: u.Quantity,
 		per_mode: Literal["repeated-symbol", "symbol", "fraction", "symbol-or-fraction", "reciprocal"] = "symbol",
@@ -187,13 +188,13 @@ if __name__ == '__main__':
 	kgms = u.kg * u.m * u.s**-1
 	print(si(kgms))
 
-	kgmAs = u.kg * u.m /u.A / u.s
+	kgmAs = u.kg * u.m / u.A / u.s
 	print(si(kgmAs))
 
-	l3vt3 = u.lux**3 * u.V / u.T ** 3
+	l3vt3 = u.lux**3 * u.V / u.T**3
 	print(si(l3vt3))
 
-	print(3* l3vt3)
+	print(3 * l3vt3)
 
-	print((3* l3vt3).value)
-	print((3* l3vt3).unit)
+	print((3 * l3vt3).value)
+	print((3 * l3vt3).unit)

@@ -30,7 +30,7 @@ from textwrap import indent
 from typing import Any, Iterable, List, Mapping, Optional, Sequence, Tuple, Union
 
 # 3rd party
-import pandas as pandas
+import pandas as pandas  # type: ignore
 import tabulate
 from tabulate import Line, TableFormat
 
@@ -345,7 +345,6 @@ def _make_body_only_formats(raw=False):
 
 body_only_format = _make_body_only_formats(raw=False)
 raw_body_only_format = _make_body_only_formats(raw=True)
-
 
 
 def _parse_rows(

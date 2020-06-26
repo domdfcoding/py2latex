@@ -37,7 +37,7 @@ INSUFFICIENT INFO WILL GET THE ISSUE CLOSED. IT WILL ONLY BE REOPENED AFTER SUFF
 
   * Operating System:
   * Python:
-  * py2latex:
+  * py2LaTeX:
 
 ## Installation source
 <!-- e.g. Github repository, Github Releases, PyPI/pip, Anaconda/conda -->

@@ -1,6 +1,7 @@
 modname: py2LaTeX
 pypi_name: py2latex
 import_name: py2latex
+repo_name: py2latex
 copyright_years: "2020"
 author: "Dominic Davis-Foster"
 email: "dominic@davis-foster.co.uk"

@@ -98,7 +98,7 @@ Installation
 
 .. start installation
 
-``py2latex`` can be installed from PyPI.
+``py2LaTeX`` can be installed from PyPI.
 
 To install with ``pip``:
 

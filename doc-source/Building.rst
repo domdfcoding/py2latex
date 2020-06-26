@@ -2,7 +2,7 @@
 Building from source
 *********************
 
-To build the ``py2latex`` package from source using ``setuptools``, run the following command:
+To build the ``py2LaTeX`` package from source using ``setuptools``, run the following command:
 
 .. code-block:: bash
 

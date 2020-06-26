@@ -1,13 +1,13 @@
 <!--- This file based on https://github.com/PyGithub/PyGithub/blob/master/CONTRIBUTING.md --->
 # Contributing
 
-`py2latex` uses `tox` to automate testing, autoformatting and packaging.
+`py2LaTeX` uses `tox` to automate testing, autoformatting and packaging.
 
 For more information on installing `tox` see https://tox.readthedocs.io/en/latest/install.html
 
 ## Coding style
 
-`py2latex` uses `yapf` for code formatting and `isort` to sort imports.
+`py2LaTeX` uses `yapf` for code formatting and `isort` to sort imports.
 
 `yapf` and `isort` can be run via `tox`:
 ```bash

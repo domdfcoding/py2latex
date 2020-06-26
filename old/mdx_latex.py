@@ -85,11 +85,12 @@ definition in footnote market <sup> as opposed to putting a reference link).
 
 
 class FootnoteExtension(markdown.Extension):
-	DEF_RE = re.compile(r"(\ ?\ ?\ ?)\[\^([^\]]*)\]:\s*(.*)")
+	DEF_RE = re.compile(r"( ? ? ?)\[\^([^\]]*)\]:\s*(.*)")
 	SHORT_USE_RE = re.compile(r"\[\^([^\]]*)\]", re.M)  # [^a]
 
-	def __init__(self, configs=None):
+	def __init__(self, **kwargs):
 		self.reset()
+		super().__init__(**kwargs)
 
 	def extendMarkdown(self, md, md_globals):
 		self.md = md

@@ -34,7 +34,7 @@ import xml.dom.minidom
 from typing import List
 
 # 3rd party
-import markdown  # type: ignore
+import markdown.postprocessors  # type: ignore
 
 # this package
 from py2latex.markdown_parser.utils import escape_latex_entities
@@ -73,6 +73,9 @@ class Table2Latex:
 
 	TODO: escape latex entities.
 	"""
+
+	numcols: int
+	maxcols: int
 
 	def colformat(self):
 		# centre align everything by default

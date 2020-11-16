@@ -41,7 +41,7 @@ from typing import List
 from urllib.parse import urlparse
 
 # 3rd party
-import markdown  # type: ignore
+import markdown.postprocessors  # type: ignore
 
 __all__ = ["ImageTextPostProcessor", "Img2Latex"]
 

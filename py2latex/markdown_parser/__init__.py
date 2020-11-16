@@ -36,14 +36,16 @@ import re
 from typing import Union
 
 # 3rd party
-import markdown  # type: ignore
+import markdown
+import markdown.treeprocessors  # type: ignore
+import markdown.util  # type: ignore
 
 # this package
-from .images import ImageTextPostProcessor
-from .links import LinkTextPostProcessor
-from .maths import MathTextPostProcessor
-from .tables import TableTextPostProcessor
-from .utils import escape_latex_entities, unescape_html_entities
+from py2latex.markdown_parser.images import ImageTextPostProcessor
+from py2latex.markdown_parser.links import LinkTextPostProcessor
+from py2latex.markdown_parser.maths import MathTextPostProcessor
+from py2latex.markdown_parser.tables import TableTextPostProcessor
+from py2latex.markdown_parser.utils import escape_latex_entities, unescape_html_entities
 
 __all__ = [
 		"LaTeXExtension",
@@ -85,7 +87,7 @@ def parse_markdown(string):
 	return out
 
 
-class LaTeXExtension(markdown.Extension):
+class LaTeXExtension(markdown.extensions.Extension):
 
 	def __init__(self, configs=None):
 		self.reset()

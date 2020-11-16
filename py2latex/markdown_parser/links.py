@@ -35,7 +35,7 @@ import xml.dom.minidom
 from typing import List
 
 # 3rd party
-import markdown  # type: ignore
+import markdown.postprocessors  # type: ignore
 
 __all__ = ["Link2Latex", "LinkTextPostProcessor"]
 

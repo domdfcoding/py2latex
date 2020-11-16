@@ -27,7 +27,7 @@
 from typing import List
 
 # 3rd party
-from astropy.units import (
+from astropy.units import (  # type: ignore
 		GW,
 		MN,
 		MW,
@@ -90,13 +90,13 @@ from astropy.units import (
 		uV,
 		uW
 		)
-from astropy.units.astrophys import AU, M_e, astronomical_unit, au, u
+from astropy.units.astrophys import AU, M_e, astronomical_unit, au, u  # type: ignore
+from astropy.units.cds import mmHg  # type: ignore; type: ignore
 from astropy.units.cds import bar, barn
 from astropy.units.cds import c as clight
 from astropy.units.cds import e as elementarycharge
-from astropy.units.cds import mmHg
-from astropy.units.imperial import knot, nauticalmile
-from astropy.units.si import (
+from astropy.units.imperial import knot, nauticalmile  # type: ignore
+from astropy.units.si import (  # type: ignore
 		A,
 		Bq,
 		C,

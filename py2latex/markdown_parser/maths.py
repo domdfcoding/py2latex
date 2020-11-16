@@ -33,7 +33,7 @@
 import re
 
 # 3rd party
-import markdown  # type: ignore
+import markdown.postprocessors  # type: ignore
 
 # this package
 from py2latex.markdown_parser.utils import unescape_latex_entities

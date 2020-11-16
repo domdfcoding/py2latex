@@ -705,9 +705,9 @@ class SubTable:
 			row = re.sub(r"(\\multicolumn{4\}{.*\}{{.*\}\}\s*)&(\s*)&(\s*)&", r"\1 \2 \3", row)
 			row = re.sub(r"(\\multicolumn{5\}{.*\}{{.*\}\}\s*)&(\s*)&(\s*)&(\s*)&", r"\1 \2 \3 \4", row)
 
-			if add_vspace and row_idx in vspace:  # type: ignore
+			if add_vspace and row_idx in vspace:
 				table_body += "\\addlinespace"
-			if add_hlines and row_idx in hlines:  # type: ignore
+			if add_hlines and row_idx in hlines:
 				table_body += "\\midrule"
 
 			table_body += f"{row}\n"

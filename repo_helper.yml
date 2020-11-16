@@ -31,7 +31,7 @@ travis_pypi_secure: "Gr7l1pZeiIWaA6Xi2x0IhBxlhSfdIL3Zs3V8Ftjz4TcTJPk4nDeoTvvpWhK
 
 # additional lines for MANIFEST.in
 manifest_additional:
-  - recursive-include py2latex/templates/ *
+  - recursive-include py2latex/templates/ *.tex
 
 classifiers:
   - 'Development Status :: 3 - Alpha'

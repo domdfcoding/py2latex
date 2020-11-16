@@ -1,18 +1,16 @@
 # stdlib
 import pathlib
-import re
+from pprint import pprint
 
 # 3rd party
-import jinja2
-from jinja2 import Environment, FileSystemLoader
+import astropy.units as u
 
 # this package
 import py2latex
+from py2latex.glossaries import glossary_from_file
 from py2latex.markdown_parser import load_markdown
 from py2latex.sectioning import make_chapter
-from py2latex.glossaries import glossary_from_file
-# stdlib
-from pprint import pprint
+from py2latex.siunit import SI, si
 
 chapters_list = []
 
@@ -31,16 +29,13 @@ chapters_list.append(make_chapter(title=f"Markdown Chapter", body=text_md))
 
 chapters_list.append(make_chapter(title=f"Introduction", body=load_markdown("introduction.md")))
 
-import astropy.units as u
-from py2latex.siunit import si, SI
 kgms = u.kg * u.m / u.A / u.s
 chapters_list.append(si(kgms))
-l3vt3 = u.lux ** 3 * u.V / u.T ** 3
+l3vt3 = u.lux**3 * u.V / u.T**3
 chapters_list.append(si(l3vt3))
-chapters_list.append(SI(3*l3vt3))
+chapters_list.append(SI(3 * l3vt3))
 
 glossary = glossary_from_file(pathlib.Path("glossary.yaml"))
-
 
 pprint(glossary)
 

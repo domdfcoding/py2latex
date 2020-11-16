@@ -73,7 +73,6 @@ def makeExtension(configs=None):
 	return LaTeXExtension(configs=configs)
 
 
-
 """
 ========================= FOOTNOTES =================================
 
@@ -133,10 +132,10 @@ class FootnotePreprocessor:
 		# function call doesn't really substitute anything - it's just
 		# a way to get a callback for each occurence.
 
-		text = "\n".join(lines)
+		text = '\n'.join(lines)
 		self.footnotes.SHORT_USE_RE.sub(self.recordFootnoteUse, text)
 
-		return text.split("\n")
+		return text.split('\n')
 
 	def recordFootnoteUse(self, match):
 		id = match.group(1)
@@ -160,7 +159,7 @@ class FootnotePreprocessor:
 
 			detabbed, theRest = self.blockGuru.detectTabbed(lines[i + 1:])
 
-			self.footnotes.setFootnote(id, footnote + "\n" + "\n".join(detabbed))
+			self.footnotes.setFootnote(id, footnote + '\n' + '\n'.join(detabbed))
 
 			more_plain = self._handleFootnoteDefinitions(theRest)
 			return plain + [''] + more_plain
@@ -195,7 +194,7 @@ class FootnotePattern(markdown.inlinepatterns.Pattern):
 		sup = doc.createElement("sup")
 		id = m.group(2)
 		# stick the footnote text in the sup
-		self.footnotes.md._processSection(sup, self.footnotes.footnotes[id].split("\n"))
+		self.footnotes.md._processSection(sup, self.footnotes.footnotes[id].split('\n'))
 		return sup
 
 

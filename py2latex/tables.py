@@ -1,4 +1,4 @@
-#  !/usr/bin/env python
+#!/usr/bin/env python
 #
 #  tables.py
 #
@@ -27,16 +27,31 @@
 import re
 from functools import partial
 from textwrap import indent
-from typing import Any, Iterable, List, Mapping, Optional, Sequence, Tuple, Union
+from typing import Any, Iterable, List, Optional, Sequence, Tuple, Union
 
 # 3rd party
-import pandas as pandas  # type: ignore
+import pandas  # type: ignore
 import tabulate
 from tabulate import Line, TableFormat
 
 # this package
 from py2latex.core import begin, make_caption, make_label, re_escape
 from py2latex.templates import templates
+
+__all__ = [
+		"SubTable",
+		"add_longtable_caption",
+		"latex_format_builder",
+		"longtable_from_template",
+		"multicolumn",
+		"parse_column_alignments",
+		"parse_hlines",
+		"parse_vspace",
+		"set_table_widths",
+		"subtables_from_template",
+		"table_from_template",
+		"tabular_from_template"
+		]
 
 # TODO: Tabulate accepts Union[Mapping[str, Iterable[Any]], Iterable[Iterable[Any]]] for tabular data
 
@@ -105,7 +120,7 @@ def _latex_line_begin_tabular(colwidths, colaligns, booktabs=False, longtable=Fa
 	else:
 		line_begin_elements.append(hline)
 
-	return "\n".join(line_begin_elements)
+	return '\n'.join(line_begin_elements)
 
 
 def latex_format_builder(
@@ -148,8 +163,8 @@ def latex_format_builder(
 
 	return TableFormat(
 			lineabove=lineabove,
-			linebelowheader=Line("\n".join(linebelowheader), '', '', ''),
-			linebelow=Line("\n".join(linebelow), '', '', ''),
+			linebelowheader=Line('\n'.join(linebelowheader), '', '', ''),
+			linebelow=Line('\n'.join(linebelow), '', '', ''),
 			datarow=datarow,
 			headerrow=headerrow,
 			linebetweenrows=None,
@@ -673,7 +688,7 @@ class SubTable:
 				missingval=missingval,
 				showindex=showindex,
 				disable_numparse=disable_numparse,  # colalign=colalign,
-				).split("\n")
+				).split('\n')
 
 		header_row, body_rows, ncols = _parse_rows(rows, tabular_data, headers)
 		add_vspace, vspace = parse_vspace(ncols, vspace)

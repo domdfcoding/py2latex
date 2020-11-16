@@ -1,7 +1,6 @@
 # stdlib
 import os
 import pathlib
-import re
 from typing import Dict, Union
 
 # 3rd party
@@ -9,6 +8,8 @@ import yaml
 
 # this package
 from py2latex.markdown_parser import parse_markdown
+
+__all__ = ["escape_prefix", "glossary_from_file", "load_glossary", "make_glossary"]
 
 
 def load_glossary(glossary_file: Union[str, pathlib.Path, os.PathLike]) -> Dict[str, Dict[str, str]]:

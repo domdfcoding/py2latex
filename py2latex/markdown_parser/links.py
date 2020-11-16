@@ -1,4 +1,4 @@
-#  !/usr/bin/env python
+#!/usr/bin/env python
 #
 #  links.py
 #
@@ -33,6 +33,8 @@ from typing import List
 
 # 3rd party
 import markdown  # type: ignore
+
+__all__ = ["Link2Latex", "LinkTextPostProcessor"]
 
 
 class LinkTextPostProcessor(markdown.postprocessors.Postprocessor):

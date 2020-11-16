@@ -32,6 +32,8 @@ from typing import Iterable, Optional, Union
 # this package
 from .templates import templates
 
+__all__ = ["make_document"]
+
 __author__ = "Dominic Davis-Foster"
 __copyright__ = "2020 Dominic Davis-Foster"
 

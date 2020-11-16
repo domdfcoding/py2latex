@@ -1,4 +1,4 @@
-#  !/usr/bin/env python
+#!/usr/bin/env python
 #
 #  maths.py
 #
@@ -34,6 +34,8 @@ import markdown  # type: ignore
 
 # this package
 from py2latex.markdown_parser.utils import unescape_latex_entities
+
+__all__ = ["MathTextPostProcessor"]
 
 
 class MathTextPostProcessor(markdown.postprocessors.Postprocessor):

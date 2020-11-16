@@ -1,4 +1,4 @@
-#  !/usr/bin/env python
+#!/usr/bin/env python
 #
 #  __init__.py
 #
@@ -41,6 +41,15 @@ from .links import LinkTextPostProcessor
 from .maths import MathTextPostProcessor
 from .tables import TableTextPostProcessor
 from .utils import escape_latex_entities, unescape_html_entities
+
+__all__ = [
+		"LaTeXExtension",
+		"LaTeXTreeProcessor",
+		"UnescapeHtmlTextPostProcessor",
+		"gls",
+		"load_markdown",
+		"parse_markdown"
+		]
 
 
 def gls(name):

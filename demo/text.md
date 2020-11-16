@@ -2,7 +2,7 @@
 
 Here is some **bold** and some *italic*.
 
-Here is some <sup>superscript</sup> 
+Here is some <sup>superscript</sup>
 
 ## Another heading
 

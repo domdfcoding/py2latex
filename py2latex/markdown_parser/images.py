@@ -1,4 +1,4 @@
-#  !/usr/bin/env python
+#!/usr/bin/env python
 #
 #  images.py
 #
@@ -39,6 +39,8 @@ from urllib.parse import urlparse
 
 # 3rd party
 import markdown  # type: ignore
+
+__all__ = ["ImageTextPostProcessor", "Img2Latex"]
 
 
 class ImageTextPostProcessor(markdown.postprocessors.Postprocessor):

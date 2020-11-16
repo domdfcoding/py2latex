@@ -1,4 +1,4 @@
-#  !/usr/bin/env python
+#!/usr/bin/env python
 #
 #  core.py
 #
@@ -22,6 +22,8 @@
 
 # stdlib
 from typing import Optional
+
+__all__ = ["begin", "end", "make_caption", "make_label", "re_escape"]
 
 
 def make_caption(caption: str) -> str:
@@ -96,4 +98,4 @@ def re_escape(string: str) -> str:
 	:rtype:
 	"""
 
-	return string.replace("\\", "\\\\")
+	return string.replace('\\', "\\\\")

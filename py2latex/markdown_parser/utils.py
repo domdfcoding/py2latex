@@ -1,4 +1,4 @@
-#  !/usr/bin/env python
+#!/usr/bin/env python
 #
 #  utils.py
 #
@@ -28,6 +28,8 @@
 # stdlib
 import re
 
+__all__ = ["escape_latex_entities", "re_escape", "unescape_html_entities", "unescape_latex_entities"]
+
 
 def re_escape(string: str) -> str:
 	"""
@@ -40,7 +42,7 @@ def re_escape(string: str) -> str:
 	:rtype:
 	"""
 
-	return string.replace("\\", "\\\\")
+	return string.replace('\\', "\\\\")
 
 
 start_single_quote_re = re.compile("(^|\\s|\")'")

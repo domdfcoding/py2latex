@@ -1,4 +1,4 @@
-#  !/usr/bin/env python
+#!/usr/bin/env python
 #
 #  templates.py
 #
@@ -19,8 +19,19 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA 02110-1301, USA.
 #
+
 # this package
 from .templates import templates
+
+__all__ = [
+		"make_chapter",
+		"make_paragraph",
+		"make_part",
+		"make_section",
+		"make_subparagraph",
+		"make_subsection",
+		"make_subsubsection"
+		]
 
 sectioning_template = templates.get_template("sectioning.tex")
 

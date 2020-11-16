@@ -1,4 +1,4 @@
-#  !/usr/bin/env python
+#!/usr/bin/env python
 #
 #  packages.py
 #
@@ -22,6 +22,8 @@
 
 # stdlib
 from typing import List, Optional
+
+__all__ = ["PackageTracker", "usepackage"]
 
 
 def usepackage(package_name: str, options: Optional[str] = None) -> str:

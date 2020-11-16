@@ -1,4 +1,4 @@
-#  !/usr/bin/env python
+#!/usr/bin/env python
 #
 #  colors.py
 #
@@ -19,6 +19,30 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA 02110-1301, USA.
 #
+
+__all__ = [
+		"black",
+		"blue",
+		"brown",
+		"colour",
+		"cyan",
+		"darkgray",
+		"darkgrey",
+		"gray",
+		"green",
+		"grey",
+		"lime",
+		"magenta",
+		"olive",
+		"orange",
+		"pink",
+		"purple",
+		"red",
+		"teal",
+		"violet",
+		"white",
+		"yellow"
+		]
 
 
 def colour(text_colour: str, text: str):

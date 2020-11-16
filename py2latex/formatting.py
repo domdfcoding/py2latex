@@ -1,4 +1,4 @@
-#  !/usr/bin/env python
+#!/usr/bin/env python
 #
 #  formatting.py
 #
@@ -22,6 +22,8 @@
 
 # stdlib
 from typing import Union
+
+__all__ = ["bold", "italic", "latex_subscript", "latex_superscript", "underline"]
 
 
 def bold(val: Union[str, float]) -> str:

@@ -1,4 +1,4 @@
-#  !/usr/bin/env python
+#!/usr/bin/env python
 #
 #  tables.py
 #
@@ -35,6 +35,8 @@ import markdown  # type: ignore
 
 # this package
 from py2latex.markdown_parser.utils import escape_latex_entities
+
+__all__ = ["Table2Latex", "TableTextPostProcessor"]
 
 
 class TableTextPostProcessor(markdown.postprocessors.Postprocessor):

@@ -7,7 +7,7 @@ author: "Dominic Davis-Foster"
 email: "dominic@davis-foster.co.uk"
 version: "0.0.6"
 username: "domdfcoding"
-license: 'LGPLv3+'
+license: 'MIT'
 short_desc: 'Create LaTeX documents with Python, Markdown and Jinja2.'
 
 enable_tests: False

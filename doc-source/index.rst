@@ -8,7 +8,7 @@ py2LaTeX
 
 .. end short_desc
 
-.. start shields 
+.. start shields
 
 .. list-table::
 	:stub-columns: 1
@@ -17,94 +17,92 @@ py2LaTeX
 	* - Docs
 	  - |docs| |docs_check|
 	* - Tests
-	  - |travis| |actions_windows| |actions_macos| |codefactor|
+	  - |travis| |actions_windows| |actions_macos| |codefactor| |pre_commit_ci|
 	* - PyPI
 	  - |pypi-version| |supported-versions| |supported-implementations| |wheel|
 	* - Activity
 	  - |commits-latest| |commits-since| |maintained|
 	* - Other
-	  - |license| |language| |requires|
+	  - |license| |language| |requires| |pre_commit|
 
-.. |docs| image:: https://img.shields.io/readthedocs/py2latex/latest?logo=read-the-docs
-	:target: https://py2latex.readthedocs.io/en/latest/?badge=latest
-	:alt: Documentation Status
-	
-.. |docs_check| image:: https://github.com/domdfcoding/py2latex/workflows/Docs%20Check/badge.svg
-	:target: https://github.com/domdfcoding/py2latex/actions?query=workflow%3A%22Docs+Check%22
+.. |docs| rtfd-shield::
+	:project: py2latex
+	:alt: Documentation Build Status
+
+.. |docs_check| actions-shield::
+	:workflow: Docs Check
 	:alt: Docs Check Status
 
-.. |travis| image:: https://img.shields.io/travis/com/domdfcoding/py2latex/master?logo=travis
-	:target: https://travis-ci.com/domdfcoding/py2latex
+.. |travis| travis-shield::
+	:travis-site: com
 	:alt: Travis Build Status
 
-.. |actions_windows| image:: https://github.com/domdfcoding/py2latex/workflows/Windows%20Tests/badge.svg
-	:target: https://github.com/domdfcoding/py2latex/actions?query=workflow%3A%22Windows+Tests%22
+.. |actions_windows| actions-shield::
+	:workflow: Windows Tests
 	:alt: Windows Tests Status
 
-.. |actions_macos| image:: https://github.com/domdfcoding/py2latex/workflows/macOS%20Tests/badge.svg
-	:target: https://github.com/domdfcoding/py2latex/actions?query=workflow%3A%22macOS+Tests%22
+.. |actions_macos| actions-shield::
+	:workflow: macOS Tests
 	:alt: macOS Tests Status
 
-.. |requires| image:: https://requires.io/github/domdfcoding/py2latex/requirements.svg?branch=master
-	:target: https://requires.io/github/domdfcoding/py2latex/requirements/?branch=master
+.. |requires| requires-io-shield::
 	:alt: Requirements Status
 
-.. |codefactor| image:: https://img.shields.io/codefactor/grade/github/domdfcoding/py2latex?logo=codefactor
-	:target: https://www.codefactor.io/repository/github/domdfcoding/py2latex
+.. |codefactor| codefactor-shield::
 	:alt: CodeFactor Grade
 
-.. |pypi-version| image:: https://img.shields.io/pypi/v/py2latex
-	:target: https://pypi.org/project/py2latex/
+.. |pypi-version| pypi-shield::
+	:project: py2latex
+	:version:
 	:alt: PyPI - Package Version
 
-.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/py2latex
-	:target: https://pypi.org/project/py2latex/
+.. |supported-versions| pypi-shield::
+	:project: py2latex
+	:py-versions:
 	:alt: PyPI - Supported Python Versions
 
-.. |supported-implementations| image:: https://img.shields.io/pypi/implementation/py2latex
-	:target: https://pypi.org/project/py2latex/
+.. |supported-implementations| pypi-shield::
+	:project: py2latex
+	:implementations:
 	:alt: PyPI - Supported Implementations
 
-.. |wheel| image:: https://img.shields.io/pypi/wheel/py2latex
-	:target: https://pypi.org/project/py2latex/
+.. |wheel| pypi-shield::
+	:project: py2latex
+	:wheel:
 	:alt: PyPI - Wheel
 
-.. |license| image:: https://img.shields.io/github/license/domdfcoding/py2latex
+.. |license| github-shield::
+	:license:
 	:alt: License
-	:target: https://github.com/domdfcoding/py2latex/blob/master/LICENSE
 
-.. |language| image:: https://img.shields.io/github/languages/top/domdfcoding/py2latex
+.. |language| github-shield::
+	:top-language:
 	:alt: GitHub top language
 
-.. |commits-since| image:: https://img.shields.io/github/commits-since/domdfcoding/py2latex/v0.0.6
-	:target: https://github.com/domdfcoding/py2latex/pulse
+.. |commits-since| github-shield::
+	:commits-since: v0.0.6
 	:alt: GitHub commits since tagged version
 
-.. |commits-latest| image:: https://img.shields.io/github/last-commit/domdfcoding/py2latex
-	:target: https://github.com/domdfcoding/py2latex/commit/master
+.. |commits-latest| github-shield::
+	:last-commit:
 	:alt: GitHub last commit
 
-.. |maintained| image:: https://img.shields.io/maintenance/yes/2020
+.. |maintained| maintained-shield:: 2020
 	:alt: Maintenance
+
+.. |pre_commit| pre-commit-shield::
+	:alt: pre-commit
+
+.. |pre_commit_ci| pre-commit-ci-shield::
+	:alt: pre-commit.ci status
 
 .. end shields
 
 .. start installation
 
-.. tabs::
-
-	.. tab:: from PyPI
-
-		.. prompt:: bash
-
-			pip install py2latex
-
-
-	.. tab:: from GitHub
-
-		.. prompt:: bash
-
-			pip install git+https://github.com/domdfcoding/py2latex@master
+.. installation:: py2latex
+	:pypi:
+	:github:
 
 .. end installation
 

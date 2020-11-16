@@ -1,31 +1,47 @@
-# This file is managed by `git_helper`. Don't edit it directly
+# This file is managed by 'repo_helper'. Don't edit it directly.
+---
 
+os: linux
 language: python
-dist: xenial
+dist: focal
 cache: pip
 python:
   - '3.6'
   - '3.7'
   - '3.8'
 
+arch:
+  - amd64
+  - arm64
 install:
 
-  - pip install pip  --upgrade
+  - pip install --upgrade pip
   - pip install tox tox-travis
 
 
 script:
-  - tox
+  - tox -vv
 
 
 stages:
   - test
   - deploy_pypi
 
-  - deploy_releases
 
 jobs:
+  allow_failures:
+    - arch: arm64
+  exclude:
+    - python: '3.7'
+      arch: arm64
+    - python: '3.8'
+      arch: arm64
+
   include:
+    - stage: test
+      dist: bionic
+      python: 3.8
+
     - stage: deploy_pypi
       python: "3.6"
       script: skip
@@ -34,20 +50,8 @@ jobs:
           tags: true
           repo: domdfcoding/py2latex
         provider: pypi
-        user: "DomDF"
+        username: "DomDF"
         password:
           secure: Gr7l1pZeiIWaA6Xi2x0IhBxlhSfdIL3Zs3V8Ftjz4TcTJPk4nDeoTvvpWhKw24lrIUoDma2jIe44nh3gXpTqrNnvwz3JMYYKVH5Pzn9xydCaW98qyWt7JQYfa751Co25FQLHjZwcRnyYgjRUNzP/CXoQnydZYCov+B1hKbRDv2AYvwbIBCzeWVg6NahQEke4FolDS6NZh3aHsii0yrbw06ldvsGKGBZOsJg+9HlzGAFeFTvaSRE6IcfoqEUO3L9Px3cwqXuw3GGvSpqmBqjaRPDSx6t0oPSdQxzOYzs8H4AJzz5Ew1WQhaXITOPNl6Kz9N6f0jYWm9k4ec1nlF0BSkWpbnTjWtGi3uayQiMIFIF5gQsu7nltZXV/t1jsUke+z1r1E8i02ylZiDH9q8sjC58al0jEpj0R+85dNoSVnSRxzTMGH3Wxyig83T9RytQFAr/bq1a+uDXJCBD7Pj8DvWbmHgi46lz819W3gRS6CzVnTMhGXIRXzOdVm1wPL6GjcBvvYlbhaTu6q03oYZBs1rZ7b4ohnQEnFy8TIVxyZCB/dQiYe+yVCOzbufFe8bAq6RFz+Ew88xwRHyDxleCX022g4F1jyqBTTS5MfCWVhmqA8m5N7MlE+HbS3CxME9eKS+yVcKCwUiXUym1kZwwERa3S72at8o/nEhgDarTeWg0=
         distributions: "sdist bdist_wheel"
         skip_existing: true
-
-
-    - stage: deploy_releases
-      python: "3.6"
-      install:
-        - pip install PyGithub requests
-      script: skip
-      deploy:
-        on:
-          repo: domdfcoding/py2latex
-        provider: script
-        script: python .ci/copy_pypi_2_github.py || return 1;

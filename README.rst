@@ -10,7 +10,7 @@ py2LaTeX
 
 This project is at a VERY early stage, and as such things might not work and WILL break between versions.
 
-.. start shields 
+.. start shields
 
 .. list-table::
 	:stub-columns: 1
@@ -19,18 +19,18 @@ This project is at a VERY early stage, and as such things might not work and WIL
 	* - Docs
 	  - |docs| |docs_check|
 	* - Tests
-	  - |travis| |actions_windows| |actions_macos| |codefactor|
+	  - |travis| |actions_windows| |actions_macos| |codefactor| |pre_commit_ci|
 	* - PyPI
 	  - |pypi-version| |supported-versions| |supported-implementations| |wheel|
 	* - Activity
 	  - |commits-latest| |commits-since| |maintained|
 	* - Other
-	  - |license| |language| |requires|
+	  - |license| |language| |requires| |pre_commit|
 
 .. |docs| image:: https://img.shields.io/readthedocs/py2latex/latest?logo=read-the-docs
 	:target: https://py2latex.readthedocs.io/en/latest/?badge=latest
-	:alt: Documentation Status
-	
+	:alt: Documentation Build Status
+
 .. |docs_check| image:: https://github.com/domdfcoding/py2latex/workflows/Docs%20Check/badge.svg
 	:target: https://github.com/domdfcoding/py2latex/actions?query=workflow%3A%22Docs+Check%22
 	:alt: Docs Check Status
@@ -59,7 +59,7 @@ This project is at a VERY early stage, and as such things might not work and WIL
 	:target: https://pypi.org/project/py2latex/
 	:alt: PyPI - Package Version
 
-.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/py2latex
+.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/py2latex?logo=python&logoColor=white
 	:target: https://pypi.org/project/py2latex/
 	:alt: PyPI - Supported Python Versions
 
@@ -72,8 +72,8 @@ This project is at a VERY early stage, and as such things might not work and WIL
 	:alt: PyPI - Wheel
 
 .. |license| image:: https://img.shields.io/github/license/domdfcoding/py2latex
-	:alt: License
 	:target: https://github.com/domdfcoding/py2latex/blob/master/LICENSE
+	:alt: License
 
 .. |language| image:: https://img.shields.io/github/languages/top/domdfcoding/py2latex
 	:alt: GitHub top language
@@ -88,6 +88,14 @@ This project is at a VERY early stage, and as such things might not work and WIL
 
 .. |maintained| image:: https://img.shields.io/maintenance/yes/2020
 	:alt: Maintenance
+
+.. |pre_commit| image:: https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white
+	:target: https://github.com/pre-commit/pre-commit
+	:alt: pre-commit
+
+.. |pre_commit_ci| image:: https://results.pre-commit.ci/badge/github/domdfcoding/py2latex/master.svg
+	:target: https://results.pre-commit.ci/latest/github/domdfcoding/py2latex/master
+	:alt: pre-commit.ci status
 
 .. end shields
 

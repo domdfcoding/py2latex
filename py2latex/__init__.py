@@ -2,7 +2,7 @@
 #
 #  __init__.py
 """
-Docstring Goes Here
+Create LaTeX documents with Python, Markdown and Jinja2.
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
@@ -27,14 +27,13 @@ Docstring Goes Here
 #
 
 # stdlib
-import os
-import pathlib
-from typing import Iterable, Optional, Union
+from typing import Iterable
 
 # this package
-from .templates import templates
+from domdf_python_tools.paths import PathPlus
+from domdf_python_tools.typing import PathLike
 
-__all__ = ["make_document"]
+import py2latex.templates
 
 __author__ = "Dominic Davis-Foster"
 __copyright__ = "2020 Dominic Davis-Foster"
@@ -42,20 +41,23 @@ __license__ = "MIT License"
 __version__ = "0.0.6"
 __email__ = "dominic@davis-foster.co.uk"
 
-main_template = templates.get_template("main.tex")
+__all__ = ["make_document"]
+
+main_template = py2latex.templates.templates.get_template("main.tex")
 
 
 def make_document(
-		outfile: Union[str, pathlib.Path, os.PathLike],
-		elements: Optional[Iterable[str]] = None,
+		outfile: PathLike,
+		*elements: Iterable[str],
 		glossary: str = '',
 		):
+	r"""
+	Construct a LaTeX document from the given elements.
 
-	if not isinstance(outfile, pathlib.Path):
-		outfile = pathlib.Path(outfile)
+	:param outfile:
+	:param \*elements:
+	:param glossary:
+	"""
 
-	if elements is None:
-		elements = []
-
-	with open(outfile, 'w') as fp:
-		fp.write(main_template.render(elements=elements, glossary=glossary))
+	outfile = PathPlus(outfile)
+	outfile.write_clean(main_template.render(elements=elements, glossary=glossary))

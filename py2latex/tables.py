@@ -700,10 +700,10 @@ class SubTable:
 
 		table_body = ''
 		for row_idx, row in enumerate(body_rows):
-			row = re.sub(r"(\\multicolumn{2\}{.*\}{{.*\}\}\s*)&", r"\1 ", row)
-			row = re.sub(r"(\\multicolumn{3\}{.*\}{{.*\}\}\s*)&(\s*)&", r"\1 \2", row)
-			row = re.sub(r"(\\multicolumn{4\}{.*\}{{.*\}\}\s*)&(\s*)&(\s*)&", r"\1 \2 \3", row)
-			row = re.sub(r"(\\multicolumn{5\}{.*\}{{.*\}\}\s*)&(\s*)&(\s*)&(\s*)&", r"\1 \2 \3 \4", row)
+			row = re.sub(r"(\\multicolumn{2\}{.*}{{.*}}\s*)&", r"\1 ", row)
+			row = re.sub(r"(\\multicolumn{3\}{.*}{{.*}}\s*)&(\s*)&", r"\1 \2", row)
+			row = re.sub(r"(\\multicolumn{4\}{.*}{{.*}}\s*)&(\s*)&(\s*)&", r"\1 \2 \3", row)
+			row = re.sub(r"(\\multicolumn{5\}{.*}{{.*}}\s*)&(\s*)&(\s*)&(\s*)&", r"\1 \2 \3 \4", row)
 
 			if add_vspace and row_idx in vspace:
 				table_body += "\\addlinespace"

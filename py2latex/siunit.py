@@ -459,7 +459,7 @@ def get_si_elements(unit: UnitBase) -> List[str]:
 	for base, power in zip(unit.bases, unit.powers):
 
 		if base in astropy_siunitx_mapping:
-			print(base)
+			# print(base)
 			base = astropy_siunitx_mapping[base]
 
 		# print(base, power)

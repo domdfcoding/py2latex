@@ -24,7 +24,7 @@
 #
 
 # this package
-from .templates import templates
+from py2latex.templates import templates
 
 __all__ = [
 		"make_chapter",

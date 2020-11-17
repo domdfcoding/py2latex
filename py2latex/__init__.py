@@ -29,10 +29,11 @@ Create LaTeX documents with Python, Markdown and Jinja2.
 # stdlib
 from typing import Iterable
 
-# this package
+# 3rd party
 from domdf_python_tools.paths import PathPlus
 from domdf_python_tools.typing import PathLike
 
+# this package
 import py2latex.templates
 
 __author__ = "Dominic Davis-Foster"

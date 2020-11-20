@@ -3,7 +3,7 @@ Downloading source code
 =========================
 
 The ``py2LaTeX`` source code is available on GitHub,
-and can be accessed from the following URL: https://github.com/domdfcoding/py2latex"
+and can be accessed from the following URL: https://github.com/domdfcoding/py2latex
 
 If you have ``git`` installed, you can clone the repository with the following command:
 

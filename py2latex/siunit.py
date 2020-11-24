@@ -27,7 +27,8 @@
 from typing import List
 
 # 3rd party
-from astropy.units import (  # type: ignore
+import astropy.units.cds  # type: ignore
+from astropy.units import (
 		GW,
 		MN,
 		MW,
@@ -91,10 +92,7 @@ from astropy.units import (  # type: ignore
 		uW
 		)
 from astropy.units.astrophys import AU, M_e, astronomical_unit, au, u  # type: ignore
-from astropy.units.cds import bar, barn  # type: ignore
-from astropy.units.cds import c as clight
-from astropy.units.cds import e as elementarycharge
-from astropy.units.cds import mmHg
+from astropy.units.cds import bar, barn, mmHg
 from astropy.units.imperial import knot, nauticalmile  # type: ignore
 from astropy.units.si import (  # type: ignore
 		A,
@@ -175,6 +173,9 @@ from astropy.units.si import (  # type: ignore
 		weber
 		)
 from typing_extensions import Literal
+
+clight = astropy.units.cds.c
+elementarycharge = astropy.units.cds.e
 
 kelvin = Kelvin
 metre = meter

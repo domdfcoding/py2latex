@@ -91,10 +91,10 @@ from astropy.units import (  # type: ignore
 		uW
 		)
 from astropy.units.astrophys import AU, M_e, astronomical_unit, au, u  # type: ignore
-from astropy.units.cds import bar, barn  # type: ignore
+from astropy.units.cds import mmHg  # type: ignore; type: ignore
+from astropy.units.cds import bar, barn
 from astropy.units.cds import c as clight
 from astropy.units.cds import e as elementarycharge
-from astropy.units.cds import mmHg  # type: ignore
 from astropy.units.imperial import knot, nauticalmile  # type: ignore
 from astropy.units.si import (  # type: ignore
 		A,

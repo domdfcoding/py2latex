@@ -114,10 +114,17 @@ py2LaTeX
 .. toctree::
 	:maxdepth: 3
 	:caption: Documentation
+	:glob:
 
-	API Reference<docs>
+	api/py2latex
+	api/*
+
+.. toctree::
+	:maxdepth: 3
+	:caption: Contributing
+
+	contributing
 	Source
-	Building
 
 .. start links
 

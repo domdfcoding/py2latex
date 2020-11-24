@@ -2,6 +2,6 @@ include __pkginfo__.py
 include LICENSE
 include requirements.txt
 prune **/__pycache__
-recursive-include py2latex/templates/ *.tex
+recursive-include py2latex/templates *.tex
 recursive-include py2latex *.pyi
 include py2latex/py.typed

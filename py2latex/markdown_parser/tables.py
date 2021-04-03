@@ -71,7 +71,7 @@ class Table2Latex:
 	"""
 	Convert html tables to Latex.
 
-	TODO: escape latex entities.
+	.. TODO:: escape latex entities.
 	"""
 
 	numcols: int

@@ -48,10 +48,11 @@ __all__ = [
 		]
 
 
-def colour(text_colour: str, text: str):
-	r"""Make the given text the given colour
+def colour(text_colour: str, text: str) -> str:
+	r"""
+	Make the given text the given colour.
 
-	Akin to \color{text_colour}{string}
+	Akin to ``\color{text_colour}{string}``.
 
 	:param text_colour: The colour to make the text
 	:param text: The text to colour
@@ -62,12 +63,13 @@ def colour(text_colour: str, text: str):
 	return fr"{{\color{{{text_colour}}}{text}}}"
 
 
-def black(text: str):
-	r"""Make the given text black
+def black(text: str) -> str:
+	r"""
+	Make the given text black.
 
-	Akin to \color{black}{string}
+	Akin to ``\color{black}{string}``.
 
-	:param text: The text to make black
+	:param text:
 
 	:return: The formatted string.
 	"""
@@ -75,12 +77,13 @@ def black(text: str):
 	return colour("black", text)
 
 
-def blue(text: str):
-	r"""Make the given text blue
+def blue(text: str) -> str:
+	r"""
+	Make the given text blue.
 
-	Akin to \color{blue}{string}
+	Akin to ``\color{blue}{string}``.
 
-	:param text: The text to make blue
+	:param text:
 
 	:return: The formatted string.
 	"""
@@ -88,12 +91,13 @@ def blue(text: str):
 	return colour("blue", text)
 
 
-def brown(text: str):
-	r"""Make the given text brown
+def brown(text: str) -> str:
+	r"""
+	Make the given text brown.
 
-	Akin to \color{brown}{string}
+	Akin to ``\color{brown}{string}``.
 
-	:param text: The text to make brown
+	:param text:
 
 	:return: The formatted string.
 	"""
@@ -101,12 +105,13 @@ def brown(text: str):
 	return colour("brown", text)
 
 
-def cyan(text: str):
-	r"""Make the given text cyan
+def cyan(text: str) -> str:
+	r"""
+	Make the given text cyan.
 
-	Akin to \color{cyan}{string}
+	Akin to ``\color{cyan}{string}``.
 
-	:param text: The text to make cyan
+	:param text:
 
 	:return: The formatted string.
 	"""
@@ -114,25 +119,13 @@ def cyan(text: str):
 	return colour("cyan", text)
 
 
-def darkgrey(text: str):
-	r"""Make the given text darkgrey
+def darkgrey(text: str) -> str:
+	r"""
+	Make the given text darkgrey.
 
-	Akin to \color{darkgray}{string}
+	Akin to ``\color{darkgray}{string}``.
 
-	:param text: The text to make darkgrey
-
-	:return: The formatted string.
-	"""
-
-	return colour("darkgray", text)
-
-
-def darkgray(text: str):
-	r"""Make the given text darkgray
-
-	Akin to \\color{darkgray}{string}
-
-	:param text: The text to make darkgray
+	:param text:
 
 	:return: The formatted string.
 	"""
@@ -140,12 +133,27 @@ def darkgray(text: str):
 	return colour("darkgray", text)
 
 
-def grey(text: str):
-	r"""Make the given text grey
+def darkgray(text: str) -> str:
+	r"""
+	Make the given text darkgray.
 
-	Akin to \color{gray}{string}
+	Akin to ``\\color{darkgray}{string}``.
 
-	:param text: The text to make grey
+	:param text:
+
+	:return: The formatted string.
+	"""
+
+	return colour("darkgray", text)
+
+
+def grey(text: str) -> str:
+	r"""
+	Make the given text grey.
+
+	Akin to ``\color{gray}{string}``.
+
+	:param text:
 
 	:return: The formatted string.
 	"""
@@ -153,12 +161,13 @@ def grey(text: str):
 	return colour("gray", text)
 
 
-def gray(text: str):
-	r"""Make the given text gray
+def gray(text: str) -> str:
+	r"""
+	Make the given text gray.
 
-	Akin to \color{gray}{string}
+	Akin to ``\color{gray}{string}``.
 
-	:param text: The text to make gray
+	:param text:
 
 	:return: The formatted string.
 	"""
@@ -166,12 +175,13 @@ def gray(text: str):
 	return colour("gray", text)
 
 
-def green(text: str):
-	r"""Make the given text green
+def green(text: str) -> str:
+	r"""
+	Make the given text green.
 
-	Akin to \color{green}{string}
+	Akin to ``\color{green}{string}``.
 
-	:param text: The text to make green
+	:param text:
 
 	:return: The formatted string.
 	"""
@@ -179,12 +189,13 @@ def green(text: str):
 	return colour("green", text)
 
 
-def lime(text: str):
-	r"""Make the given text lime
+def lime(text: str) -> str:
+	r"""
+	Make the given text lime.
 
-	Akin to \color{lime}{string}
+	Akin to ``\color{lime}{string}``.
 
-	:param text: The text to make lime
+	:param text:
 
 	:return: The formatted string.
 	"""
@@ -192,12 +203,13 @@ def lime(text: str):
 	return colour("lime", text)
 
 
-def magenta(text: str):
-	r"""Make the given text magenta
+def magenta(text: str) -> str:
+	r"""
+	Make the given text magenta.
 
-	Akin to \color{magenta}{string}
+	Akin to ``\color{magenta}{string}``.
 
-	:param text: The text to make magenta
+	:param text:
 
 	:return: The formatted string.
 	"""
@@ -205,12 +217,13 @@ def magenta(text: str):
 	return colour("magenta", text)
 
 
-def olive(text: str):
-	r"""Make the given text olive
+def olive(text: str) -> str:
+	r"""
+	Make the given text olive.
 
-	Akin to \color{olive}{string}
+	Akin to ``\color{olive}{string}``.
 
-	:param text: The text to make olive
+	:param text:
 
 	:return: The formatted string.
 	"""
@@ -218,12 +231,13 @@ def olive(text: str):
 	return colour("olive", text)
 
 
-def orange(text: str):
-	r"""Make the given text orange
+def orange(text: str) -> str:
+	r"""
+	Make the given text orange.
 
-	Akin to \color{orange}{string}
+	Akin to ``\color{orange}{string}``.
 
-	:param text: The text to make orange
+	:param text:
 
 	:return: The formatted string.
 	"""
@@ -231,12 +245,13 @@ def orange(text: str):
 	return colour("orange", text)
 
 
-def pink(text: str):
-	r"""Make the given text pink
+def pink(text: str) -> str:
+	r"""
+	Make the given text pink.
 
-	Akin to \color{pink}{string}
+	Akin to ``\color{pink}{string}``.
 
-	:param text: The text to make pink
+	:param text:
 
 	:return: The formatted string.
 	"""
@@ -244,12 +259,13 @@ def pink(text: str):
 	return colour("pink", text)
 
 
-def purple(text: str):
-	r"""Make the given text purple
+def purple(text: str) -> str:
+	r"""
+	Make the given text purple.
 
-	Akin to \color{purple}{string}
+	Akin to ``\color{purple}{string}``.
 
-	:param text: The text to make purple
+	:param text:
 
 	:return: The formatted string.
 	"""
@@ -257,12 +273,13 @@ def purple(text: str):
 	return colour("purple", text)
 
 
-def red(text: str):
-	r"""Make the given text red
+def red(text: str) -> str:
+	r"""
+	Make the given text red.
 
-	Akin to \color{red}{string}
+	Akin to ``\color{red}{string}``.
 
-	:param text: The text to make red
+	:param text:
 
 	:return: The formatted string.
 	"""
@@ -270,12 +287,13 @@ def red(text: str):
 	return colour("red", text)
 
 
-def teal(text: str):
-	r"""Make the given text teal
+def teal(text: str) -> str:
+	r"""
+	Make the given text teal.
 
-	Akin to \color{teal}{string}
+	Akin to ``\color{teal}{string}``.
 
-	:param text: The text to make teal
+	:param text:
 
 	:return: The formatted string.
 	"""
@@ -283,12 +301,13 @@ def teal(text: str):
 	return colour("teal", text)
 
 
-def violet(text: str):
-	r"""Make the given text violet
+def violet(text: str) -> str:
+	r"""
+	Make the given text violet.
 
-	Akin to \color{violet}{string}
+	Akin to ``\color{violet}{string}``.
 
-	:param text: The text to make violet
+	:param text:
 
 	:return: The formatted string.
 	"""
@@ -296,12 +315,13 @@ def violet(text: str):
 	return colour("violet", text)
 
 
-def white(text: str):
-	r"""Make the given text white
+def white(text: str) -> str:
+	r"""
+	Make the given text white.
 
-	Akin to \color{white}{string}
+	Akin to ``\color{white}{string}``.
 
-	:param text: The text to make white
+	:param text:
 
 	:return: The formatted string.
 	"""
@@ -309,12 +329,13 @@ def white(text: str):
 	return colour("white", text)
 
 
-def yellow(text: str):
-	r"""Make the given text yellow
+def yellow(text: str) -> str:
+	r"""
+	Make the given text yellow.
 
-	Akin to \color{yellow}{string}
+	Akin to ``\color{yellow}{string}``.
 
-	:param text: The text to make yellow
+	:param text:
 
 	:return: The formatted string.
 	"""

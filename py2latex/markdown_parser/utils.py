@@ -1,8 +1,11 @@
 #!/usr/bin/env python
 #
 #  utils.py
+"""
+Utility functions for Markdown -> HTML -> LaTeX conversion.
+"""
 #
-#  Copyright © 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
+#  Copyright © 2020-2021 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
 #  Permission is hereby granted, free of charge, to any person obtaining a copy
 #  of this software and associated documentation files (the "Software"), to deal
@@ -55,12 +58,9 @@ end_double_quote_re = re.compile('"(,|\\.|\\s|$)')
 
 def unescape_html_entities(text: str) -> str:
 	"""
+	Replaces escaped html entities (e.g. ``&amp;``) with their ASCII representations (e.g. ``&``).
 
 	:param text:
-	:type text: str
-
-	:return:
-	:rtype: str
 	"""
 
 	out = text.replace("&amp;", '&')
@@ -75,10 +75,6 @@ def escape_latex_entities(text: str) -> str:
 	Escape latex reserved characters.
 
 	:param text:
-	:type text: str
-
-	:return:
-	:rtype: str
 	"""
 
 	out = text
@@ -105,14 +101,12 @@ def escape_latex_entities(text: str) -> str:
 
 def unescape_latex_entities(text: str) -> str:
 	"""
-	Limit ourselves as this is only used for maths stuff.
+	Unescape certain latex characters.
 
 	:param text:
-	:type text: str
-
-	:return:
-	:rtype: str
 	"""
+
+	# Limit ourselves as this is only used for maths stuff.
 
 	out = text
 	out = out.replace("\\&", '&')

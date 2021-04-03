@@ -47,7 +47,6 @@ __all__ = [
 		"latex_format_builder",
 		"longtable_from_template",
 		"multicolumn",
-		"parse_column_alignments",
 		"parse_hlines",
 		"parse_vspace",
 		"set_table_widths",
@@ -758,24 +757,26 @@ def subtables_from_template(
 			)
 
 
-def parse_column_alignments(colalign, colwidths, vlines, ncols):
+def parse_column_alignments(
+		colalign: Optional[Sequence[Union[str, None]]],
+		colwidths: Optional[Sequence[Union[str, None]]],
+		vlines: Union[Sequence[int], bool],
+		ncols: int,
+		) -> str:
 	"""
 
 	:param colalign:
-	:type colalign:
 	:param colwidths:
-	:type colwidths:
 	:param vlines:
-	:type vlines:
 	:param ncols:
-	:type ncols:
-
-	:return:
-	:rtype:
 	"""
 
 	if colalign is None:
 		colalign = ['l'] * ncols
+	else:
+		colalign = list(colalign)
+
+	assert colalign is not None
 
 	while len(colalign) < ncols:
 		colalign.append('l')
@@ -784,6 +785,10 @@ def parse_column_alignments(colalign, colwidths, vlines, ncols):
 
 	if colwidths is None:
 		colwidths = [None] * ncols
+	else:
+		colwidths = list(colwidths)
+
+	assert colwidths is not None
 
 	while len(colwidths) < ncols:
 		colwidths.append(None)

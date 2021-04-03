@@ -1,8 +1,11 @@
 #!/usr/bin/env python
 #
 #  core.py
+"""
+Core functionality.
+"""
 #
-#  Copyright © 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
+#  Copyright © 2020-2021 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
 #  Permission is hereby granted, free of charge, to any person obtaining a copy
 #  of this software and associated documentation files (the "Software"), to deal
@@ -31,13 +34,9 @@ __all__ = ["begin", "end", "make_caption", "make_label", "re_escape"]
 
 def make_caption(caption: str) -> str:
 	r"""
-	Akin to \caption{}
+	Akin to ``\caption{}``.
 
 	:param caption:
-	:type caption:
-
-	:return:
-	:rtype:
 	"""
 
 	return rf"\caption{{{caption}}}"
@@ -45,13 +44,9 @@ def make_caption(caption: str) -> str:
 
 def make_label(label: str) -> str:
 	r"""
-	Akin to \label{}
+	Akin to ``\label{}``.
 
 	:param label:
-	:type label:
-
-	:return:
-	:rtype:
 	"""
 
 	return rf"\label{{{label}}}"
@@ -59,15 +54,10 @@ def make_label(label: str) -> str:
 
 def begin(environment: str, options: Optional[str] = None) -> str:
 	r"""
-	Akin to \begin{environment}
+	Akin to ``\begin{environment}.``
 
 	:param environment:
-	:type environment:
 	:param options:
-	:type options:
-
-	:return:
-	:rtype:
 	"""
 
 	if options:
@@ -78,13 +68,9 @@ def begin(environment: str, options: Optional[str] = None) -> str:
 
 def end(environment: str) -> str:
 	r"""
-	Akin to \end{environment}
+	Akin to ``\end{environment}``.
 
 	:param environment:
-	:type environment:
-
-	:return:
-	:rtype:
 	"""
 
 	return rf"\end{{{environment}}}"
@@ -92,13 +78,11 @@ def end(environment: str) -> str:
 
 def re_escape(string: str) -> str:
 	"""
-	Escape literal backslashes for use with re.
+	Escape literal backslashes for use with :mod:`re`.
+
+	.. seealso:: :func:`re.escape`, which escapes all characters treated specially be :mod:`re`.
 
 	:param string:
-	:type string:
-
-	:return:
-	:rtype:
 	"""
 
 	return string.replace('\\', "\\\\")

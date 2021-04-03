@@ -1,5 +1,5 @@
 astropy>=4.1
-domdf-python-tools>=1.5.0
+domdf-python-tools>=2.9.0
 jinja2>=2.11.2
 markdown>=3.3.3
 pandas>=1.1.4

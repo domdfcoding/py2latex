@@ -24,20 +24,17 @@
 #
 
 # stdlib
-from typing import List, Optional
+from typing import Callable, List, Optional, Set, Type
 
 __all__ = ["PackageTracker", "usepackage"]
 
 
 def usepackage(package_name: str, options: Optional[str] = None) -> str:
 	r"""
-
-	Akin to \usepackage[options]{package_name}
+	Akin to ``\usepackage[options]{package_name}``.
 
 	:param package_name: The name of the package
 	:param options: Options for the package
-
-	:return:
 	"""
 
 	if options:
@@ -48,16 +45,23 @@ def usepackage(package_name: str, options: Optional[str] = None) -> str:
 
 class PackageTracker:
 
-	packages: List[str] = []
+	packages: Set[str] = set()
+
+	def __new__(cls: Type["PackageTracker"]) -> Type["PackageTracker"]:
+		return cls
 
 	@classmethod
-	def requires(cls, package: str):
-		if package not in cls.packages:
-			cls.packages.append(package)
+	def requires(cls, package: str) -> Callable[[Callable], Callable]:
+		"""
+		Mark a function as requiring a particular package when invoked.
 
-		def wrap(f):
+		:param package:
+		"""
+
+		def wrap(f: Callable) -> Callable:
 
 			def wrapped_f(*args, **kwargs):
+				cls.packages.add(package)
 				f(*args, **kwargs)
 
 			return wrapped_f

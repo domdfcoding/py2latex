@@ -37,24 +37,31 @@ from typing import List
 # 3rd party
 import markdown.postprocessors  # type: ignore
 
-__all__ = ["Link2Latex", "LinkTextPostProcessor"]
+__all__ = ["link_to_Latex", "LinkTextPostProcessor"]
 
 
 class LinkTextPostProcessor(markdown.postprocessors.Postprocessor):
+	"""
+	Markdown postprocessor to convert hyperlinks to LaTeX
+	"""
 
-	def run(self, instr) -> str:
+	def run(self, text) -> str:
+		"""
+		Transforms the given HTML document (as a string) to convert hyperlinks to LaTeX
+
+		:param text:
+		"""
 		# Process all hyperlinks
 
-		converter = Link2Latex()
 		new_blocks: List[str] = []
 
-		for block in instr.split("\n\n"):
+		for block in text.split("\n\n"):
 			stripped = block.strip()
 			match = re.search(r"<a[^>]*>([^<]+)</a>", stripped)
 			# <table catches modified versions (e.g. <table class="..">
 
 			if match:
-				latex_link = re.sub(r"<a[^>]*>([^<]+)</a>", converter.convert(match.group(0)).strip(), stripped)
+				latex_link = re.sub(r"<a[^>]*>([^<]+)</a>", link_to_Latex(match.group(0)).strip(), stripped)
 				new_blocks.append(latex_link)
 			else:
 				new_blocks.append(block)
@@ -62,17 +69,17 @@ class LinkTextPostProcessor(markdown.postprocessors.Postprocessor):
 		return "\n\n".join(new_blocks)
 
 
-class Link2Latex:
+def link_to_Latex(link_str: str) -> str:
+	"""
+	Convert an HTML link to its latex equivalent.
+	"""
 
-	def convert(self, instr) -> str:
-		dom = xml.dom.minidom.parseString(instr)
-		link = dom.documentElement
-		href = link.getAttribute("href")
+	dom = xml.dom.minidom.parseString(link_str)
+	link = dom.documentElement
+	href = link.getAttribute("href")
 
-		desc = re.search(r">([^<]+)", instr)
-		if desc:
-			return f"""
-				\\href{{{href}}}{{{desc.group(0)[1:]}}}
-				"""
-		else:
-			return ''
+	desc = re.search(r">([^<]+)", link_str)
+	if desc:
+		return f"\n\\href{{{href}}}{{{desc.group(0)[1:]}}}\n"
+	else:
+		return ''

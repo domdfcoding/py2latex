@@ -43,58 +43,59 @@ from urllib.parse import urlparse
 # 3rd party
 import markdown.postprocessors  # type: ignore
 
-__all__ = ["ImageTextPostProcessor", "Img2Latex"]
+__all__ = ["ImageTextPostProcessor", "img_to_latex"]
 
 
 class ImageTextPostProcessor(markdown.postprocessors.Postprocessor):
 
 	def run(self, instr) -> str:
-		"""Process all img tags
+		"""
+		Process all img tags
 
-		Similar to process_tables this is not very sophisticated and for it
-		to work it is expected that img tags are put in a section of their own
+		Similar to ``process_tables`` this is not very sophisticated.
+		For it to work it is expected that ``img`` tags are put in a section of their own
 		(that is separated by at least one blank line above and below).
 		"""
-		converter = Img2Latex()
+
 		new_blocks: List[str] = []
+
 		for block in instr.split("\n\n"):
 			stripped = block.strip()
 			# <table catches modified verions (e.g. <table class="..">
 			if stripped.startswith("<img"):
-				latex_img = converter.convert(stripped).strip()
+				latex_img = img_to_latex(stripped).strip()
 				new_blocks.append(latex_img)
 			else:
 				new_blocks.append(block)
+
 		return "\n\n".join(new_blocks)
 
 
-class Img2Latex:
+def img_to_latex(instr) -> str:
+	dom = xml.dom.minidom.parseString(instr)
+	img = dom.documentElement
+	src = img.getAttribute("src")
 
-	def convert(self, instr) -> str:
-		dom = xml.dom.minidom.parseString(instr)
-		img = dom.documentElement
-		src = img.getAttribute("src")
+	if urlparse(src).scheme != '':
+		src_urlparse = urlparse(src)
+		conn = http.client.HTTPConnection(src_urlparse.netloc)
+		conn.request("HEAD", src_urlparse.path)
+		response = conn.getresponse()
+		conn.close()
 
-		if urlparse(src).scheme != '':
-			src_urlparse = urlparse(src)
-			conn = http.client.HTTPConnection(src_urlparse.netloc)
-			conn.request("HEAD", src_urlparse.path)
-			response = conn.getresponse()
-			conn.close()
+		if response.status == 200:
+			filename = os.path.join(tempfile.mkdtemp(), src.split('/')[-1])
+			urllib.request.urlretrieve(src, filename)
+			src = filename
 
-			if response.status == 200:
-				filename = os.path.join(tempfile.mkdtemp(), src.split('/')[-1])
-				urllib.request.urlretrieve(src, filename)
-				src = filename
+	alt = img.getAttribute("alt")
 
-		alt = img.getAttribute("alt")
+	# Using graphicx and ajustbox package for *max width*
 
-		# Using graphicx and ajustbox package for *max width*
-
-		return f"""
-			\\begin{{figure}}[H]
-			\\centering
-			\\includegraphics[max width=\\linewidth]{{{src}}}
-			\\caption{{{alt}}}
-			\\end{{figure}}
-			"""
+	return f"""
+		\\begin{{figure}}[H]
+		\\centering
+		\\includegraphics[max width=\\linewidth]{{{src}}}
+		\\caption{{{alt}}}
+		\\end{{figure}}
+		"""

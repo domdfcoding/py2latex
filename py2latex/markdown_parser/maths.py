@@ -33,7 +33,7 @@
 import re
 
 # 3rd party
-import markdown.postprocessors  # type: ignore
+import markdown.postprocessors
 
 # this package
 from py2latex.markdown_parser.utils import unescape_latex_entities
@@ -44,12 +44,11 @@ __all__ = ["MathTextPostProcessor"]
 class MathTextPostProcessor(markdown.postprocessors.Postprocessor):
 
 	def run(self, instr):
-		"""Convert all math sections in {text} whether latex, asciimathml or
-		latexmathml formatted to latex.
+		"""
+		Convert all math sections in {text} whether LaTeX, asciimathml or latexmathml formatted to LaTeX.
 
-		This assumes you are using $ for inline math and $$ for blocks as your
-		mathematics delimiter (*not* the standard asciimathml or latexmathml
-		delimiter).
+		This assumes you are using $ for inline math and ``$$`` for blocks as your mathematics delimiter
+		(*not* the standard asciimathml or latexmathml delimiter).
 		"""
 
 		def repl_1(matchobj) -> str:
@@ -69,10 +68,6 @@ class MathTextPostProcessor(markdown.postprocessors.Postprocessor):
 			"""
 
 			:param matchobj:
-			:type matchobj:
-
-			:return:
-			:rtype: str
 			"""
 
 			text = unescape_latex_entities(matchobj.group(1))

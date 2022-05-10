@@ -34,7 +34,7 @@ import xml.dom.minidom
 from typing import List
 
 # 3rd party
-import markdown.postprocessors  # type: ignore
+import markdown.postprocessors
 
 # this package
 from py2latex.markdown_parser.utils import escape_latex_entities
@@ -48,10 +48,10 @@ class TableTextPostProcessor(markdown.postprocessors.Postprocessor):
 		"""
 		This is not very sophisticated and for it to work it is expected that:
 
-			1. tables to be in a section on their own (that is at least one
-			blank line above and below)
-			2. no nesting of tables
-		"""
+		1. tables to be in a section on their own (that is at least one
+		   blank line above and below)
+		2. no nesting of tables
+		"""  # noqa: D400
 
 		converter = Table2Latex()
 		new_blocks: List[str] = []

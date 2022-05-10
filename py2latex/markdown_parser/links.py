@@ -35,22 +35,23 @@ import xml.dom.minidom
 from typing import List
 
 # 3rd party
-import markdown.postprocessors  # type: ignore
+import markdown.postprocessors
 
 __all__ = ["link_to_Latex", "LinkTextPostProcessor"]
 
 
 class LinkTextPostProcessor(markdown.postprocessors.Postprocessor):
 	"""
-	Markdown postprocessor to convert hyperlinks to LaTeX
+	Markdown postprocessor to convert hyperlinks to LaTeX.
 	"""
 
 	def run(self, text) -> str:
 		"""
-		Transforms the given HTML document (as a string) to convert hyperlinks to LaTeX
+		Transforms the given HTML document (as a string) to convert hyperlinks to LaTeX.
 
 		:param text:
 		"""
+
 		# Process all hyperlinks
 
 		new_blocks: List[str] = []

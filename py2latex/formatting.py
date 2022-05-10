@@ -30,11 +30,11 @@ __all__ = ["bold", "italic", "latex_subscript", "latex_superscript", "underline"
 
 
 def bold(val: Union[str, float]) -> str:
-	r"""Make the given value bold
+	r"""Make the given value bold.
 
 	Akin to \textbf{string}
 
-	:param val: The value to make bold
+	:param val:
 
 	:return: The formatted string.
 	"""
@@ -43,11 +43,11 @@ def bold(val: Union[str, float]) -> str:
 
 
 def underline(val: Union[str, float]) -> str:
-	r"""Underline the given value
+	r"""Underline the given value.
 
 	Akin to \underline{string}
 
-	:param val: The value to underline
+	:param val:
 
 	:return: The formatted string.
 	"""
@@ -56,11 +56,11 @@ def underline(val: Union[str, float]) -> str:
 
 
 def italic(val: Union[str, float]) -> str:
-	r"""Make the given value italic
+	r"""Make the given value italic.
 
 	Akin to \textit{string}
 
-	:param val: The value to make italic
+	:param val:
 
 	:return: The formatted string.
 	"""
@@ -72,7 +72,7 @@ def latex_subscript(val: Union[str, float]) -> str:
 	"""
 	Returns the LaTeX subscript of the given value.
 
-	:param val: The value to superscript
+	:param val: The value to superscript.
 
 	:rtype: str
 	"""
@@ -84,7 +84,7 @@ def latex_superscript(val: Union[str, float]) -> str:
 	"""
 	Returns the LaTeX superscript of the given value.
 
-	:param val: The value to subscript
+	:param val: The value to subscript.
 
 	:rtype: str
 	"""

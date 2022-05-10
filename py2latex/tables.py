@@ -33,7 +33,7 @@ from textwrap import indent
 from typing import Any, Iterable, List, Optional, Sequence, Tuple, Union
 
 # 3rd party
-import pandas  # type: ignore
+import pandas  # type: ignore[import]
 import tabulate
 from tabulate import Line, TableFormat
 
@@ -47,6 +47,7 @@ __all__ = [
 		"latex_format_builder",
 		"longtable_from_template",
 		"multicolumn",
+		"parse_column_alignments",
 		"parse_hlines",
 		"parse_vspace",
 		"set_table_widths",
@@ -71,30 +72,21 @@ def multicolumn(cols: int, pos: str, text: str) -> str:
 	"""
 
 	:param cols: The number of columms to span
-	:type cols: int
 	:param pos: Text alignment:
 		* c for centered
 		* l for flushleft
 		* r for flushright
-	:type pos: str
 	:param text:
-	:type text: str
-
-	:return:
-	:rtype: str
 	"""
 
 	return fr"\multicolumn{{{cols}}}{{{pos}}}{{{{{text}}}}}"
 
 
 def _latex_line_begin_tabular(colwidths, colaligns, booktabs=False, longtable=False, longtable_continued=False):
-	"""
-	Based on Bart Broere's fork of python-tabulate
-	https://github.com/bartbroere/python-tabulate
-	MIT Licensed
-
-	https://pypi.org/project/tabulate/
-	"""
+	# Based on Bart Broere's fork of python-tabulate.
+	# https://github.com/bartbroere/python-tabulate
+	# MIT Licensed
+	# https://pypi.org/project/tabulate/
 
 	alignment = {"left": 'l', "right": 'r', "center": 'c', "decimal": 'r'}
 	tabular_columns_fmt = ''.join([alignment.get(a, 'l') for a in colaligns])
@@ -159,9 +151,9 @@ def latex_format_builder(
 		linebelow = [hline, r"\end{tabular}"]
 
 	if raw:
-		datarow = headerrow = partial(tabulate._latex_row, escrules={})  # type: ignore
+		datarow = headerrow = partial(tabulate._latex_row, escrules={})  # type: ignore[attr-defined]
 	else:
-		datarow = headerrow = tabulate._latex_row  # type: ignore
+		datarow = headerrow = tabulate._latex_row  # type: ignore[attr-defined]
 
 	return TableFormat(
 			lineabove=lineabove,
@@ -191,7 +183,7 @@ raw_longbooktab_cont = latex_format_builder(raw=True, booktabs=True, longtable=T
 
 def add_longtable_caption(table: str, caption: Optional[str] = None, label: Optional[str] = None) -> str:
 	"""
-	Add a caption to a longtable
+	Add a caption to a longtable.
 
 	:param table:
 	:type table: str
@@ -249,7 +241,7 @@ _longtable_template = templates.get_template("longtable.tex")
 _table_template = templates.get_template("table.tex")
 _tabular_template = templates.get_template("tabular.tex")
 _subtables_template = templates.get_template("subtables.tex")
-_subtables_template.globals["indent"] = indent  # type: ignore
+_subtables_template.globals["indent"] = indent
 
 
 def longtable_from_template(
@@ -259,10 +251,10 @@ def longtable_from_template(
 		label: Optional[str] = None,
 		headers: Sequence[str] = (),
 		pos: str = "htpb",
-		floatfmt: Union[str, Iterable[str]] = tabulate._DEFAULT_FLOATFMT,  # type: ignore
+		floatfmt: Union[str, Iterable[str]] = tabulate._DEFAULT_FLOATFMT,  # type: ignore[attr-defined]
 		numalign: Optional[str] = "decimal",
 		stralign: Optional[str] = "left",
-		missingval: Union[str, Iterable[str]] = tabulate._DEFAULT_MISSINGVAL,  # type: ignore
+		missingval: Union[str, Iterable[str]] = tabulate._DEFAULT_MISSINGVAL,  # type: ignore[attr-defined]
 		showindex: Union[str, bool, Iterable[Any]] = "default",
 		disable_numparse: Union[bool, Iterable[int]] = False,
 		colalign: Optional[Sequence[Union[str, None]]] = None,
@@ -344,9 +336,9 @@ def longtable_from_template(
 def _make_body_only_formats(raw=False):
 
 	if raw:
-		datarow = headerrow = partial(tabulate._latex_row, escrules={})  # type: ignore
+		datarow = headerrow = partial(tabulate._latex_row, escrules={})  # type: ignore[attr-defined]
 	else:
-		datarow = headerrow = tabulate._latex_row  # type: ignore
+		datarow = headerrow = tabulate._latex_row  # type: ignore[attr-defined]
 
 	return TableFormat(
 			lineabove=None,
@@ -374,9 +366,6 @@ def _parse_rows(
 	:param rows:
 	:param tabular_data:
 	:param headers:
-
-	:return:
-	:rtype:
 	"""
 
 	header_len = 0
@@ -406,11 +395,7 @@ def parse_vspace(
 	"""
 
 	:param ncols:
-	:type ncols: int
 	:param vspace:
-
-	:return:
-	:rtype:
 	"""
 
 	if isinstance(vspace, Sequence):
@@ -428,11 +413,8 @@ def parse_hlines(
 		) -> Tuple[bool, Sequence[int]]:
 	"""
 
-	:param tabular_data:
+	:param nrows:
 	:param hlines:
-
-	:return:
-	:rtype:
 	"""
 
 	if isinstance(hlines, Sequence):
@@ -451,10 +433,10 @@ def table_from_template(
 		label: Optional[str] = None,
 		headers: Sequence[str] = (),
 		pos: str = "htpb",
-		floatfmt: Union[str, Iterable[str]] = tabulate._DEFAULT_FLOATFMT,  # type: ignore
+		floatfmt: Union[str, Iterable[str]] = tabulate._DEFAULT_FLOATFMT,  # type: ignore[attr-defined]
 		numalign: Optional[str] = "decimal",
 		stralign: Optional[str] = "left",
-		missingval: Union[str, Iterable[str]] = tabulate._DEFAULT_MISSINGVAL,  # type: ignore
+		missingval: Union[str, Iterable[str]] = tabulate._DEFAULT_MISSINGVAL,  # type: ignore[attr-defined]
 		showindex: Union[str, bool, Iterable[Any]] = "default",
 		disable_numparse: Union[bool, Iterable[int]] = False,
 		colalign: Optional[Sequence[Union[str, None]]] = None,
@@ -537,10 +519,10 @@ def tabular_from_template(
 		tabular_data: Union[Sequence[Sequence[Any]]],
 		*,
 		headers: Sequence[str] = (),
-		floatfmt: Union[str, Iterable[str]] = tabulate._DEFAULT_FLOATFMT,  # type: ignore
+		floatfmt: Union[str, Iterable[str]] = tabulate._DEFAULT_FLOATFMT,  # type: ignore[attr-defined]
 		numalign: Optional[str] = "decimal",
 		stralign: Optional[str] = "left",
-		missingval: Union[str, Iterable[str]] = tabulate._DEFAULT_MISSINGVAL,  # type: ignore
+		missingval: Union[str, Iterable[str]] = tabulate._DEFAULT_MISSINGVAL,  # type: ignore[attr-defined]
 		showindex: Union[str, bool, Iterable[Any]] = "default",
 		disable_numparse: Union[bool, Iterable[int]] = False,
 		colalign: Optional[Sequence[Union[str, None]]] = None,
@@ -660,10 +642,10 @@ class SubTable:
 			caption: str,
 			label: Optional[str] = None,
 			headers: Sequence[str] = (),
-			floatfmt: Union[str, Iterable[str]] = tabulate._DEFAULT_FLOATFMT,  # type: ignore
+			floatfmt: Union[str, Iterable[str]] = tabulate._DEFAULT_FLOATFMT,  # type: ignore[attr-defined]
 			numalign: Optional[str] = "decimal",
 			stralign: Optional[str] = "left",
-			missingval: Union[str, Iterable[str]] = tabulate._DEFAULT_MISSINGVAL,  # type: ignore
+			missingval: Union[str, Iterable[str]] = tabulate._DEFAULT_MISSINGVAL,  # type: ignore[attr-defined]
 			showindex: Union[str, bool, Iterable[Any]] = "default",
 			disable_numparse: Union[bool, Iterable[int]] = False,
 			colalign: Optional[Sequence[Union[str, None]]] = None,

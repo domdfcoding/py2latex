@@ -47,7 +47,7 @@ class PackageTracker:
 
 	packages: Set[str] = set()
 
-	def __new__(cls: Type["PackageTracker"]) -> Type["PackageTracker"]:
+	def __new__(cls: Type["PackageTracker"]) -> Type["PackageTracker"]:  # type: ignore[misc]
 		return cls
 
 	@classmethod

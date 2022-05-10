@@ -36,4 +36,4 @@ __all__ = ["template_dir", "templates"]
 
 template_dir = (pathlib.Path(__file__).parent / "templates").absolute()
 
-templates = Environment(loader=FileSystemLoader(template_dir))  # type: ignore
+templates = Environment(loader=FileSystemLoader(template_dir))

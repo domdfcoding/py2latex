@@ -41,7 +41,7 @@ from typing import List
 from urllib.parse import urlparse
 
 # 3rd party
-import markdown.postprocessors  # type: ignore
+import markdown.postprocessors
 
 __all__ = ["ImageTextPostProcessor", "img_to_latex"]
 
@@ -50,7 +50,7 @@ class ImageTextPostProcessor(markdown.postprocessors.Postprocessor):
 
 	def run(self, instr) -> str:
 		"""
-		Process all img tags
+		Process all img tags.
 
 		Similar to ``process_tables`` this is not very sophisticated.
 		For it to work it is expected that ``img`` tags are put in a section of their own

@@ -37,8 +37,8 @@ from typing import Union
 
 # 3rd party
 import markdown
-import markdown.treeprocessors  # type: ignore
-import markdown.util  # type: ignore
+import markdown.treeprocessors
+import markdown.util
 
 # this package
 from py2latex.markdown_parser.images import ImageTextPostProcessor
@@ -126,8 +126,10 @@ class LaTeXExtension(markdown.extensions.Extension):
 class LaTeXTreeProcessor(markdown.treeprocessors.Treeprocessor):
 
 	def run(self, doc):
-		"""Walk the dom converting relevant nodes to text nodes with relevant
-		content."""
+		"""
+		Walk the DOM converting relevant nodes to text nodes with relevant content.
+		"""
+
 		latex_text = self.tolatex(doc)
 
 		doc.clear()

@@ -54,7 +54,7 @@ def make_label(label: str) -> str:
 
 def begin(environment: str, options: Optional[str] = None) -> str:
 	r"""
-	Akin to ``\begin{environment}.``
+	Akin to ``\begin{environment}``.
 
 	:param environment:
 	:param options:

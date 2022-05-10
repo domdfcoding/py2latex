@@ -1,4 +1,4 @@
-astropy>=4.1
+astropy>=4.3
 domdf-python-tools>=2.9.0
 jinja2>=2.11.2
 markdown>=3.3.3

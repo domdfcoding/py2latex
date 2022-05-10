@@ -25,7 +25,7 @@ This project is at a VERY early stage, and as such things might not work and WIL
 	* - Activity
 	  - |commits-latest| |commits-since| |maintained| |pypi-downloads|
 	* - QA
-	  - |codefactor| |actions_flake8| |actions_mypy| |pre_commit_ci|
+	  - |codefactor| |actions_flake8| |actions_mypy|
 	* - Other
 	  - |license| |language| |requires|
 
@@ -57,8 +57,8 @@ This project is at a VERY early stage, and as such things might not work and WIL
 	:target: https://github.com/domdfcoding/py2latex/actions?query=workflow%3A%22mypy%22
 	:alt: mypy status
 
-.. |requires| image:: https://requires.io/github/domdfcoding/py2latex/requirements.svg?branch=master
-	:target: https://requires.io/github/domdfcoding/py2latex/requirements/?branch=master
+.. |requires| image:: https://dependency-dash.herokuapp.com/github/domdfcoding/py2latex/badge.svg
+	:target: https://dependency-dash.herokuapp.com/github/domdfcoding/py2latex/
 	:alt: Requirements Status
 
 .. |codefactor| image:: https://img.shields.io/codefactor/grade/github/domdfcoding/py2latex?logo=codefactor
@@ -96,16 +96,12 @@ This project is at a VERY early stage, and as such things might not work and WIL
 	:target: https://github.com/domdfcoding/py2latex/commit/master
 	:alt: GitHub last commit
 
-.. |maintained| image:: https://img.shields.io/maintenance/yes/2021
+.. |maintained| image:: https://img.shields.io/maintenance/yes/2022
 	:alt: Maintenance
 
 .. |pypi-downloads| image:: https://img.shields.io/pypi/dm/py2latex
 	:target: https://pypi.org/project/py2latex/
 	:alt: PyPI - Downloads
-
-.. |pre_commit_ci| image:: https://results.pre-commit.ci/badge/github/domdfcoding/py2latex/master.svg
-	:target: https://results.pre-commit.ci/latest/github/domdfcoding/py2latex/master
-	:alt: pre-commit.ci status
 
 .. end shields
 

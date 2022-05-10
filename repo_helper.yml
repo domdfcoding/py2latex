@@ -12,6 +12,7 @@ short_desc: 'Create LaTeX documents with Python, Markdown and Jinja2.'
 
 enable_tests: False
 enable_conda: False
+use_whey: true
 
 #additional_ignore:
 #  -
@@ -25,7 +26,6 @@ python_versions:
   - '3.8'
   - '3.9'
 
-# travis secure password for PyPI
 
 # additional lines for MANIFEST.in
 manifest_additional:

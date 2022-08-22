@@ -381,7 +381,7 @@ def _parse_rows(
 	if isinstance(tabular_data, pandas.DataFrame):
 		body_len = len(tabular_data.columns)
 	else:
-		body_len = max([len(subl) for subl in tabular_data])
+		body_len = max(len(subl) for subl in tabular_data)
 
 	ncols = max(header_len, body_len)
 

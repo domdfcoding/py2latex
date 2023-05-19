@@ -137,6 +137,7 @@ py2LaTeX
 	:caption: Contributing
 
 	contributing
+	license
 	Source
 
 .. sidebar-links::

@@ -44,6 +44,24 @@ license-key = "MIT"
 additional-files = [ "recursive-include py2latex/templates *.tex",]
 
 [tool.importcheck]
+always = [
+    "py2latex",
+    "py2latex.markdown_parser",
+    "py2latex.markdown_parser.images",
+    "py2latex.markdown_parser.links",
+    "py2latex.markdown_parser.maths",
+    "py2latex.markdown_parser.tables",
+    "py2latex.markdown_parser.utils",
+    "py2latex.colors",
+    "py2latex.core",
+    "py2latex.formatting",
+    "py2latex.glossaries",
+    "py2latex.packages",
+    "py2latex.sectioning",
+    "py2latex.siunit",
+    "py2latex.tables",
+    "py2latex.templates",
+]
 
 [tool.sphinx-pyproject]
 github_username = "domdfcoding"

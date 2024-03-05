@@ -43,4 +43,4 @@ known_third_party = [
     "tabulate",
     "typing_extensions",
 ]
-known_first_party = "py2latex"
+known_first_party = [ "py2latex",]

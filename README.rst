@@ -96,7 +96,7 @@ This project is at a VERY early stage, and as such things might not work and WIL
 	:target: https://github.com/domdfcoding/py2latex/commit/master
 	:alt: GitHub last commit
 
-.. |maintained| image:: https://img.shields.io/maintenance/yes/2023
+.. |maintained| image:: https://img.shields.io/maintenance/yes/2024
 	:alt: Maintenance
 
 .. |pypi-downloads| image:: https://img.shields.io/pypi/dm/py2latex

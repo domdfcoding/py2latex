@@ -133,7 +133,7 @@ class LaTeXTreeProcessor(markdown.treeprocessors.Treeprocessor):
 		latex_text = self.tolatex(doc)
 
 		doc.clear()
-		latex_node = markdown.util.etree.Element("root")
+		latex_node = markdown.util.etree.Element("root")  # type: ignore[attr-defined]
 		latex_node.text = latex_text
 		doc.append(latex_node)
 

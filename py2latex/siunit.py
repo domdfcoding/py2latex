@@ -27,7 +27,7 @@
 from typing import List
 
 # 3rd party
-import astropy.units.cds  # type: ignore
+import astropy.units.cds  # type: ignore[import]
 from astropy.units import (
 		GW,
 		MN,
@@ -91,11 +91,11 @@ from astropy.units import (
 		uV,
 		uW
 		)
-from astropy.units.astrophys import AU, astronomical_unit, au  # type: ignore
+from astropy.units.astrophys import AU, astronomical_unit, au  # type: ignore[import]
 from astropy.units.cds import bar, barn, mmHg
-from astropy.units.imperial import knot, nauticalmile  # type: ignore
-from astropy.units.misc import M_e, u  # type: ignore
-from astropy.units.si import (  # type: ignore
+from astropy.units.imperial import knot, nauticalmile  # type: ignore[import]
+from astropy.units.misc import M_e, u  # type: ignore[import]
+from astropy.units.si import (  # type: ignore[import]  # noqa: F401
 		A,
 		Bq,
 		C,

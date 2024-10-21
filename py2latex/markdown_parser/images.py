@@ -48,7 +48,7 @@ __all__ = ["ImageTextPostProcessor", "img_to_latex"]
 
 class ImageTextPostProcessor(markdown.postprocessors.Postprocessor):
 
-	def run(self, instr) -> str:
+	def run(self, instr: str) -> str:
 		"""
 		Process all img tags.
 
@@ -71,7 +71,7 @@ class ImageTextPostProcessor(markdown.postprocessors.Postprocessor):
 		return "\n\n".join(new_blocks)
 
 
-def img_to_latex(instr) -> str:
+def img_to_latex(instr: str) -> str:
 	dom = xml.dom.minidom.parseString(instr)
 	img = dom.documentElement
 	src = img.getAttribute("src")

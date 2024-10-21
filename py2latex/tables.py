@@ -789,6 +789,8 @@ def parse_column_alignments(
 		if add_vlines and col_idx in vlines:
 			alignment_elements.append('|')
 
+		assert alignment is not None
+
 		if alignment.startswith('l'):
 			if width is None:
 				alignment_elements.append('l')

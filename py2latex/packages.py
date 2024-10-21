@@ -24,7 +24,7 @@
 #
 
 # stdlib
-from typing import Callable, List, Optional, Set, Type
+from typing import Callable, Optional, Set, Type
 
 __all__ = ["PackageTracker", "usepackage"]
 

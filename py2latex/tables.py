@@ -797,6 +797,12 @@ def parse_column_alignments(
 			else:
 				alignment_elements.append(fr">{{\raggedright}}p{{{width}}}")
 
+		elif alignment.startswith('h'):
+			if width is None:
+				alignment_elements.append('l')
+			else:
+				alignment_elements.append(fr">{{\raggedright\hangindent=1em}}p{{{width}}}")
+
 		elif alignment.startswith('r') or alignment.lower() == "decimal":
 			if width is None:
 				alignment_elements.append('r')

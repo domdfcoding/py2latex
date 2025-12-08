@@ -160,6 +160,7 @@ class Table2Latex:
 		dom = xml.dom.minidom.parseString(instr)
 		core = self.tolatex(dom.documentElement)
 
+		assert dom.documentElement is not None
 		captionElements = dom.documentElement.getElementsByTagName("caption")
 		caption = ''
 		if captionElements:

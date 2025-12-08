@@ -14,11 +14,6 @@ enable_tests: False
 enable_conda: False
 use_whey: true
 
-#additional_ignore:
-#  -
-
-python_deploy_version: 3.6
-
 # Versions to run tests for
 python_versions:
   - '3.7'

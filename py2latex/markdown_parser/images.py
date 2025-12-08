@@ -74,6 +74,7 @@ class ImageTextPostProcessor(markdown.postprocessors.Postprocessor):
 def img_to_latex(instr: str) -> str:
 	dom = xml.dom.minidom.parseString(instr)
 	img = dom.documentElement
+	assert img is not None
 	src = img.getAttribute("src")
 
 	if urlparse(src).scheme != '':

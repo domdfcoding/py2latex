@@ -77,6 +77,7 @@ def link_to_Latex(link_str: str) -> str:
 
 	dom = xml.dom.minidom.parseString(link_str)
 	link = dom.documentElement
+	assert link is not None
 	href = link.getAttribute("href")
 
 	desc = re.search(r">([^<]+)", link_str)

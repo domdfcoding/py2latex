@@ -92,7 +92,7 @@ class LaTeXExtension(markdown.extensions.Extension):
 	def __init__(self, configs=None):
 		self.reset()
 
-	def extendMarkdown(self, md, md_globals):
+	def extendMarkdown(self, md, md_globals):  # type: ignore[override]
 		self.md = md
 
 		# remove escape pattern -- \\(.*) -- as this messes up any embedded

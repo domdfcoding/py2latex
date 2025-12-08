@@ -33,7 +33,7 @@ from textwrap import indent
 from typing import Any, Iterable, List, Optional, Sequence, Tuple, Union
 
 # 3rd party
-import pandas  # type: ignore[import]
+import pandas  # type: ignore[import-untyped]
 import tabulate
 from tabulate import Line, TableFormat
 

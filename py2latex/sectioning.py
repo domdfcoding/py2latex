@@ -33,7 +33,7 @@ __all__ = [
 		"make_section",
 		"make_subparagraph",
 		"make_subsection",
-		"make_subsubsection"
+		"make_subsubsection",
 		]
 
 sectioning_template = templates.get_template("sectioning.tex")

@@ -44,7 +44,7 @@ __all__ = [
 		"teal",
 		"violet",
 		"white",
-		"yellow"
+		"yellow",
 		]
 
 

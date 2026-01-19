@@ -53,7 +53,7 @@ __all__ = [
 		"UnescapeHtmlTextPostProcessor",
 		"gls",
 		"load_markdown",
-		"parse_markdown"
+		"parse_markdown",
 		]
 
 
@@ -128,6 +128,8 @@ class LaTeXTreeProcessor(markdown.treeprocessors.Treeprocessor):
 	def run(self, doc):
 		"""
 		Walk the DOM converting relevant nodes to text nodes with relevant content.
+
+		:param doc:
 		"""
 
 		latex_text = self.tolatex(doc)

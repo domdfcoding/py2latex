@@ -44,13 +44,15 @@ __all__ = ["Table2Latex", "TableTextPostProcessor"]
 
 class TableTextPostProcessor(markdown.postprocessors.Postprocessor):
 
-	def run(self, instr):
+	def run(self, instr: str):
 		"""
 		This is not very sophisticated and for it to work it is expected that:
 
 		1. tables to be in a section on their own (that is at least one
 		   blank line above and below)
 		2. no nesting of tables
+
+		:param instr: Input text to process.
 		"""  # noqa: D400
 
 		converter = Table2Latex()

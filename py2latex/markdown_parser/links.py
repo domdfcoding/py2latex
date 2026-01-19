@@ -73,6 +73,8 @@ class LinkTextPostProcessor(markdown.postprocessors.Postprocessor):
 def link_to_Latex(link_str: str) -> str:
 	"""
 	Convert an HTML link to its latex equivalent.
+
+	:param link_str:
 	"""
 
 	dom = xml.dom.minidom.parseString(link_str)

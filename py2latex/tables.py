@@ -53,7 +53,7 @@ __all__ = [
 		"set_table_widths",
 		"subtables_from_template",
 		"table_from_template",
-		"tabular_from_template"
+		"tabular_from_template",
 		]
 
 # TODO: Tabulate accepts Union[Mapping[str, Iterable[Any]], Iterable[Iterable[Any]]] for tabular data
@@ -104,7 +104,7 @@ def _latex_line_begin_tabular(colwidths, colaligns, booktabs=False, longtable=Fa
 
 \bottomrule
 \endlastfoot
-"""
+""",
 					)
 	else:
 		line_begin_elements = [rf"\begin{{tabular}}{{{tabular_columns_fmt}}}"]
@@ -127,7 +127,7 @@ def latex_format_builder(
 			_latex_line_begin_tabular,
 			longtable=longtable,
 			booktabs=booktabs,
-			longtable_continued=longtable_continued
+			longtable_continued=longtable_continued,
 			)
 
 	if booktabs and longtable:
@@ -837,12 +837,14 @@ if __name__ == "__main__":
 	from pprint import pprint
 
 	pprint(
-			longtable_from_template([
-					[1, 2, 3, 4, 5],
-					[1, 2, 3, 4, 5],
-					[1, 2, 3, 4, 5],
-					[1, 2, 3, 4, 5],
-					],
-									headers=["Foo", "Bar", "Baz", "Fizz", "Buzz"],
-									caption="My Caption")
+			longtable_from_template(
+					[
+							[1, 2, 3, 4, 5],
+							[1, 2, 3, 4, 5],
+							[1, 2, 3, 4, 5],
+							[1, 2, 3, 4, 5],
+							],
+					headers=["Foo", "Bar", "Baz", "Fizz", "Buzz"],
+					caption="My Caption",
+					),
 			)

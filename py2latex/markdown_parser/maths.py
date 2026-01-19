@@ -43,12 +43,14 @@ __all__ = ["MathTextPostProcessor"]
 
 class MathTextPostProcessor(markdown.postprocessors.Postprocessor):
 
-	def run(self, instr):
+	def run(self, instr: str):
 		"""
 		Convert all math sections in {text} whether LaTeX, asciimathml or latexmathml formatted to LaTeX.
 
 		This assumes you are using $ for inline math and ``$$`` for blocks as your mathematics delimiter
 		(*not* the standard asciimathml or latexmathml delimiter).
+
+		:param instr: Input text to process.
 		"""
 
 		def repl_1(matchobj) -> str:

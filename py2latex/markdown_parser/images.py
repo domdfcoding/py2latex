@@ -55,6 +55,8 @@ class ImageTextPostProcessor(markdown.postprocessors.Postprocessor):
 		Similar to ``process_tables`` this is not very sophisticated.
 		For it to work it is expected that ``img`` tags are put in a section of their own
 		(that is separated by at least one blank line above and below).
+
+		:param instr: Input text to process.
 		"""
 
 		new_blocks: List[str] = []
